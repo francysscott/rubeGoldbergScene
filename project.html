@@ -43,18 +43,15 @@ Details available to change:
     <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/fscottRoom.js"></script>
     <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/fscottTable.js"></script>
     <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/scarovilUmbrella.js"></script>
-    //<script src="fscott_scarovilWindow.js"></script>
+    <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/fscott_scarovilWindow.js"></script>
     <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/scarovil_fscottTeapot.js"></script>
-    <script src="marble.js"></script>
+    <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/scarovilShinyBall.js"></script>
     <script src="Chandelier.js"></script>
-<!-- 	<script src="domino.js"></script> -->
+    <script src="domino.js"></script>
 
   </head>
 <body>
-<!-- adds rain video outside of scene to help with rendering -->
-<video hidden width="320" height="240" autoplay>
-  <source src="../videos/Gentlerain.ogv" type="video/ogg">
-</video>
+
 
 <script id="prog">
 var scene = new THREE.Scene(); 
@@ -212,11 +209,10 @@ function drawScene() {
 	chand.position.set(0,sceneParams.roomH, 0);
 	scene.add(chand);	 
   
-//  var domino = createDomino(sceneParams.umbrellaColor, sceneParams.umbrellaSpecular,
-//     						 sceneParams.umbrellaShininess, sceneParams.umbrellaSizes );
-//     						 
-//  scene.add(domino);
-// 
+    var domino = createDomino(sceneParams.umbrellaColor, sceneParams.umbrellaSpecular,
+     						 sceneParams.umbrellaShininess, sceneParams.umbrellaSizes );     						 
+    scene.add(domino);
+ 
 
     
   //Create and place window
