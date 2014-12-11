@@ -8,12 +8,16 @@
 */
 
 function createBall(ballRad, ballColor, ballShininess) {
+	var ball = new THREE.Object3D();
 	var ballG = new THREE.SphereGeometry(ballRad,30,30);
     var ballM = new THREE.MeshPhongMaterial({color: ballColor,
     										 ambient: ballColor,
                                              shininess: ballShininess
                                     		});
-    var ball = new THREE.Mesh(ballG,ballM);
+    var bll = new THREE.Mesh(ballG,ballM);
+    bll.position.y = ballRad;
+    
+    ball.add(bll);
 
 	return ball;
 }

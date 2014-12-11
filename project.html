@@ -86,38 +86,42 @@ Details available to change:
 					wallTexture: "../images/beige_wallpaper.jpg",
 					ceilingTexture: "../images/wood-pattern.jpg",
 					floorTexture: "../images/wood-pattern.jpg",
+					//window
 					windowWidth: 150,
 					windowframeColor: 0x5E2612,
 					windowVideo: "../videos/Gentlerain.ogv",
+					//ball
 					ballColor: 0xBB33FF,
 					ballRad: 6,
                     ballSpecular: 0x444444,
                     ballShininess: 20,
-                    tableHeight: 40,
-                    tableWidth: 50,
+                    //table
+                    tableHeight: 50,
+                    tableWidth: 90,
                     tableColor: 0x835930,
                     tableTexture: '../images/dark-wood.jpg',
                     tableShininess: 10,
+                    //umbrella
                     umbrellaColor: 0x524CFD,
                     umbrellaSpecular: 0x444444,
                     umbrellaShininess: 5,
                     umbrellaSize: 25,
                     umbrellaTexture: '../images/stripes.jpg',
                     handleColor: 0x663300,
+                    //block
                     blockColor: 0xFFFFFF,
                     blockSpecular: 0x333333,
                     blockShininess: 1,
                     blockSize: 5,
                     blockTexture: '../images/ivory-wood.jpg',
+                    //teapot
                     teapotAmbient: TW.makeColor(0.135, 0.2225, 0.1575), //values are for jade
                     teapotDiffuse: TW.makeColor(0.54, 0.89, 0.63), //from OpenGL/VRML Materials
                     teapotSpecular: TW.makeColor(0.316228, 0.316228, 0.316228),
                     teapotShininess: 128 * 0.1,
                     teapotSize: 5,
-                    ambLightColor: 0x6F6F6F,
-                    dirLightColor: 0xAAAAAA,
+                    //bowling ball
                     marbleRadius: 35,
-    				deltaT: 0.5,        // time between steps, in arbitrary time units
     				marbleColor: 0x524CFD,
     				marbleSpecular: 0x444444,
                     marbleShininess: 20,
@@ -127,9 +131,15 @@ Details available to change:
     				marbleInitialZ: -40,
     				marbleAngularVelocity: TW.degrees2radians(3),
     				marbleInitialAngle: -Math.PI/4,
+    				//shelf
+    				
+                    //lights
+                    ambLightColor: 0x6F6F6F,
+                    dirLightColor: 0xAAAAAA,
+                    //animation
+       				deltaT: 0.5,        // time between steps, in arbitrary time units
                     lastElement : null
                   };
-
 
   var animationState = {
         marbleAngle: sceneParams.marbleInitialAngle,
@@ -138,7 +148,6 @@ Details available to change:
         time: 0,
         lastParam: null
     };
-
 
   function drawScene() {
 
@@ -149,15 +158,17 @@ Details available to change:
 							sceneParams.ceilingTexture, 
 							sceneParams.floorTexture);
 	room.name="room";
-	room.position.set(0, w2, 0);  // Increase y so that the room is at the right spot
+	room.position.set(0, w2, 0);  // Increase y so that the origin is at the right spot
 	scene.add(room);
 	
-	var table = createTexturedTable(sceneParams.tableHeight, 	// for woodgrain table
+	// Create and place table
+	var table = createTexturedTable(sceneParams.tableHeight, // for woodgrain table
 							sceneParams.tableWidth, 
 							sceneParams.tableTexture, 
 							sceneParams.tableShininess);
 	table.name = "table";
-	table.position.set(90,sceneParams.tableHeight, 90);  // Place in room
+	table.position.set(-30,sceneParams.tableHeight, -90);  // Put in back of room
+	table.rotation.y = Math.PI * 0.5; //rotate 90 degrees
 	scene.add(table);
 	
 	// Create and place ball in room
@@ -165,10 +176,8 @@ Details available to change:
 							sceneParams.ballColor, 
 							sceneParams.ballShininess);
     ball.name = "ball";         // give it a name, so we can remove it next time.
-    // Position ball correctly according to specifications
-    ball.position.x = -w2 + (sceneParams.ballRad * 1.5);
-    ball.position.y = sceneParams.ballRad * 0.99;
-    ball.position.z = -w2 + (sceneParams.ballRad * 1.5);
+	// Put ball in front left corner of room    
+    ball.position.set(-130, 0, 70);
     scene.add(ball);
     
     //Create and place Umbrella in room
@@ -310,14 +319,12 @@ Details available to change:
     marble.visible = true;
 
 	//update video
-	if ( video.readyState === video.HAVE_ENOUGH_DATA ) 
+	if (video.readyState === video.HAVE_ENOUGH_DATA) 
 	{
-		videoImageContext.drawImage( video, 0, 0 );
-		if ( videoTexture ) 
-			videoTexture.needsUpdate = true;
+		videoImageContext.drawImage(video, 0, 0);
+		if (videoTexture) videoTexture.needsUpdate = true;
 	}
-  
-	renderer.render( scene, state.cameraObject ); //re-render the scene using the TW camera
+	renderer.render(scene, state.cameraObject); //re-render the scene using the TW camera
   }
 
   animate(); //allows video to play

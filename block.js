@@ -41,7 +41,6 @@ function createBlock(blockColor, blockSpecular, blockShininess, size, blockTextu
 												   ambient: blockColor,
 												   specular: blockSpecular,
 												   shininess: blockShininess} );
-		console.log("no texture");
     } else {
     	var wood = THREE.ImageUtils.loadTexture( blockTexture,
                                                 new THREE.UVMapping(),
@@ -55,8 +54,6 @@ function createBlock(blockColor, blockSpecular, blockShininess, size, blockTextu
 												   specular: blockSpecular,
 												   shininess: blockShininess,
 												   map: wood} );
-		console.log("YES texture");
-		console.log(blockTexture);
 	}
 												   
 	var blockGeom = new THREE.BoxGeometry( size * 0.5, size, 0.25 * size);
