@@ -60,14 +60,14 @@ function createSlide (height, length, width, inputColor, inputShininess, isLippe
 	slideTop.position.set(0,height,0);
 	slideTop.rotateX(degree);
 	
-	//var slideBottomGeom = buildBaseGeom(height, length, width, diff);
-	//var slideBottom = new THREE.Mesh( slideBottomGeom, slideMaterial );
+	var slideBottomGeom = buildBaseGeom(height, length, width, diff);
+	var slideBottom = new THREE.Mesh( slideBottomGeom, slideMaterial );
 	
-	//slideBottom.position.set(0,0,0);
+	slideBottom.position.set(0,0,0);
 	
 	slide.add(slideTop);
 	console.log("now adding slide bottom");
-	//slide.add(slideBottom);
+	slide.add(slideBottom);
 	
 	return slide;
 
@@ -75,14 +75,14 @@ function createSlide (height, length, width, inputColor, inputShininess, isLippe
 
 function buildBaseGeom(height, length, width, diff)  {
 	
-	var min = new THREE.Vector3( 0, 0, 0 );
-	var max = new THREE.Vector3( diff, height - diff, diff );
-	
-	return new THREE.Box3(min, max);
-	
-	
+// 	var min = new THREE.Vector3( 0, 0, 0 );
+// 	var max = new THREE.Vector3( diff, height - diff, diff );
+// 	
+// 	return new THREE.Box3(min, max);
 	
 	
+	
+	return new THREE.BoxGeometry( diff, (height-diff), diff);
 	
 	
 	
@@ -184,16 +184,13 @@ function buildBaseGeom(height, length, width, diff)  {
     geom.computeVertexNormals(true);
 
     return geom;
-	
-	
-	
-	
+
 	
 }
 
 
 function buildSlideGeom(height, length, width, isLipped)  {
-	var slideLength = Math.sqrt(height*height + length*length);
+	var slideLength = Math.sqrt((height*height) + (length*length));
 
 	var extrusionSettings = {
 		size: slideLength, height: width, curveSegments: 3,
