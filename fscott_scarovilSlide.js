@@ -44,31 +44,39 @@
 
 
 function createSlide (height, length, width, inputColor, inputShininess, isLipped) {
-	var slide = new THREE.Object3D();  // frame into which all pieces are placed.
 	
-	
-// 	var materialFront = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
-// 	var materialSide = new THREE.MeshBasicMaterial( { color: 0xff8800 } );
-// 	var materialArray = [ materialFront, materialSide ];
-// 	var starMaterial = new THREE.MeshFaceMaterial(materialArray);
-	
-	
-	var slideTopGeom = buildSlideGeom(height, length, width, isLipped);
-	
+	var diff = 0.1 * width;  	// needed for calculating the fits of the base and slide
 	var slideMaterial = new THREE.MeshPhongMaterial({color: inputColor,
     										 ambient: inputColor,
                                              shininess: inputShininess,
+                                    		 specular: 0xCCCCCC
                                     		});
-	
+                                    		
+    var slide = new THREE.Object3D();  // frame into which all pieces are placed.
+                                    		
+	var slideTopGeom = buildSlideGeom(height, length, width, isLipped);
 	var slideTop = new THREE.Mesh( slideTopGeom, slideMaterial );
+	var degree = (Math.PI/4)- Math.atan(length / (height-diff)); 	// get the correct amount of rotation
+	slideTop.position.set(0,diff,0);
+	slideTop.rotateX(degree);
+	
+	//var slideBottomGeom = buildBaseGeom(height, length, width);
+	//var slideBottom = new THREE.Mesh( slideBottomGeom, slideMaterial );
 	
 	slide.add(slideTop);
+	//slide.add(slideBottom);
 	
 	return slide;
 
 }
 
-
+function buildBaseGeom(height, length, width, diff)  {
+	
+	var min = new THREE.Vector3( 1, 0, 0 );
+	var max = new THREE.Vector3( 2, 4, 5 );
+	
+	return new THREE.Box3(min, max);
+}
 
 
 function buildSlideGeom(height, length, width, isLipped)  {
