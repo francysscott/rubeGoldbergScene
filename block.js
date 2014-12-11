@@ -34,16 +34,36 @@
  */
 
 function createBlock(blockColor, blockSpecular, blockShininess, size, blockTexture) {
-		
-	var blockMat = new THREE.MeshPhongMaterial( { color: blockColor,
+	var block = new THREE.Object3D();
+	
+	if(blockTexture  === undefined) {
+    	var blockMat = new THREE.MeshPhongMaterial( { color: blockColor,
+												   ambient: blockColor,
+												   specular: blockSpecular,
+												   shininess: blockShininess} );
+		console.log("no texture");
+    } else {
+    	var wood = THREE.ImageUtils.loadTexture( blockTexture,
+                                                new THREE.UVMapping(),
+                                                TW.render );
+		wood.wrapS = THREE.RepeatWrapping;
+		wood.wrapT = THREE.RepeatWrapping;
+		wood.repeat.set( 1, 1 );
+	
+		var blockMat = new THREE.MeshPhongMaterial( { color: blockColor,
 												   ambient: blockColor,
 												   specular: blockSpecular,
 												   shininess: blockShininess,
-												   texture: blockTexture} );
+												   map: wood} );
+		console.log("YES texture");
+		console.log(blockTexture);
+	}
 												   
 	var blockGeom = new THREE.BoxGeometry( size * 0.5, size, 0.25 * size);
-	var block = new THREE.Mesh( blockGeom, blockMat );
-		
+	 blck = new THREE.Mesh( blockGeom, blockMat );
+	blck.position.set(0, size * 0.5, 0);
+	block.add(blck);
+	
 	return block;
 }
  

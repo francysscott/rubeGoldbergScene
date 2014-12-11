@@ -53,16 +53,18 @@ Details available to change:
   </head>
 <body>
 
-
 <script id="prog">
+
+//global variables for animation
 var scene = new THREE.Scene(); 
 var renderer = new THREE.WebGLRenderer();
+var marble;
+var marbleCam; 
 
- var marble;
- var marbleCam; 
+
+var blck;
 
 TW.mainInit(renderer,scene);
-
 
 TW.makeColor = function(r,g,b) {
     // Input values are in 0-1; return value is a 24-bit number
@@ -82,39 +84,44 @@ TW.makeColor = function(r,g,b) {
 };
 
 var sceneParams = { roomH : 200,
-					wallTexture : "../images/beige_wallpaper.jpg",
-					ceilingTexture : "../images/wood-pattern.jpg",
-					floorTexture : "../images/wood-pattern.jpg",
+					wallTexture: "../images/beige_wallpaper.jpg",
+					ceilingTexture: "../images/wood-pattern.jpg",
+					floorTexture: "../images/wood-pattern.jpg",
 					windowWidth: 150,
 					windowframeColor: 0x5E2612,
 					windowVideo: "../videos/Gentlerain.ogv",
-					ballColor : 0xBB33FF,
-					ballRad : 6,
-                    ballSpecular : 0x444444,
-                    ballShininess : 20,
-                    tableHeight : 40,
-                    tableWidth : 50,
-                    tableColor : 0x835930,
-                    tableTexture : '../images/dark-wood.jpg',
-                    tableShininess : 10,
-                    umbrellaColor : 0x524CFD,
-                    umbrellaSpecular : 0x444444,
-                    umbrellaShininess : 5,
+					ballColor: 0xBB33FF,
+					ballRad: 6,
+                    ballSpecular: 0x444444,
+                    ballShininess: 20,
+                    tableHeight: 40,
+                    tableWidth: 50,
+                    tableColor: 0x835930,
+                    tableTexture: '../images/dark-wood.jpg',
+                    tableShininess: 10,
+                    umbrellaColor: 0x524CFD,
+                    umbrellaSpecular: 0x444444,
+                    umbrellaShininess: 5,
                     umbrellaSize: 25,
                     umbrellaTexture: '../images/stripes.jpg',
                     handleColor: 0x663300,
+                    blockColor: 0xFFFFFF,
+                    blockSpecular: 0x333333,
+                    blockShininess: 1,
+                    blockSize: 5,
+                    blockTexture: '../images/ivory-wood.jpg',
                     teapotAmbient: TW.makeColor(0.135, 0.2225, 0.1575), //values are for jade
                     teapotDiffuse: TW.makeColor(0.54, 0.89, 0.63), //from OpenGL/VRML Materials
                     teapotSpecular: TW.makeColor(0.316228, 0.316228, 0.316228),
                     teapotShininess: 128 * 0.1,
                     teapotSize: 5,
                     ambLightColor: 0x6F6F6F,
-                    dirLightColor : 0xAAAAAA,
+                    dirLightColor: 0xAAAAAA,
                     marbleRadius: 35,
     				deltaT: 0.5,        // time between steps, in arbitrary time units
     				marbleColor: 0x524CFD,
-    				marbleSpecular : 0x444444,
-                    marbleShininess : 20,
+    				marbleSpecular: 0x444444,
+                    marbleShininess: 20,
     				marbleVelocityX: 0.8,
     				marbleVelocityZ: 0.4,
     				marbleInitialX: 90,
@@ -203,8 +210,6 @@ function drawScene() {
 	marbleCam.position.set(10, (sceneParams.marbleRadius), 0 );
 	scene.add(marbleCam);
 	
-	
-	
 	//Create and place the chandelier
 	chand = createChandelier(42, 4, true, "glass.jpg", "bronze.jpg");
 	chand.position.set(0,sceneParams.roomH, 0);
@@ -212,8 +217,9 @@ function drawScene() {
   
   
     //Create and place domino
-    var block = createBlock(sceneParams.umbrellaColor, sceneParams.umbrellaSpecular,
-     						 sceneParams.umbrellaShininess, sceneParams.umbrellaSize );     						 
+    var block = createBlock(sceneParams.blockColor, sceneParams.blockSpecular,
+     						 sceneParams.blockShininess, sceneParams.blockSize,
+     						 sceneParams.blockTexture );     						 
     scene.add(block);
     
     // createSlide (height, length, width, inputColor, inputShininess, isLipped)
