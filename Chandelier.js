@@ -59,6 +59,8 @@ function createChandelier(inputHeight, numBranches, isLipped,
 	}
 	
 	// Add lights for branches
+	// Note that names for lights must be identical to the names of lights
+	// within the main!
 	// SpotLight(hex, intensity, distance, angle, exponent)
 	// spotLight1 = new THREE.SpotLight(0xFFFF00,
 //                                          0.9,
