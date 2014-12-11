@@ -47,7 +47,8 @@ Details available to change:
     <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/scarovil_fscottTeapot.js"></script>
     <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/scarovilShinyBall.js"></script>
     <script src="Chandelier.js"></script>
-    <script src="block.js"></script>
+	<script src="block.js"></script>
+    <script src="fscott_scarovilSlide.js"></script>
 
   </head>
 <body>
@@ -214,6 +215,11 @@ function drawScene() {
     var block = createBlock(sceneParams.umbrellaColor, sceneParams.umbrellaSpecular,
      						 sceneParams.umbrellaShininess, sceneParams.umbrellaSize );     						 
     scene.add(block);
+    
+    // createSlide (height, length, width, inputColor, inputShininess, isLipped)
+    var slide = createSlide (5, 10, 10, 0xFFFF00, 0.3, true);
+    slide.position.set(0, 30, -10);
+    scene.add(slide);
  
 
     
