@@ -51,6 +51,7 @@ Details available to change:
     <script src="Chandelier.js"></script>
 	<script src="block.js"></script>
     <script src="fscott_scarovilSlide.js"></script>
+    <script src="shelf.js"></script>
 
   </head>
   <body>
@@ -128,7 +129,7 @@ Details available to change:
                     slideShininess: 30,
                     slideLip: true,
                     //bowling ball
-                    marbleRadius: 35,
+                    marbleRadius: 12,
     				marbleColor: 0x524CFD,
     				marbleSpecular: 0x444444,
                     marbleShininess: 20,
@@ -139,7 +140,13 @@ Details available to change:
     				marbleAngularVelocity: TW.degrees2radians(3),
     				marbleInitialAngle: -Math.PI/4,
     				//shelf
-    				
+    				shelfColor: 0xAA7243,
+    				shelfSpecular: 0x333333,
+    				shelfShininess: 3,
+    				shelfHeight: 12,
+    				shelfWidth: 30,
+    				shelfLength: 100,
+    				shelfTexture: '../images/dark-wood.jpg',
                     //lights
                     ambLightColor: 0x6F6F6F,
                     dirLightColor: 0xAAAAAA,
@@ -201,17 +208,23 @@ Details available to change:
 	umbrella.rotateZ(-Math.PI/8);
 	scene.add(umbrella);
 	
-	//create and place teapot
+	//Create and place shelf
+	var shelf = createShelf(sceneParams.shelfWidth, sceneParams.shelfHeight, sceneParams.shelfLength,
+							sceneParams.shelfTexture, sceneParams.shelfColor, sceneParams.shelfSpecular,
+							sceneParams.shelfShininess);
+	shelf.position.set(150, 140, -50);
+	scene.add(shelf);
+	
+	//Create and place teapot
 	var teapot = createTeapot(sceneParams.teapotDiffuse, sceneParams.teapotAmbient, 
 							  sceneParams.teapotSpecular, sceneParams.teapotShininess,
 							  sceneParams.teapotSize, function(teapot) {
-							  	teapot.position.set(90, sceneParams.tableHeight, 80); //set on tabletop
-    							teapot.rotateY(Math.PI/7); //rotate to a jaunty angle
+							  	teapot.position.set(130, 140, -80); //set on tabletop
+    							teapot.rotateY(Math.PI/12); 
     							scene.add(teapot); }
-    							);
-    							
+    							);		
 
-    //Create and place marble
+    //Create marble and its camera
     var marbleSet = createShinyBall(sceneParams.marbleColor, sceneParams.marbleSpecular,
     						 sceneParams.marbleShininess, sceneParams.marbleRadius );
 	marble = marbleSet[0];
