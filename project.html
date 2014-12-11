@@ -1,319 +1,308 @@
-<!-- 
-Francys Scott and Susie Carovillano
-November 2014
-CS 307
-hwk6.html
-
-Creates a room with a a ball, umbrella, table with lathed legs, teapot, and a window
-with the sounds and view of a rainy day. (Note: Textures make take a little 
-while to properly load and render.)
-
-Manipulate the sceneParams to change the scene's details.
-Details available to change:
-	room's size;
-	wall, ceiling, and floor textures;
-	window's width and frame color;
-	ball's color, radius, shininess, and specular light interactions;
-	table's height, width, color, texture, and shininess;
-	umbrella canopy's color, size, texture, shininess, and specular light interactions;
-	umbrella handle's color;
-	teapot's size, shininess, and ambient, diffuse, and specular light interactions;
-	ambient light's color;
-	and directional light's color.
-	
+<!-- 
+Francys Scott and Susie Carovillano
+November 2014
+CS 307project.html
+
+Creates a room with a a ball, umbrella, table with lathed legs, teapot, and a window
+with the sounds and view of a rainy day. (Note: Textures make take a little 
+while to properly load and render.)
+
+Manipulate the sceneParams to change the scene's details.
+Details available to change:
+	room's size;
+	wall, ceiling, and floor textures;
+	window's width and frame color;
+	ball's color, radius, shininess, and specular light interactions;
+	table's height, width, color, texture, and shininess;
+	umbrella canopy's color, size, texture, shininess, and specular light interactions;
+	umbrella handle's color;
+	teapot's size, shininess, and ambient, diffuse, and specular light interactions;
+	ambient light's color;
+	and directional light's color.
+	
  -->
-<html>
-  <head>
-    <title>hwk6</title>
-    <style>      
-      canvas {
-          display: block;
-          margin: 10px auto;
-          width: 800px;
-          height: 500px;
-      }
-    </style>
-    <script src="http://cs.wellesley.edu/~cs307/threejs/libs/three.js"></script>
-    <script src="http://cs.wellesley.edu/~cs307/threejs/libs/OrbitControls.js"></script>
-    <script src="http://cs.wellesley.edu/~cs307/threejs/libs/tw.js"></script>
-    <script src="http://cs.wellesley.edu/~cs307/threejs/libs/dat.gui.min.js"></script>
-    <!-- Personal scripts with our helper methods for various objects. -->
-    <script src="createBall.js"></script>
-    <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/fscottRoom.js"></script>
-    <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/fscottTable.js"></script>
-    <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/scarovilUmbrella.js"></script>
-    //<script src="http://cs.wellesley.edu/~cs307/threejs/contrib/fscott_scarovilWindow.js"></script>
-    <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/scarovil_fscottTeapot.js"></script>
-    <script src="marble.js"></script>
-    <script src="Chandelier.js"></script>
-<!-- 	<script src="domino.js"></script> -->
-
-  </head>
-<body>
-
-<!-- adds rain video outside of scene to help with rendering -->
-<video hidden width="320" height="240" autoplay>
-  <source src="videos/Gentlerain.ogv" type="video/ogg">
-</video>
-
-<script id="prog">
-var scene = new THREE.Scene(); 
-var renderer = new THREE.WebGLRenderer();
-
- var marble;
- var marbleCam; 
-
-TW.mainInit(renderer,scene);
-
-
-TW.makeColor = function(r,g,b) {
-    // Input values are in 0-1; return value is a 24-bit number
-    // to determine the hex code, just do val.toString(16).
-    // You might have to add a leading zero.
-    function unsignedByte(p) {
-        if( 0 <= p && p <= 1 ) {
-            return Math.round(p*255);
-        }
-        throw "primary not in [0,1]";
-    }
-
-    var intValue = 256*256*unsignedByte(r) + 256*unsignedByte(g) + unsignedByte(b);
-    var hexString = intValue.toString(16);
-    console.log("r: "+r+" g: "+g+" b: "+b+" hexString: 0x"+hexString+" int: "+intValue);
-    return intValue;
-};
-
-var sceneParams = { roomH : 200,
-					wallTexture : "images/beige_wallpaper.jpg",
-					ceilingTexture : "images/wood-pattern.jpg",
-					floorTexture : "images/wood-pattern.jpg",
-					windowWidth: 150,
-					windowframeColor: 0x5E2612,
-					ballColor : 0xBB33FF,
-					ballRad : 6,
-                    ballSpecular : 0x444444,
-                    ballShininess : 20,
-                    tableHeight : 40,
-                    tableWidth : 50,
-                    tableColor : 0x835930,
-                    tableTexture : 'images/dark-wood.jpg',
-                    tableShininess : 10,
-                    umbrellaColor : 0x524CFD,
-                    umbrellaSpecular : 0x444444,
-                    umbrellaShininess : 5,
-                    umbrellaSize: 25,
-                    umbrellaTexture: 'images/stripes.jpg',
-                    handleColor: 0x663300,
-                    teapotAmbient: TW.makeColor(0.135, 0.2225, 0.1575), //values are for jade
-                    teapotDiffuse: TW.makeColor(0.54, 0.89, 0.63), //from OpenGL/VRML Materials
-                    teapotSpecular: TW.makeColor(0.316228, 0.316228, 0.316228),
-                    teapotShininess: 128 * 0.1,
-                    teapotSize: 5,
-                    ambLightColor: 0x6F6F6F,
-                    dirLightColor : 0xAAAAAA,
-                    marbleRadius: 35,
-    				deltaT: 0.5,        // time between steps, in arbitrary time units
-    				marbleColor: 0x524CFD,
-    				marbleSpecular : 0x444444,
-                    marbleShininess : 5,
-    				marbleVelocityX: 0.8,
-    				marbleVelocityZ: 0.4,
-    				marbleInitialX: 90,
-    				marbleInitialZ: -40,
-    				marbleAngularVelocity: TW.degrees2radians(3),
-    				marbleInitialAngle: -Math.PI/4,
-                    lastElement : null
+<html>
+  <head>
+    <title>CS307 Final</title>
+    <style>      
+      canvas {
+          display: block;
+          margin: 10px auto;
+          width: 800px;
+          height: 500px;
+      }
+    </style>
+    <script src="http://cs.wellesley.edu/~cs307/threejs/libs/three.js"></script>
+    <script src="http://cs.wellesley.edu/~cs307/threejs/libs/OrbitControls.js"></script>
+    <script src="http://cs.wellesley.edu/~cs307/threejs/libs/tw.js"></script>
+    <script src="http://cs.wellesley.edu/~cs307/threejs/libs/dat.gui.min.js"></script>
+    <!-- Personal scripts with our helper methods for various objects. -->
+    <script src="createBall.js"></script>
+    <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/fscottRoom.js"></script>
+    <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/fscottTable.js"></script>
+    <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/scarovilUmbrella.js"></script>
+    //<script src="http://cs.wellesley.edu/~cs307/threejs/contrib/fscott_scarovilWindow.js"></script>
+    <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/scarovil_fscottTeapot.js"></script>
+    <script src="marble.js"></script>
+    <script src="Chandelier.js"></script>
+<!-- 	<script src="domino.js"></script> -->
+
+  </head>
+<body>
+<!-- adds rain video outside of scene to help with rendering -->
+<video hidden width="320" height="240" autoplay>
+  <source src="../videos/Gentlerain.ogv" type="video/ogg">
+</video>
+
+<script id="prog">
+var scene = new THREE.Scene(); 
+var renderer = new THREE.WebGLRenderer();
+
+ var marble;
+ var marbleCam; 
+
+TW.mainInit(renderer,scene);
+
+
+TW.makeColor = function(r,g,b) {
+    // Input values are in 0-1; return value is a 24-bit number
+    // to determine the hex code, just do val.toString(16).
+    // You might have to add a leading zero.
+    function unsignedByte(p) {
+        if( 0 <= p && p <= 1 ) {
+            return Math.round(p*255);
+        }
+        throw "primary not in [0,1]";
+    }
+
+    var intValue = 256*256*unsignedByte(r) + 256*unsignedByte(g) + unsignedByte(b);
+    var hexString = intValue.toString(16);
+    console.log("r: "+r+" g: "+g+" b: "+b+" hexString: 0x"+hexString+" int: "+intValue);
+    return intValue;
+};
+
+var sceneParams = { roomH : 200,
+					wallTexture : "../images/beige_wallpaper.jpg",
+					ceilingTexture : "../images/wood-pattern.jpg",
+					floorTexture : "../images/wood-pattern.jpg",
+					windowWidth: 150,
+					windowframeColor: 0x5E2612,
+					ballColor : 0xBB33FF,
+					ballRad : 6,
+                    ballSpecular : 0x444444,
+                    ballShininess : 20,
+                    tableHeight : 40,
+                    tableWidth : 50,
+                    tableColor : 0x835930,
+                    tableTexture : '../images/dark-wood.jpg',
+                    tableShininess : 10,
+                    umbrellaColor : 0x524CFD,
+                    umbrellaSpecular : 0x444444,
+                    umbrellaShininess : 5,
+                    umbrellaSize: 25,
+                    umbrellaTexture: '../images/stripes.jpg',
+                    handleColor: 0x663300,
+                    teapotAmbient: TW.makeColor(0.135, 0.2225, 0.1575), //values are for jade
+                    teapotDiffuse: TW.makeColor(0.54, 0.89, 0.63), //from OpenGL/VRML Materials
+                    teapotSpecular: TW.makeColor(0.316228, 0.316228, 0.316228),
+                    teapotShininess: 128 * 0.1,
+                    teapotSize: 5,
+                    ambLightColor: 0x6F6F6F,
+                    dirLightColor : 0xAAAAAA,
+                    marbleRadius: 35,
+    				deltaT: 0.5,        // time between steps, in arbitrary time units
+    				marbleColor: 0x524CFD,
+    				marbleSpecular : 0x444444,
+                    marbleShininess : 5,
+    				marbleVelocityX: 0.8,
+    				marbleVelocityZ: 0.4,
+    				marbleInitialX: 90,
+    				marbleInitialZ: -40,
+    				marbleAngularVelocity: TW.degrees2radians(3),
+    				marbleInitialAngle: -Math.PI/4,
+                    lastElement : null
                   };
-
-var animationState = {
-        marbleAngle: sceneParams.marbleInitialAngle,
-        marbleX: sceneParams.marbleInitialX,
-        marbleZ: sceneParams.marbleInitialZ,
-        time: 0,
-        lastParam: null
-    };
-
+
+var animationState = {
+        marbleAngle: sceneParams.marbleInitialAngle,
+        marbleX: sceneParams.marbleInitialX,
+        marbleZ: sceneParams.marbleInitialZ,
+        time: 0,
+        lastParam: null
+    };
 function drawScene() {
-    
-    // Create and place the room in which the objects appear
-    var w2 = sceneParams.roomH / 2;		// one-half the room length
-	var room = createRoom(sceneParams.roomH, 
-							sceneParams.wallTexture, 
-							sceneParams.ceilingTexture, 
-							sceneParams.floorTexture);
-	room.name="room";
-	room.position.set(0, w2, 0);  // Increase y so that the room is at the right spot
-	scene.add(room);
-	
-	var table = createTexturedTable(sceneParams.tableHeight, 	// for woodgrain table
-							sceneParams.tableWidth, 
-							sceneParams.tableTexture, 
-							sceneParams.tableShininess);
-	table.name = "table";
-	table.position.set(90,sceneParams.tableHeight, 90);  // Place in room
-	scene.add(table);
-	
-	// Create and place ball in room
-	var ball = createBall(sceneParams.ballRad, 
-							sceneParams.ballColor, 
-							sceneParams.ballShininess);
-    ball.name = "ball";         // give it a name, so we can remove it next time.
-    // Position ball correctly according to specifications
-    ball.position.x = -w2 + (sceneParams.ballRad * 1.5);
-    ball.position.y = sceneParams.ballRad * 0.99;
-    ball.position.z = -w2 + (sceneParams.ballRad * 1.5);
-    scene.add(ball);
-    
-    //Create and place Umbrella in room
-    var umbrella = createUmbrella(sceneParams.umbrellaColor, 
-							sceneParams.umbrellaSpecular, 
-							sceneParams.umbrellaShininess,
-							sceneParams.umbrellaSize, 
-							sceneParams.umbrellaTexture,
-							sceneParams.handleColor);
-	umbrella.name = "umbrella";
-	umbrella.position.set(-100, 26, 90);  // Place in room on floor
-	umbrella.rotateX(Math.PI/2);		// rotate top of umbrella so two spokes rest on floor
-	umbrella.rotateY(-Math.PI/3.67);	// rotate umbrella so spokes and cane rest on floor
-	umbrella.rotateZ(-Math.PI/8);
-	scene.add(umbrella);
-	
-	//create and place teapot
-	var teapot = createTeapot(sceneParams.teapotDiffuse, sceneParams.teapotAmbient, 
-							  sceneParams.teapotSpecular, sceneParams.teapotShininess,
-							  sceneParams.teapotSize, function(teapot) {
-							  	teapot.position.set(90, sceneParams.tableHeight, 80); //set on tabletop
-    							teapot.rotateY(Math.PI/7); //rotate to a jaunty angle
-    							scene.add(teapot); }
-    							);
+    // Create and place the room in which the objects appear
+    var w2 = sceneParams.roomH / 2;		// one-half the room length
+	var room = createRoom(sceneParams.roomH, 
+							sceneParams.wallTexture, 
+							sceneParams.ceilingTexture, 
+							sceneParams.floorTexture);
+	room.name="room";
+	room.position.set(0, w2, 0);  // Increase y so that the room is at the right spot
+	scene.add(room);
+	
+	var table = createTexturedTable(sceneParams.tableHeight, 	// for woodgrain table
+							sceneParams.tableWidth, 
+							sceneParams.tableTexture, 
+							sceneParams.tableShininess);
+	table.name = "table";
+	table.position.set(90,sceneParams.tableHeight, 90);  // Place in room
+	scene.add(table);
+	
+	// Create and place ball in room
+	var ball = createBall(sceneParams.ballRad, 
+							sceneParams.ballColor, 
+							sceneParams.ballShininess);
+    ball.name = "ball";         // give it a name, so we can remove it next time.
+    // Position ball correctly according to specifications
+    ball.position.x = -w2 + (sceneParams.ballRad * 1.5);
+    ball.position.y = sceneParams.ballRad * 0.99;
+    ball.position.z = -w2 + (sceneParams.ballRad * 1.5);
+    scene.add(ball);
+    
+    //Create and place Umbrella in room
+    var umbrella = createUmbrella(sceneParams.umbrellaColor, 
+							sceneParams.umbrellaSpecular, 
+							sceneParams.umbrellaShininess,
+							sceneParams.umbrellaSize, 
+							sceneParams.umbrellaTexture,
+							sceneParams.handleColor);
+	umbrella.name = "umbrella";
+	umbrella.position.set(-100, 26, 90);  // Place in room on floor
+	umbrella.rotateX(Math.PI/2);		// rotate top of umbrella so two spokes rest on floor
+	umbrella.rotateY(-Math.PI/3.67);	// rotate umbrella so spokes and cane rest on floor
+	umbrella.rotateZ(-Math.PI/8);
+	scene.add(umbrella);
+	
+	//create and place teapot
+	var teapot = createTeapot(sceneParams.teapotDiffuse, sceneParams.teapotAmbient, 
+							  sceneParams.teapotSpecular, sceneParams.teapotShininess,
+							  sceneParams.teapotSize, function(teapot) {
+							  	teapot.position.set(90, sceneParams.tableHeight, 80); //set on tabletop
+    							teapot.rotateY(Math.PI/7); //rotate to a jaunty angle
+    							scene.add(teapot); }
+    							);
     							
-
-    //Create and place marble
-    var marbleSet = createMarble(sceneParams.marbleColor, sceneParams.marbleSpecular,
-    						 sceneParams.marbleShininess, sceneParams.marbleRadius );
-	marble = marbleSet[0];
-	marbleCam = marbleSet[1];
-    						 
-    marble.position.set(10, (sceneParams.marbleRadius), 0 );
-	
-	scene.add(marble);	
-	
-	chand = createChandelier(42, 4, true, "glass.jpg", "bronze.jpg");
-	chand.position.set(0,sceneParams.roomH, 0);
-	scene.add(chand);	 
-  
-//  var domino = createDomino(sceneParams.umbrellaColor, sceneParams.umbrellaSpecular,
-//     						 sceneParams.umbrellaShininess, sceneParams.umbrellaSizes );
-//     						 
-//  scene.add(domino);
-// 
-// 	var size = 10;
-//         
-//     var dominoMat = new THREE.MeshPhongMaterial( { color: 0x333333} );
-// 	var sphereGeom =  new THREE.SphereGeometry( size * 0.125 * 0.5, 32, 16 );
-// 	var blockGeom = new THREE.BoxGeometry( size * 0.53, size, 0.25 * size);
-// 	var block = new THREE.Mesh( blockGeom, dominoMat );
-// 	var dots = new THREE.Mesh( sphereGeom, dominoMat);
-// 	
-//  var domino = block.subtract(dots);
-	
-//	scene.add(domino);
-    
-  //Create and place window
-	var window = createWindow(sceneParams.windowWidth, sceneParams.windowframeColor);
-	window.name="window";
-	window.position.set(-(w2 * 1.5), w2, -(w2/3));
-	window.rotateY(Math.PI/2); //rotate to be in the wall's plane
-	scene.add(window);
-	
-	
-    TW.render();
-}
-
-
-// Light section:  add lights as appropriate
-
-//create ambient light
-var ambLight = new THREE.AmbientLight( sceneParams.ambLightColor); // soft white light 
-ambLight.name = "ambient";
-scene.add( ambLight );
-
-// create directional light
-var dirlight = new THREE.DirectionalLight( sceneParams.dirLightColor );
-dirlight.position.set(5,5,8);
-ambLight.name = "directional";
-scene.add(dirlight);
-
-// create directional light from window
-var dirlight2 = new THREE.DirectionalLight( sceneParams.dirLightColor );
-dirlight2.position.set(-5,2,-4);
-ambLight.name = "directional2";
+    //Create and place marble
+    var marbleSet = createMarble(sceneParams.marbleColor, sceneParams.marbleSpecular,
+    						 sceneParams.marbleShininess, sceneParams.marbleRadius );
+	marble = marbleSet[0];
+	marbleCam = marbleSet[1];
+    						 
+    marble.position.set(10, (sceneParams.marbleRadius), 0 );
+	scene.add(marble);	
+	
+	chand = createChandelier(42, 4, true, "glass.jpg", "bronze.jpg");
+	chand.position.set(0,sceneParams.roomH, 0);
+	scene.add(chand);	 
+  
+//  var domino = createDomino(sceneParams.umbrellaColor, sceneParams.umbrellaSpecular,
+//     						 sceneParams.umbrellaShininess, sceneParams.umbrellaSizes );
+//     						 
+//  scene.add(domino);
+// 
+// 	var size = 10;
+//         
+//     var dominoMat = new THREE.MeshPhongMaterial( { color: 0x333333} );
+// 	var sphereGeom =  new THREE.SphereGeometry( size * 0.125 * 0.5, 32, 16 );
+// 	var blockGeom = new THREE.BoxGeometry( size * 0.53, size, 0.25 * size);
+// 	var block = new THREE.Mesh( blockGeom, dominoMat );
+// 	var dots = new THREE.Mesh( sphereGeom, dominoMat);
+// 	
+//  var domino = block.subtract(dots);
+	
+//	scene.add(domino);
+    
+  //Create and place window
+	var window = createWindow(sceneParams.windowWidth, sceneParams.windowframeColor);
+	window.name="window";
+	window.position.set(-(w2 * 1.5), w2, -(w2/3));
+	window.rotateY(Math.PI/2); //rotate to be in the wall's plane
+	scene.add(window);
+	
+	
+    TW.render();
+}
+
+
+// Light section:  add lights as appropriate
+
+//create ambient light
+var ambLight = new THREE.AmbientLight( sceneParams.ambLightColor); // soft white light 
+ambLight.name = "ambient";
+scene.add( ambLight );
+
+// create directional light
+var dirlight = new THREE.DirectionalLight( sceneParams.dirLightColor );
+dirlight.position.set(5,5,8);
+ambLight.name = "directional";
+scene.add(dirlight);
+
+// create directional light from window
+var dirlight2 = new THREE.DirectionalLight( sceneParams.dirLightColor );
+dirlight2.position.set(-5,2,-4);
+ambLight.name = "directional2";
 scene.add(dirlight2);
-
-// Finish camera and place scene on view.
-var state = TW.cameraSetup(renderer,
-					   scene,
-					   {minx: -(sceneParams.roomH * 1.5)/2, 
-						  maxx: (sceneParams.roomH * 1.5)/2,
-						miny: 0, maxy: sceneParams.roomH,
-						minz: -(sceneParams.roomH * 1.5)/2,
-						  maxz: (sceneParams.roomH * 1.5)/2});  
-						  
-	//state.cameraObject.near = 5;   
-	//state.cameraObject.postion.set(300, 150, 250);      
-
+// Finish camera and place scene on view.
+var state = TW.cameraSetup(renderer,
+					   scene,
+					   {minx: -(sceneParams.roomH * 1.5)/2, 
+						  maxx: (sceneParams.roomH * 1.5)/2,
+						miny: 0, maxy: sceneParams.roomH,
+						minz: -(sceneParams.roomH * 1.5)/2,
+						  maxz: (sceneParams.roomH * 1.5)/2});  
+						 
+	//state.cameraObject.near = 5;   
+	//state.cameraObject.postion.set(300, 150, 250);      
+
 drawScene();
-
-function updateMarblePosition(time) {
-    var deltaAngle = sceneParams.marbleAngularVelocity * sceneParams.deltaT;
-    animationState.marbleAngle += deltaAngle; // in radians
-    // if the ball w/ radius R rotates by r radians, the ball rolls R * r units but to the *left*
-    animationState.marbleX += -1 * sceneParams.marbleRadius * deltaAngle;
-    animationState.marbleZ += 1 * sceneParams.marbleRadius * deltaAngle;
-    marble.position.x = animationState.marbleX;
-    marbleCam.position.x = marble.position.x;
-    marble.position.z = animationState.marbleZ;
-    marbleCam.position.z = marble.position.z;
-    marble.rotateX(deltaAngle);
+
+function updateMarblePosition(time) {
+    var deltaAngle = sceneParams.marbleAngularVelocity * sceneParams.deltaT;
+    animationState.marbleAngle += deltaAngle; // in radians
+    // if the ball w/ radius R rotates by r radians, the ball rolls R * r units but to the *left*
+    animationState.marbleX += -1 * sceneParams.marbleRadius * deltaAngle;
+    animationState.marbleZ += 1 * sceneParams.marbleRadius * deltaAngle;
+    marble.position.x = animationState.marbleX;
+    marbleCam.position.x = marble.position.x;
+    marble.position.z = animationState.marbleZ;
+    marbleCam.position.z = marble.position.z;
+    marble.rotateX(deltaAngle);
+}
+
+function animate() 
+{
+    requestAnimationFrame( animate );
+	render();		
+}
+
+function updateState() {
+    // changes the time and everything in the state that depends on it
+    animationState.time += sceneParams.deltaT;
+    if (animationState.time < 80) { 
+    	updateMarblePosition(animationState.time);
+    }
+}
+
+function render() 
+{	
+        // update marble 
+        marble.visible = false;
+        updateState();
+        marbleCam.updateCubeMap(renderer, scene);
+        marble.visible = true;
+
+	//update video
+	if ( video.readyState === video.HAVE_ENOUGH_DATA ) 
+	{
+		videoImageContext.drawImage( video, 0, 0 );
+		if ( videoTexture ) 
+			videoTexture.needsUpdate = true;
+	}
+  
+	renderer.render( scene, state.cameraObject ); //re-render the scene using the TW camera
 }
-
-function animate() 
-{
-    requestAnimationFrame( animate );
-	render();		
-}
-
-function updateState() {
-    // changes the time and everything in the state that depends on it
-    animationState.time += sceneParams.deltaT;
-    if (animationState.time < 80) { 
-    	updateMarblePosition(animationState.time);
-    }
-}
-
-function render() 
-{	
-        // update marble 
-        marble.visible = false;
-        updateState();
-        marbleCam.updateCubeMap(renderer, scene);
-        marble.visible = true;
-
-	//update video
-	if ( video.readyState === video.HAVE_ENOUGH_DATA ) 
-	{
-		videoImageContext.drawImage( video, 0, 0 );
-		if ( videoTexture ) 
-			videoTexture.needsUpdate = true;
-	}
-  
-  	
-  	
-	renderer.render( scene, state.cameraObject ); //re-render the scene using the TW camera
-}
-
 animate(); //allows video to play
-        
-</script>
-</body>
+</script>
+</body>
 </html>
