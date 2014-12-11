@@ -4,6 +4,8 @@ November 2014
 CS 307
 project.html
 
+Update the description below
+
 Creates a room with a a ball, umbrella, table with lathed legs, teapot, and a window
 with the sounds and view of a rainy day. (Note: Textures make take a little 
 while to properly load and render.)
@@ -51,22 +53,19 @@ Details available to change:
     <script src="fscott_scarovilSlide.js"></script>
 
   </head>
-<body>
+  <body>
 
-<script id="prog">
+  <script id="prog">
 
-//global variables for animation
-var scene = new THREE.Scene(); 
-var renderer = new THREE.WebGLRenderer();
-var marble;
-var marbleCam; 
+  //global variables for animation
+  var scene = new THREE.Scene(); 
+  var renderer = new THREE.WebGLRenderer();
+  var marble;
+  var marbleCam; 
+  
+  TW.mainInit(renderer,scene);
 
-
-var blck;
-
-TW.mainInit(renderer,scene);
-
-TW.makeColor = function(r,g,b) {
+  TW.makeColor = function(r,g,b) {
     // Input values are in 0-1; return value is a 24-bit number
     // to determine the hex code, just do val.toString(16).
     // You might have to add a leading zero.
@@ -81,9 +80,9 @@ TW.makeColor = function(r,g,b) {
     var hexString = intValue.toString(16);
     console.log("r: "+r+" g: "+g+" b: "+b+" hexString: 0x"+hexString+" int: "+intValue);
     return intValue;
-};
+  };
 
-var sceneParams = { roomH : 200,
+  var sceneParams = { roomH : 200,
 					wallTexture: "../images/beige_wallpaper.jpg",
 					ceilingTexture: "../images/wood-pattern.jpg",
 					floorTexture: "../images/wood-pattern.jpg",
@@ -132,7 +131,7 @@ var sceneParams = { roomH : 200,
                   };
 
 
-var animationState = {
+  var animationState = {
         marbleAngle: sceneParams.marbleInitialAngle,
         marbleX: sceneParams.marbleInitialX,
         marbleZ: sceneParams.marbleInitialZ,
@@ -141,7 +140,7 @@ var animationState = {
     };
 
 
-function drawScene() {
+  function drawScene() {
 
     // Create and place the room in which the objects appear
     var w2 = sceneParams.roomH / 2;		// one-half the room length
@@ -229,7 +228,7 @@ function drawScene() {
  
 
     
-  //Create and place window
+    //Create and place window
 	var window = createWindow(sceneParams.windowWidth, sceneParams.windowframeColor, sceneParams.windowVideo);
 	window.name="window";
 	window.position.set(-(w2 * 1.5), w2, -(w2/3));
@@ -238,45 +237,44 @@ function drawScene() {
 	
 	
     TW.render();
-}
+  }
 
 
-// Light section:  add lights as appropriate
+  // Light section:  add lights as appropriate
 
-//create ambient light
-var ambLight = new THREE.AmbientLight( sceneParams.ambLightColor); // soft white light 
-ambLight.name = "ambient";
-scene.add( ambLight );
+  //create ambient light
+  var ambLight = new THREE.AmbientLight( sceneParams.ambLightColor); // soft white light 
+  ambLight.name = "ambient";
+  scene.add( ambLight );
 
-// create directional light
-var dirlight = new THREE.DirectionalLight( sceneParams.dirLightColor );
-dirlight.position.set(5,5,8);
-ambLight.name = "directional";
-scene.add(dirlight);
+  // create directional light
+  var dirlight = new THREE.DirectionalLight( sceneParams.dirLightColor );
+  dirlight.position.set(5,5,8);
+  ambLight.name = "directional";
+  scene.add(dirlight);
 
-// create directional light from window
-var dirlight2 = new THREE.DirectionalLight( sceneParams.dirLightColor );
-dirlight2.position.set(-5,2,-4);
-ambLight.name = "directional2";
-scene.add(dirlight2);
+  // create directional light from window
+  var dirlight2 = new THREE.DirectionalLight( sceneParams.dirLightColor );
+  dirlight2.position.set(-5,2,-4);
+  ambLight.name = "directional2";
+  scene.add(dirlight2);
 
-// Finish camera and place scene on view.
-var state = TW.cameraSetup(renderer,
+  // Finish camera and place scene on view.
+  var state = TW.cameraSetup(renderer,
 					   scene,
 					   {minx: -(sceneParams.roomH * 1.5)/2, 
 						  maxx: (sceneParams.roomH * 1.5)/2,
 						miny: 0, maxy: sceneParams.roomH,
 						minz: -(sceneParams.roomH * 1.5)/2,
 						  maxz: (sceneParams.roomH * 1.5)/2});  
-	//to allow better zooming
-	state.cameraObject.near = 1;  
-	state.cameraObject.updateProjectionMatrix();
+  //to allow better zooming
+  state.cameraObject.near = 1;  
+  state.cameraObject.updateProjectionMatrix();
 	      
+  drawScene();
 
-drawScene();
 
-
-function updateMarblePosition(time) {
+  function updateMarblePosition(time) {
     var deltaAngle = sceneParams.marbleAngularVelocity * sceneParams.deltaT;
     animationState.marbleAngle += deltaAngle; // in radians
     // if the ball w/ radius R rotates by r radians, the ball rolls R * r units but to the *left*
@@ -287,29 +285,29 @@ function updateMarblePosition(time) {
     marble.position.z = animationState.marbleZ;
     marbleCam.position.z = marble.position.z;
     marble.rotateX(deltaAngle);
-}
+  }
 
-function animate() 
-{
+  function animate() 
+  {
     requestAnimationFrame( animate );
 	render();		
-}
+  }
 
-function updateState() {
+  function updateState() {
     // changes the time and everything in the state that depends on it
     animationState.time += sceneParams.deltaT;
     if (animationState.time < 80) { 
     	updateMarblePosition(animationState.time);
     }
-}
+  }
 
-function render() 
-{	
-        // update marble 
-        marble.visible = false;
-        updateState();
-        marbleCam.updateCubeMap(renderer, scene);
-        marble.visible = true;
+  function render() 
+  {	
+    // update marble 
+    marble.visible = false;
+    updateState();
+    marbleCam.updateCubeMap(renderer, scene);
+    marble.visible = true;
 
 	//update video
 	if ( video.readyState === video.HAVE_ENOUGH_DATA ) 
@@ -320,11 +318,11 @@ function render()
 	}
   
 	renderer.render( scene, state.cameraObject ); //re-render the scene using the TW camera
-}
+  }
 
-animate(); //allows video to play
+  animate(); //allows video to play
 
-</script>
-</body>
+  </script>
+  </body>
 </html>
 
