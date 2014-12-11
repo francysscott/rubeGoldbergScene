@@ -1,6 +1,5 @@
 function createMarble(marbleColor, marbleSpecular, marbleShininess, marbleSize) {
-	// phong material translucence
-	
+	//phong material translucence
 	// create additional camera
         var mSphereCamera = new THREE.CubeCamera(0.1, 1000, 512);
          mSphereCamera.position.set(10, 50, 25 );
