@@ -89,6 +89,7 @@ var sceneParams = { roomH : 200,
 					floorTexture : "../images/wood-pattern.jpg",
 					windowWidth: 150,
 					windowframeColor: 0x5E2612,
+					windowVideo: "../videos/Gentlerain.ogv",
 					ballColor : 0xBB33FF,
 					ballRad : 6,
                     ballSpecular : 0x444444,
@@ -115,7 +116,7 @@ var sceneParams = { roomH : 200,
     				deltaT: 0.5,        // time between steps, in arbitrary time units
     				marbleColor: 0x524CFD,
     				marbleSpecular : 0x444444,
-                    marbleShininess : 5,
+                    marbleShininess : 20,
     				marbleVelocityX: 0.8,
     				marbleVelocityZ: 0.4,
     				marbleInitialX: 90,
@@ -191,7 +192,7 @@ function drawScene() {
     							
 
     //Create and place marble
-    var marbleSet = createMarble(sceneParams.marbleColor, sceneParams.marbleSpecular,
+    var marbleSet = createShinyBall(sceneParams.marbleColor, sceneParams.marbleSpecular,
     						 sceneParams.marbleShininess, sceneParams.marbleRadius );
 	marble = marbleSet[0];
 	marbleCam = marbleSet[1];
@@ -219,7 +220,7 @@ function drawScene() {
 
     
   //Create and place window
-	var window = createWindow(sceneParams.windowWidth, sceneParams.windowframeColor, "../videos/Gentlerain.ogv");
+	var window = createWindow(sceneParams.windowWidth, sceneParams.windowframeColor, sceneParams.windowVideo);
 	window.name="window";
 	window.position.set(-(w2 * 1.5), w2, -(w2/3));
 	window.rotateY(Math.PI/2); //rotate to be in the wall's plane
