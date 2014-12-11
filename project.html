@@ -209,9 +209,11 @@ function drawScene() {
 	chand.position.set(0,sceneParams.roomH, 0);
 	scene.add(chand);	 
   
-    var domino = createDomino(sceneParams.umbrellaColor, sceneParams.umbrellaSpecular,
-     						 sceneParams.umbrellaShininess, sceneParams.umbrellaSizes );     						 
-    scene.add(domino);
+  
+    //Create and place domino
+    var block = createBlock(sceneParams.umbrellaColor, sceneParams.umbrellaSpecular,
+     						 sceneParams.umbrellaShininess, sceneParams.umbrellaSize );     						 
+    scene.add(block);
  
 
     
@@ -254,9 +256,10 @@ var state = TW.cameraSetup(renderer,
 						miny: 0, maxy: sceneParams.roomH,
 						minz: -(sceneParams.roomH * 1.5)/2,
 						  maxz: (sceneParams.roomH * 1.5)/2});  
-						 
-	//state.cameraObject.near = 5;   
-	//state.cameraObject.postion.set(300, 150, 250);      
+	//to allow better zooming
+	state.cameraObject.near = 1;  
+	state.cameraObject.updateProjectionMatrix();
+	      
 
 drawScene();
 
