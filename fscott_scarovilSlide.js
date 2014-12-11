@@ -60,11 +60,14 @@ function createSlide (height, length, width, inputColor, inputShininess, isLippe
 	slideTop.position.set(0,diff,0);
 	slideTop.rotateX(degree);
 	
-	//var slideBottomGeom = buildBaseGeom(height, length, width);
-	//var slideBottom = new THREE.Mesh( slideBottomGeom, slideMaterial );
+	var slideBottomGeom = buildBaseGeom(height, length, width, diff);
+	var slideBottom = new THREE.Mesh( slideBottomGeom, slideMaterial );
+	
+	slideBottom.position.set(0,0,0);
 	
 	slide.add(slideTop);
-	//slide.add(slideBottom);
+	console.log("now adding slide bottom");
+	slide.add(slideBottom);
 	
 	return slide;
 
@@ -72,10 +75,120 @@ function createSlide (height, length, width, inputColor, inputShininess, isLippe
 
 function buildBaseGeom(height, length, width, diff)  {
 	
-	var min = new THREE.Vector3( 1, 0, 0 );
-	var max = new THREE.Vector3( 2, 4, 5 );
+	var min = new THREE.Vector3( 0, 0, 0 );
+	var max = new THREE.Vector3( diff, height - diff, diff );
 	
 	return new THREE.Box3(min, max);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	var geom = new THREE.Geometry();
+	// Create vars for easy calculation of window frame coordinates.
+    var w2 = 0.5*width;
+    var h2 = 0.5*height;
+    var d = depth;
+    var th = thickness;
+    var th1 = 0.2 * thickness;
+    var th8 = 0.6 * thickness;
+    
+    // add the base vertice points, points 0..3 (back side of window)
+    geom.vertices.push(new THREE.Vector3(+w2, h2, 0));
+    geom.vertices.push(new THREE.Vector3(-w2, h2, 0));
+    geom.vertices.push(new THREE.Vector3(-w2, -h2, 0));
+    geom.vertices.push(new THREE.Vector3(+w2, -h2, 0));
+    
+    // add the first four corners projected into room, points 4..7 
+    // (front side outside coords of main frame)
+    geom.vertices.push(new THREE.Vector3(w2-th1, h2-th1, d));
+    geom.vertices.push(new THREE.Vector3(-w2+th1, h2-th1, d));
+    geom.vertices.push(new THREE.Vector3(-w2+th1, -h2+th1, d));
+    geom.vertices.push(new THREE.Vector3(w2-th1, -h2+th1, d));
+    
+    // add the inside coords for the left inner frame, 8..15
+    // (inner portion of left window frame)
+    geom.vertices.push(new THREE.Vector3(-(th8/2), h2-th1-th8, d));
+    geom.vertices.push(new THREE.Vector3(-w2+th1+th8, h2-th1-th8, d));
+    geom.vertices.push(new THREE.Vector3(-w2+th1+th8, -h2+th1+th8, d));
+    geom.vertices.push(new THREE.Vector3(-(th8/2), -h2+th1+th8, d));
+    
+    geom.vertices.push(new THREE.Vector3(-(th/2), h2-th, 0));
+    geom.vertices.push(new THREE.Vector3(-w2+th, h2-th, 0));
+    geom.vertices.push(new THREE.Vector3(-w2+th, -h2+th, 0));
+    geom.vertices.push(new THREE.Vector3(-(th/2), -h2+th, 0));
+    
+    // add the inside coords for the right inner frame, 16..23
+    // (inner portion of right window frame)
+    geom.vertices.push(new THREE.Vector3(w2-th1-th8, h2-th1-th8, d));
+    geom.vertices.push(new THREE.Vector3((th8/2), h2-th1-th8, d));
+    geom.vertices.push(new THREE.Vector3((th8/2), -h2+th1+th8, d));
+    geom.vertices.push(new THREE.Vector3(w2-th1-th8, -h2+th1+th8, d));
+    
+    geom.vertices.push(new THREE.Vector3(w2-th, h2-th, 0));
+    geom.vertices.push(new THREE.Vector3((th/2), h2-th, 0));
+    geom.vertices.push(new THREE.Vector3((th/2), -h2+th, 0));
+    geom.vertices.push(new THREE.Vector3(w2-th, -h2+th, 0));
+    
+
+    // now that we've got the vertices we need to define the faces.
+	// Note:  the faces are one-sided.
+    // outer faces
+    geom.faces.push(new THREE.Face3(0, 1, 5));
+    geom.faces.push(new THREE.Face3(5, 4, 0));
+    geom.faces.push(new THREE.Face3(1, 2, 5));
+    geom.faces.push(new THREE.Face3(2, 6, 5));
+    geom.faces.push(new THREE.Face3(2, 3, 6));
+    geom.faces.push(new THREE.Face3(3, 7, 6));
+    geom.faces.push(new THREE.Face3(3, 0, 7));
+    geom.faces.push(new THREE.Face3(0, 4, 7));
+    
+    // top faces
+    geom.faces.push(new THREE.Face3(17, 8, 11));
+    geom.faces.push(new THREE.Face3(11, 18, 17));
+    geom.faces.push(new THREE.Face3(5, 9, 4));
+    geom.faces.push(new THREE.Face3(9, 16, 4));
+    geom.faces.push(new THREE.Face3(9, 5, 6));
+    geom.faces.push(new THREE.Face3(6, 10, 9));
+    geom.faces.push(new THREE.Face3(10, 6, 7));
+    geom.faces.push(new THREE.Face3(7, 19, 10));
+    geom.faces.push(new THREE.Face3(19, 7, 4));
+    geom.faces.push(new THREE.Face3(4, 16, 19));
+    
+    // inner left faces
+    geom.faces.push(new THREE.Face3(9, 13, 8));
+    geom.faces.push(new THREE.Face3(13, 12, 8));
+    geom.faces.push(new THREE.Face3(13, 9, 10));
+    geom.faces.push(new THREE.Face3(10, 14, 13));
+    geom.faces.push(new THREE.Face3(14, 10, 11));
+    geom.faces.push(new THREE.Face3(11, 15, 14));
+    geom.faces.push(new THREE.Face3(15, 11, 8));
+    geom.faces.push(new THREE.Face3(8, 12, 15));
+    
+    // inner right faces
+	geom.faces.push(new THREE.Face3(20, 16, 17));
+	geom.faces.push(new THREE.Face3(17, 21, 20));
+	geom.faces.push(new THREE.Face3(21, 17, 18));
+	geom.faces.push(new THREE.Face3(18, 22, 21));
+	geom.faces.push(new THREE.Face3(22, 18, 19));
+	geom.faces.push(new THREE.Face3(19, 23, 22));
+	geom.faces.push(new THREE.Face3(23, 19, 16));
+	geom.faces.push(new THREE.Face3(16, 20, 23));
+	
+    // calculate the normals for shading
+    geom.computeFaceNormals();
+    geom.computeVertexNormals(true);
+
+    return geom;
+	
+	
+	
+	
+	
 }
 
 

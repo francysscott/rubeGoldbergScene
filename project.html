@@ -120,6 +120,13 @@ Details available to change:
                     teapotSpecular: TW.makeColor(0.316228, 0.316228, 0.316228),
                     teapotShininess: 128 * 0.1,
                     teapotSize: 5,
+                    //slide
+                    slideHeight: 5,
+                    slideLength: 20,
+                    slideWidth: 8,
+                    slideColor: 0xFFEE00,
+                    slideShininess: 30,
+                    slideLip: true,
                     //bowling ball
                     marbleRadius: 35,
     				marbleColor: 0x524CFD,
@@ -231,7 +238,12 @@ Details available to change:
     scene.add(block);
     
     // createSlide (height, length, width, inputColor, inputShininess, isLipped)
-    var slide = createSlide (5, 10, 10, 0xFFFF00, 0.3, true);
+    var slide = createSlide (sceneParams.slideHeight,
+                    sceneParams.slideLength,
+                    sceneParams.slideWidth,
+                    sceneParams.slideColor,
+                    sceneParams.slideShininess,
+                    sceneParams.slideLip);
     slide.position.set(0, 0, -10);
     scene.add(slide);
  
