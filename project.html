@@ -1,7 +1,8 @@
 <!-- 
 Francys Scott and Susie Carovillano
 November 2014
-CS 307project.html
+CS 307
+project.html
 
 Creates a room with a a ball, umbrella, table with lathed legs, teapot, and a window
 with the sounds and view of a rainy day. (Note: Textures make take a little 
@@ -20,7 +21,8 @@ Details available to change:
 	ambient light's color;
 	and directional light's color.
 	
- -->
+ -->
+
 <html>
   <head>
     <title>CS307 Final</title>
@@ -41,7 +43,7 @@ Details available to change:
     <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/fscottRoom.js"></script>
     <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/fscottTable.js"></script>
     <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/scarovilUmbrella.js"></script>
-    //<script src="http://cs.wellesley.edu/~cs307/threejs/contrib/fscott_scarovilWindow.js"></script>
+    //<script src="fscott_scarovilWindow.js"></script>
     <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/scarovil_fscottTeapot.js"></script>
     <script src="marble.js"></script>
     <script src="Chandelier.js"></script>
@@ -121,7 +123,8 @@ var sceneParams = { roomH : 200,
     				marbleAngularVelocity: TW.degrees2radians(3),
     				marbleInitialAngle: -Math.PI/4,
                     lastElement : null
-                  };
+                  };
+
 
 var animationState = {
         marbleAngle: sceneParams.marbleInitialAngle,
@@ -129,8 +132,11 @@ var animationState = {
         marbleZ: sceneParams.marbleInitialZ,
         time: 0,
         lastParam: null
-    };
-function drawScene() {
+    };
+
+
+function drawScene() {
+
     // Create and place the room in which the objects appear
     var w2 = sceneParams.roomH / 2;		// one-half the room length
 	var room = createRoom(sceneParams.roomH, 
@@ -182,16 +188,25 @@ function drawScene() {
     							teapot.rotateY(Math.PI/7); //rotate to a jaunty angle
     							scene.add(teapot); }
     							);
-    							
+    							
+
     //Create and place marble
     var marbleSet = createMarble(sceneParams.marbleColor, sceneParams.marbleSpecular,
     						 sceneParams.marbleShininess, sceneParams.marbleRadius );
 	marble = marbleSet[0];
 	marbleCam = marbleSet[1];
-    						 
+    
+    //add the marble					 
     marble.position.set(10, (sceneParams.marbleRadius), 0 );
 	scene.add(marble);	
 	
+	//add the camera that makes the marble reflective
+	marbleCam.position.set(10, (sceneParams.marbleRadius), 0 );
+	scene.add(marbleCam);
+	
+	
+	
+	//Create and place the chandelier
 	chand = createChandelier(42, 4, true, "glass.jpg", "bronze.jpg");
 	chand.position.set(0,sceneParams.roomH, 0);
 	scene.add(chand);	 
@@ -201,20 +216,10 @@ function drawScene() {
 //     						 
 //  scene.add(domino);
 // 
-// 	var size = 10;
-//         
-//     var dominoMat = new THREE.MeshPhongMaterial( { color: 0x333333} );
-// 	var sphereGeom =  new THREE.SphereGeometry( size * 0.125 * 0.5, 32, 16 );
-// 	var blockGeom = new THREE.BoxGeometry( size * 0.53, size, 0.25 * size);
-// 	var block = new THREE.Mesh( blockGeom, dominoMat );
-// 	var dots = new THREE.Mesh( sphereGeom, dominoMat);
-// 	
-//  var domino = block.subtract(dots);
-	
-//	scene.add(domino);
+
     
   //Create and place window
-	var window = createWindow(sceneParams.windowWidth, sceneParams.windowframeColor);
+	var window = createWindow(sceneParams.windowWidth, sceneParams.windowframeColor, "../videos/Gentlerain.ogv");
 	window.name="window";
 	window.position.set(-(w2 * 1.5), w2, -(w2/3));
 	window.rotateY(Math.PI/2); //rotate to be in the wall's plane
@@ -242,7 +247,8 @@ scene.add(dirlight);
 var dirlight2 = new THREE.DirectionalLight( sceneParams.dirLightColor );
 dirlight2.position.set(-5,2,-4);
 ambLight.name = "directional2";
-scene.add(dirlight2);
+scene.add(dirlight2);
+
 // Finish camera and place scene on view.
 var state = TW.cameraSetup(renderer,
 					   scene,
@@ -255,7 +261,8 @@ var state = TW.cameraSetup(renderer,
 	//state.cameraObject.near = 5;   
 	//state.cameraObject.postion.set(300, 150, 250);      
 
-drawScene();
+drawScene();
+
 
 function updateMarblePosition(time) {
     var deltaAngle = sceneParams.marbleAngularVelocity * sceneParams.deltaT;
@@ -301,8 +308,11 @@ function render()
 	}
   
 	renderer.render( scene, state.cameraObject ); //re-render the scene using the TW camera
-}
-animate(); //allows video to play
+}
+
+animate(); //allows video to play
+
 </script>
 </body>
-</html>
+</html>
+
