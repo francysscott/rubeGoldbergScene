@@ -56,18 +56,18 @@ function createSlide (height, length, width, inputColor, inputShininess, isLippe
                                     		
 	var slideTopGeom = buildSlideGeom(height, length, width, isLipped);
 	var slideTop = new THREE.Mesh( slideTopGeom, slideMaterial );
-	var degree = (Math.PI/4)- Math.atan(length / (height-diff)); 	// get the correct amount of rotation
-	slideTop.position.set(0,diff,0);
+	var degree = (Math.PI/4)- Math.atan((height-diff)/length); 	// get the correct amount of rotation
+	slideTop.position.set(0,height,0);
 	slideTop.rotateX(degree);
 	
-	var slideBottomGeom = buildBaseGeom(height, length, width, diff);
-	var slideBottom = new THREE.Mesh( slideBottomGeom, slideMaterial );
+	//var slideBottomGeom = buildBaseGeom(height, length, width, diff);
+	//var slideBottom = new THREE.Mesh( slideBottomGeom, slideMaterial );
 	
-	slideBottom.position.set(0,0,0);
+	//slideBottom.position.set(0,0,0);
 	
 	slide.add(slideTop);
 	console.log("now adding slide bottom");
-	slide.add(slideBottom);
+	//slide.add(slideBottom);
 	
 	return slide;
 
