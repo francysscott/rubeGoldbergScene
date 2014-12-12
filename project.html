@@ -215,12 +215,17 @@ Details available to change:
 	umbrella.rotateZ(-Math.PI/8);
 	scene.add(umbrella);
 	
-	//Create and place shelf
-	var shelf = createShelf(sceneParams.shelfWidth, sceneParams.shelfHeight, sceneParams.shelfLength,
+	//Create and place shelves
+	var shelf1 = createShelf(sceneParams.shelfWidth, sceneParams.shelfHeight, sceneParams.shelfLength,
 							sceneParams.shelfTexture, sceneParams.shelfColor, sceneParams.shelfSpecular,
 							sceneParams.shelfShininess);
-	shelf.position.set(150, 140, -50);
-	scene.add(shelf);
+	shelf1.position.set(150, 140, -50);
+	scene.add(shelf1);
+	
+	var shelf2 = shelf1.clone();
+	shelf2.rotateY(Math.PI/2);
+	shelf2.position.set(100, 100, -150);
+	scene.add(shelf2);
 	
 	//Create and place teapot
 	var teapot = createTeapot(sceneParams.teapotDiffuse, sceneParams.teapotAmbient, 
