@@ -48,6 +48,8 @@ Details available to change:
     <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/fscott_scarovilWindow.js"></script>
     <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/scarovil_fscottTeapot.js"></script>
     <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/scarovilShinyBall.js"></script>
+    <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/sbailinPenguinFIXED.js"></script>
+    <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/createRocket.js"></script>
     <script src="Chandelier.js"></script>
 	<script src="block.js"></script>
     <script src="fscott_scarovilSlide.js"></script>
@@ -146,7 +148,7 @@ Details available to change:
     				marbleInitialZ: -40,
     				marbleAngularVelocity: TW.degrees2radians(3),
     				marbleInitialAngle: -Math.PI/4,
-    				//shelf
+    				//shelves
     				shelfColor: 0xAA7243,
     				shelfSpecular: 0x333333,
     				shelfShininess: 3,
@@ -154,6 +156,12 @@ Details available to change:
     				shelfWidth: 30,
     				shelfLength: 100,
     				shelfTexture: '../images/dark-wood.jpg',
+    				// toy rocket
+    				toyRocketBodyColor:  0x0088FF,
+    				toyRocketNoseColor:  0xFF4444,
+    				toyRocketFinColor:  0xFF00FF,
+    				toyRocketThrusterColor:  0xFF8800,
+    				toyRocketCabinColor:  0x0000FF,
                     //lights
                     ambLightColor: 0x6F6F6F,
                     dirLightColor: 0xAAAAAA,
@@ -219,7 +227,7 @@ Details available to change:
 	var shelf1 = createShelf(sceneParams.shelfWidth, sceneParams.shelfHeight, sceneParams.shelfLength,
 							sceneParams.shelfTexture, sceneParams.shelfColor, sceneParams.shelfSpecular,
 							sceneParams.shelfShininess);
-	shelf1.position.set(150, 140, -50);
+	shelf1.position.set(150, 140, -100);
 	scene.add(shelf1);
 	
 	var shelf2 = shelf1.clone();
@@ -232,7 +240,7 @@ Details available to change:
 							  sceneParams.teapotSpecular, sceneParams.teapotShininess,
 							  sceneParams.teapotSize, function(teapot) {
 							  	teapot.position.set(130, 140, -80); //set on tabletop
-    							teapot.rotateY(Math.PI/12); 
+    							teapot.rotateY(-Math.PI/3); 
     							scene.add(teapot); }
     							);		
 
@@ -282,10 +290,35 @@ Details available to change:
                     sceneParams.rampColor,
                     sceneParams.rampShininess,
                     sceneParams.rampLip);
-    ramp.position.set(10, 0, -43);
+    ramp.position.set(10, 0, -43.5);
     scene.add(ramp);
- 
-
+    
+    // Add small ornaments to shelves, referencing other CS307 projects.
+    // Sarah Bailin's penguin
+    var toyPenguin = sbailinPenguin(false, false, 10, 0x444444); 
+    toyPenguin.position.set(130, 100, -130);
+    //toyPenguin.scale.set(0.8,0.8,0.8);
+    scene.add(toyPenguin);
+    // Laura Shih's (?) rocket?
+    var toyRocket = createRocket(sceneParams.toyRocketBodyColor,
+    							sceneParams.toyRocketNoseColor, 
+    							sceneParams.toyRocketFinColor, 
+    							sceneParams.toyRocketThrusterColor, 
+    							sceneParams.toyRocketCabinColor);
+    toyRocket.scale.set(.5, .5, .5);
+    //toyRocket.rotateZ(Math.PI/2.5);
+    //toyRocket.rotateY(Math.PI/2.2);
+    toyRocket.rotateX(Math.PI/2.25);
+    toyRocket.position.set(130, 150, -130);
+    scene.add(toyRocket);
+    
+    
+    // Note:  objects that don't hold up and cannot be included without significant effort:  
+    // Emily's Christmas tree, Emily Q's koi, Mary Beth Kery's house,
+    
+    
+    
+    
     
     //Create and place window
 	var window = createWindow(sceneParams.windowWidth, sceneParams.windowframeColor, sceneParams.windowVideo);
