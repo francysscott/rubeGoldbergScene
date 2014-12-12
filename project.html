@@ -265,10 +265,16 @@ Details available to change:
   
   
     //Create and place domino
-    var block = createBlock(sceneParams.blockColor, sceneParams.blockSpecular,
+    var block1 = createBlock(sceneParams.blockColor, sceneParams.blockSpecular,
      						 sceneParams.blockShininess, sceneParams.blockSize,
-     						 sceneParams.blockTexture );     						 
-    scene.add(block);
+     						 sceneParams.blockTexture );  
+    block1.position.set(-30, sceneParams.tableHeight, -90);  
+    block1.rotateY(Math.PI/2); 						 
+    scene.add(block1);
+    
+    var block2 = block1.clone();
+    block2.position.x = -27;
+    scene.add(block2);
     
     // create little slide using Slide function
     // (height, length, width, inputColor, inputShininess, isLipped)
@@ -306,8 +312,6 @@ Details available to change:
     							sceneParams.toyRocketThrusterColor, 
     							sceneParams.toyRocketCabinColor);
     toyRocket.scale.set(.5, .5, .5);
-    //toyRocket.rotateZ(Math.PI/2.5);
-    //toyRocket.rotateY(Math.PI/2.2);
     toyRocket.rotateX(Math.PI/2.25);
     toyRocket.position.set(130, 150, -130);
     scene.add(toyRocket);
