@@ -121,13 +121,20 @@ Details available to change:
                     teapotSpecular: TW.makeColor(0.316228, 0.316228, 0.316228),
                     teapotShininess: 128 * 0.1,
                     teapotSize: 5,
-                    //slide
+                    //small slide
                     slideHeight: 30,
                     slideLength: 40,
-                    slideWidth: 20,
-                    slideColor: 0xFF8800,
-                    slideShininess: 20,
-                    slideLip: false,
+                    slideWidth: 5,
+                    slideColor: 0xFFAA00,
+                    slideShininess: 10,
+                    slideLip: true,
+                    //ramp
+                    rampHeight: 50,
+                    rampLength: 60,
+                    rampWidth: 20,
+                    rampColor: 0xFF8844,
+                    rampShininess: 20,
+                    rampLip: false,
                     //bowling ball
                     marbleRadius: 12,
     				marbleColor: 0x524CFD,
@@ -250,15 +257,28 @@ Details available to change:
      						 sceneParams.blockTexture );     						 
     scene.add(block);
     
-    // createSlide (height, length, width, inputColor, inputShininess, isLipped)
+    // create little slide using Slide function
+    // (height, length, width, inputColor, inputShininess, isLipped)
     var slide = createSlide (sceneParams.slideHeight,
                     sceneParams.slideLength,
                     sceneParams.slideWidth,
                     sceneParams.slideColor,
                     sceneParams.slideShininess,
                     sceneParams.slideLip);
-    slide.position.set(10, 0, -20);
+    slide.position.set(-80, sceneParams.tableHeight, -90);
+    slide.rotateY(Math.PI/2);
     scene.add(slide);
+    
+    // create ramp using Slide function
+    // (height, length, width, inputColor, inputShininess, isLipped)
+    var ramp = createSlide (sceneParams.rampHeight,
+                    sceneParams.rampLength,
+                    sceneParams.rampWidth,
+                    sceneParams.rampColor,
+                    sceneParams.rampShininess,
+                    sceneParams.rampLip);
+    ramp.position.set(10, 0, -43);
+    scene.add(ramp);
  
 
     
