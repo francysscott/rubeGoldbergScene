@@ -56,33 +56,41 @@ function createSlide (height, length, width, inputColor, inputShininess, isLippe
                                     		
 	var slideTopGeom = buildSlideGeom(height, length, width, isLipped);
 	var slideTop = new THREE.Mesh( slideTopGeom, slideMaterial );
-	var degree = (Math.PI/4)- Math.atan((height-diff)/length); 	// get the correct amount of rotation
+	// get the correct amount of rotation for the slide so it touches the ground
+	var degree = /*(Math.PI/4)- */ Math.atan((height-diff)/length); 	
 	slideTop.position.set(0,height,0);
 	slideTop.rotateX(degree);
 	
-	var slideBottomGeom = buildBaseGeom(height, length, width, diff);
-	var slideBottom = new THREE.Mesh( slideBottomGeom, slideMaterial );
+	var slideBottomGeom = buildBaseGeom(width - 2.5*diff, diff);
+	var slideBottomRung = new THREE.Mesh( slideBottomGeom, slideMaterial );
+	slideBottomRung.position.set(0,height/3,diff/2);
+	slideBottomRung.rotateZ(Math.PI/2);
 	
-	slideBottom.position.set(0,0,0);
+	var slideMidRung = slideBottomRung.clone();
+	slideMidRung.position.set(0,2*height/3,diff/2);
+	
+	var slideSupportGeom = buildBaseGeom(height-(diff), diff);
+	var slideLeftSupport = new THREE.Mesh( slideSupportGeom, slideMaterial );
+	slideLeftSupport.position.set((width/2)-diff,(height-diff)/2,diff/2);
+	
+	var slideRightSupport = slideLeftSupport.clone();
+	slideLeftSupport.position.x = -(width/2)+diff;
 	
 	slide.add(slideTop);
 	console.log("now adding slide bottom");
-	slide.add(slideBottom);
+	slide.add(slideBottomRung);
+	slide.add(slideMidRung);
+	slide.add(slideLeftSupport);
+	slide.add(slideRightSupport);
+	
 	
 	return slide;
 
 }
 
-function buildBaseGeom(height, length, width, diff)  {
+function buildBaseGeom(height, lw)  {
 	
-// 	var min = new THREE.Vector3( 0, 0, 0 );
-// 	var max = new THREE.Vector3( diff, height - diff, diff );
-// 	
-// 	return new THREE.Box3(min, max);
-	
-	
-	
-	return new THREE.BoxGeometry( diff, (height-diff), diff);
+	return new THREE.BoxGeometry( lw, height, lw);
 	
 	
 	
@@ -189,12 +197,16 @@ function buildBaseGeom(height, length, width, diff)  {
 }
 
 
-function buildSlideGeom(height, length, width, isLipped)  {
-	var slideLength = Math.sqrt((height*height) + (length*length));
 
-	var extrusionSettings = {
-		size: slideLength, height: width, curveSegments: 3,
-		bevelThickness: 1, bevelSize: 2, bevelEnabled: false,
+
+
+
+function buildSlideGeom(height, length, width, isLipped)  {
+	var slideLength = Math.sqrt((height*height) + (length * length)); 
+	console.log("hypotenuse of "+height+" and "+length+" is "+slideLength);
+	var extrusionSettings = { 
+		amount: slideLength, 
+		bevelEnabled: false,
 		material: 0, extrudeMaterial: 1
 	};
 	
