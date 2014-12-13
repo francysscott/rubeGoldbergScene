@@ -183,6 +183,12 @@ function drawScene(sceneParams) {
     scene.add(toyRocket);
     
     
+    // Rebecca Scanlon and Cecille Yang's apple, from apple tree
+    var toyApple = makeFullApple(sceneParams.appleHeight);
+    //toyApple.fruit.mat1.side = THREE.DoubleSide;
+    toyApple.position.set(110, 112.5, -140);
+    scene.add(toyApple);
+    
     // Note:  objects that don't hold up and cannot be included without significant effort:  
     // Emily's Christmas tree, Emily Q's koi, Mary Beth Kery's house,
     
