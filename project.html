@@ -50,9 +50,9 @@ Details available to change:
     <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/scarovilUmbrella.js"></script>
     <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/fscott_scarovilWindow.js"></script>
     <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/scarovil_fscottTeapot.js"></script>
-    <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/scarovilShinyBall.js"></script>
     <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/sbailinPenguinFIXED.js"></script>
     <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/createRocket.js"></script>
+    <script src="scarovilShinyBall.js"></script>
     <script src="Chandelier.js"></script>
 	<script src="block.js"></script>
     <script src="fscott_scarovilSlide.js"></script>
@@ -125,7 +125,7 @@ Details available to change:
                     blockColor: 0xFFFFFF,
                     blockSpecular: 0x333333,
                     blockShininess: 1,
-                    blockSize: 5,
+                    blockSize: 10,
                     blockTexture: '../images/ivory-wood.jpg',
                     //teapot
                     teapotAmbient: TW.makeColor(0.135, 0.2225, 0.1575), //values are for jade
@@ -142,7 +142,7 @@ Details available to change:
                     slideLip: true,
                     //ramp
                     rampHeight: 50,
-                    rampLength: 60,
+                    rampLength: 80,
                     rampWidth: 20,
                     rampColor: 0xFF8844,
                     rampShininess: 20,
@@ -154,12 +154,13 @@ Details available to change:
                     marbleShininess: 20,
     				marbleVelocityX: 0.8,
     				marbleVelocityZ: 0.4,
-    				marbleInitialX: 90,
-    				marbleInitialZ: -40,
+    				marbleInitialX: 0,
+    				marbleInitialY: 50,
+    				marbleInitialZ: -140,
     				marbleAngularVelocity: TW.degrees2radians(3),
     				marbleInitialAngle: -Math.PI/4,
     				//shelves
-    				shelfColor: 0xAA7243,
+    				shelfColor: 0xDDDDDD,
     				shelfSpecular: 0x333333,
     				shelfShininess: 3,
     				shelfHeight: 12,
@@ -183,6 +184,7 @@ Details available to change:
   var animationState = {
         marbleAngle: sceneParams.marbleInitialAngle,
         marbleX: sceneParams.marbleInitialX,
+        marbleY: sceneParams.marbleInitialY,
         marbleZ: sceneParams.marbleInitialZ,
         time: 0,
         lastParam: null
@@ -227,7 +229,7 @@ Details available to change:
 							sceneParams.umbrellaTexture,
 							sceneParams.handleColor);
 	umbrella.name = "umbrella";
-	umbrella.position.set(-100, 26, 90);  // Place in room on floor
+	umbrella.position.set(-100, 26, 90);  // Place in room on floor in front left corner
 	umbrella.rotateX(Math.PI/2);		// rotate top of umbrella so two spokes rest on floor
 	umbrella.rotateY(-Math.PI/3.67);	// rotate umbrella so spokes and cane rest on floor
 	umbrella.rotateZ(-Math.PI/8);
@@ -261,7 +263,7 @@ Details available to change:
 	marbleCam = marbleSet[1];
     
     //add the marble					 
-    marble.position.set(10, (sceneParams.marbleRadius), 0 );
+    marble.position.set(-40, sceneParams.tableHeight, -170 );
 	scene.add(marble);	
 	
 	//add the camera that makes the marble reflective
@@ -281,8 +283,7 @@ Details available to change:
 	chand.position.set(0,sceneParams.roomH, 0);
 	scene.add(chand);	 
   
-  
-    //Create and place domino
+    //Create and place blocks
     var block1 = createBlock(sceneParams.blockColor, sceneParams.blockSpecular,
      						 sceneParams.blockShininess, sceneParams.blockSize,
      						 sceneParams.blockTexture );  
@@ -291,13 +292,35 @@ Details available to change:
     scene.add(block1);
     
     var block2 = block1.clone();
-    block2.position.x = -27;
+    block2.position.x += 8;
     scene.add(block2);
     
     var block3 = block2.clone();
-    block3.position.x = -24;
+    block3.position.x += 8;
     scene.add(block3);
     
+    var block4 = block3.clone();
+    block4.position.x += 8;
+    scene.add(block4);
+    
+    var block5 = block4.clone();
+    block5.position.x += 6;
+    block5.position.z += 2;
+    block5.rotateY(-Math.PI/6); 
+    scene.add(block5);
+    
+    var block6 = block5.clone();
+    block6.position.x += 5;
+    block6.position.z += 3;
+    block6.rotateY(-Math.PI/6); 
+    scene.add(block6);
+    
+    var block7 = block6.clone();
+    block7.position.x += 4;
+    block7.position.z += 4;
+    block7.rotateY(-Math.PI/6); 
+    scene.add(block7);
+
     // create little slide using Slide function
     // (height, length, width, inputColor, inputShininess, isLipped)
     var slide = createSlide (sceneParams.slideHeight,
@@ -327,7 +350,8 @@ Details available to change:
     toyPenguin.position.set(130, 100, -130);
     //toyPenguin.scale.set(0.8,0.8,0.8);
     scene.add(toyPenguin);
-    // Laura Shih's (?) rocket?
+    
+    // Laura Shih's (?) rocket
     var toyRocket = createRocket(sceneParams.toyRocketBodyColor,
     							sceneParams.toyRocketNoseColor, 
     							sceneParams.toyRocketFinColor, 
@@ -356,7 +380,6 @@ Details available to change:
 	
     TW.render();
   }
-
 
   // Light section:  add lights as appropriate
 
@@ -398,8 +421,12 @@ Details available to change:
     // if the ball w/ radius R rotates by r radians, the ball rolls R * r units but to the *left*
     animationState.marbleX += -1 * sceneParams.marbleRadius * deltaAngle;
     animationState.marbleZ += 1 * sceneParams.marbleRadius * deltaAngle;
+    
+    
     marble.position.x = animationState.marbleX;
     marbleCam.position.x = marble.position.x;
+    //marble.position.y = animationState.marbleY;
+    //marbleCam.position.y = marble.position.y;
     marble.position.z = animationState.marbleZ;
     marbleCam.position.z = marble.position.z;
     marble.rotateX(deltaAngle);
@@ -415,7 +442,7 @@ Details available to change:
     // changes the time and everything in the state that depends on it
     animationState.time += sceneParams.deltaT;
     if (animationState.time < 80) { 
-    	updateMarblePosition(animationState.time);
+    	//updateMarblePosition(animationState.time);
     }
   }
 

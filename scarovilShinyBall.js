@@ -41,10 +41,15 @@ function createShinyBall(shinyBallColor, shinyBallSpecular, shinyBallShininess, 
 												envMap: sphereCamera.renderTarget, //this makes the shinyBall reflective
 												shininess: shinyBallShininess} );
 	var sphereGeom =  new THREE.SphereGeometry(shinyBallSize, 32, 16);
+	
 	var shinyBall = new THREE.Mesh(sphereGeom, shinyBallMat);
+	shinyBall.position.set(0, -shinyBallSize, 0);
+	
+	var shinyBallFrame = new THREE.Object3D();
+	shinyBallFrame.add(shinyBall);
 	
 	//can only return a single object so we put the two needed objects into an array
-	var objectArray = [shinyBall, sphereCamera];
+	var objectArray = [shinyBallFrame, sphereCamera];
 	return objectArray; 
 }
 
