@@ -93,19 +93,6 @@ function createChandelier(inputHeight, numBranches, isLipped,
 		branch2.position.set(0,-height,0);
 		chandelier.add(branch2);
 	}
-
-	// Add lights for branches
-	// Note that names for lights must be identical to the names of lights
-	// within the main!
-	// SpotLight(hex, intensity, distance, angle, exponent)
-	// spotLight1 = new THREE.SpotLight(0xFFFF00,
-//                                          0.9,
-//                                          30,
-//                                          Math.PI/2,
-//                                          5);
-//     spotLight1.position.set(0, -height*5/6, width/4);
-//     spotLight1.rotateX(Math.PI/4);
-//     spotLight2 = spotLight1.clone();
 	
 	//Build and add suspension chain and ceiling mount
 	var mountGeom = new THREE.CylinderGeometry(width/4, width/4.5, width/10, numBranches*4);
@@ -121,7 +108,7 @@ function createChandelier(inputHeight, numBranches, isLipped,
     var spotLight = new THREE.SpotLight( 0xFFEFEF,
                                          1,
                                          0,
-                                         Math.PI/2,
+                                         Math.PI/2.3,
                                          1 );
     spotLight.name = "chandelierlight";
     // position and add light
