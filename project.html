@@ -52,6 +52,7 @@ Details available to change:
     <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/scarovil_fscottTeapot.js"></script>
     <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/sbailinPenguinFIXED.js"></script>
     <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/createRocket.js"></script>
+    <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/appleTreecyang4rscanlon.js"></script>
     <script src="scarovilShinyBall.js"></script>
     <script src="Chandelier.js"></script>
 	<script src="block.js"></script>
@@ -173,6 +174,8 @@ Details available to change:
     				toyRocketFinColor:  0xFF00FF,
     				toyRocketThrusterColor:  0xFF8800,
     				toyRocketCabinColor:  0x0000FF,
+    				//toy apple
+    				appleHeight: 20,
                     //lights
                     ambLightColor: 0x6F6F6F,
                     dirLightColor: 0xAAAAAA,
@@ -374,6 +377,11 @@ Details available to change:
     toyRocket.position.set(130, 150, -130);
     scene.add(toyRocket);
     
+    // Rebecca Scanlon and Cecille Yang's apple, from apple tree
+    var toyApple = makeFullApple(sceneParams.appleHeight);
+    //toyApple.fruit.mat1.side = THREE.DoubleSide;
+    toyApple.position.set(110, 112.5, -140);
+    scene.add(toyApple);
     
     // Note:  objects that don't hold up and cannot be included without significant effort:  
     // Emily's Christmas tree, Emily Q's koi, Mary Beth Kery's house,
