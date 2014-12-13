@@ -71,18 +71,18 @@ function drawScene(sceneParams) {
 	marbleCam = marbleSet[1];
     
     //add the marble					 
-    marble.position.set(10, sceneParams.tableHeight, -43.5 );
+    marble.position.set(-80, sceneParams.tableHeight + sceneParams.slideHeight, -90 );
 	scene.add(marble);	
 	
 	//add the camera that makes the marble reflective
-	marbleCam.position.set(10, (sceneParams.tableHeight + sceneParams.marbleRadius), -43.5 );
+	marbleCam.position.set(40, (sceneParams.tableHeight + sceneParams.slideHeight + sceneParams.marbleRadius), -60);
 	scene.add(marbleCam);
     
     //Create bowling ball and its camera
     var ballSet = createShinyBall(sceneParams.bowlingBallColor, sceneParams.bowlingBallSpecular,
     						 sceneParams.bowlingBallShininess, sceneParams.bowlingBallRadius );
-	bowlingBall = marbleSet[0];
-	bowlingBallCam = marbleSet[1];
+	bowlingBall = ballSet[0];
+	bowlingBallCam = ballSet[1];
     
     //add the bowling ball					 
     bowlingBall.position.set(10, sceneParams.tableHeight, -43.5 );

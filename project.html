@@ -70,6 +70,8 @@ Details available to change:
   var renderer = new THREE.WebGLRenderer();
   var marble;
   var marbleCam; 
+  var bowlingBall;
+  var bowlingBallCam;
   
   TW.mainInit(renderer,scene);
 
@@ -162,14 +164,14 @@ Details available to change:
     				bowlingBallAngularVelocity: TW.degrees2radians(3),
     				bowlingBallInitialAngle: -Math.PI/4,
                     //marble
-                    marbleRadius: 5,
-    				marbleColor: 0x524CFD,
+                    marbleRadius: 2,
+    				marbleColor: 0x34AD5A,
     				marbleSpecular: 0x444444,
                     marbleShininess: 20,
     				marbleVelocityX: 0.8,
     				marbleVelocityZ: 0.4,
     				marbleInitialX: 0,
-    				marbleInitialY: 50,
+    				marbleInitialY: 80,
     				marbleInitialZ: -140,
     				marbleAngularVelocity: TW.degrees2radians(3),
     				marbleInitialAngle: -Math.PI/4,
@@ -241,7 +243,6 @@ Details available to change:
 	      
   drawScene(sceneParams);
 
-
   function updateMarblePosition(time) {
     var deltaAngle = sceneParams.marbleAngularVelocity * sceneParams.deltaT;
     animationState.marbleAngle += deltaAngle; // in radians
@@ -280,6 +281,12 @@ Details available to change:
     updateState();
     marbleCam.updateCubeMap(renderer, scene);
     marble.visible = true;
+    
+    //update bowling ball
+    bowlingBall.visible = false;
+    updateState();
+    bowlingBallCam.updateCubeMap(renderer, scene);
+    bowlingBall.visible = true;
 
 	//update video
 	if (video.readyState === video.HAVE_ENOUGH_DATA) 
