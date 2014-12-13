@@ -79,9 +79,6 @@ function drawScene(sceneParams) {
 	scene.add(marbleCam);
 	
 	//Create and place the chandelier
-	/*
-	
-	*/
 	chand = createChandelier(sceneParams.chandelierHeight, 
 					sceneParams.chandelierNumBranches,
 					sceneParams.chandelierIsLipped,
@@ -182,6 +179,10 @@ function drawScene(sceneParams) {
     toyRocket.position.set(130, 150, -130);
     scene.add(toyRocket);
     
+    // Rebecca Scanlon and Cecille Yang's apple, from apple tree
+    var toyApple = makeFullApple(sceneParams.appleHeight);
+    toyApple.position.set(115, 112.5, -140);
+    scene.add(toyApple);
     
     // Note:  objects that don't hold up and cannot be included without significant effort:  
     // Emily's Christmas tree, Emily Q's koi, Mary Beth Kery's house,

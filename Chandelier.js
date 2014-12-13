@@ -82,17 +82,18 @@ function createChandelier(inputHeight, numBranches, isLipped,
 		height--;
 	}
 	var width = height;	// keep relationship the same between width and height
-		
+	var degree = 2*Math.PI/actualNumBranches;  // angle around the chandelier
+	
 	// Create basic branch
 	var branch1 = createBranch(height, width, glassM, metalM, isLipped);
 	// Add new branches to chandelier, number of branches as specified by user
 	for (i = 0; i < actualNumBranches; i++)  {
 		var branch2 = branch1.clone();
-		branch2.rotateY(i*(2*Math.PI/actualNumBranches));
+		branch2.rotateY(i*degree);
 		branch2.position.set(0,-height,0);
 		chandelier.add(branch2);
 	}
-	
+
 	// Add lights for branches
 	// Note that names for lights must be identical to the names of lights
 	// within the main!
@@ -115,6 +116,18 @@ function createChandelier(inputHeight, numBranches, isLipped,
 	var chain = new THREE.Mesh(chainGeom,metalM);
 	chain.position.y = -height/4;
 	chandelier.add(chain);
+	
+	//create a spotlight for the chandelier
+    var spotLight = new THREE.SpotLight( 0xFFEFEF,
+                                         1,
+                                         0,
+                                         Math.PI/2,
+                                         1 );
+    spotLight.name = "chandelierlight";
+    // position and add light
+	spotLight.position.set(0, -3*height/4, 0); 
+	spotLight.target = mount;
+    chandelier.add(spotLight);
 
 	return chandelier;
 }   
@@ -146,7 +159,7 @@ function createBranch(height, width, glassTexture, branchTexture, isLipped)  {
 	// position globe
 	globe1.rotateX(-Math.PI/2);
 	globe1.position.set(0,0,width/2);
-	
+    
 	//position base
 	base1.rotateX(-Math.PI/2);
 	base1.position.set(0,-height/20,width/2);
@@ -159,7 +172,8 @@ function createBranch(height, width, glassTexture, branchTexture, isLipped)  {
 }
 
 /**
-	Partially derived from Threejs website
+	Partially derived from Threejs website, this returns the geometry of the
+	curved arm of the branch.
 */
 function createBranchGeom(height, width)  {
 
