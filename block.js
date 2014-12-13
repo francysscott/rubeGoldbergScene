@@ -21,8 +21,8 @@
 
 	Creates a block with a height of 1 unit, a width of 0.5 units, and a 
  	depth of 0.25 units, before scaling.
-	The block's origin is at the center of its base with y increasing along
-	the height of the block.
+	The block's origin is at the center of the front edge of its base with y increasing 
+	along the height of the block.
  
  	Variables are:
   		blockColor - color of block in ambient and directional light 
@@ -57,8 +57,8 @@ function createBlock(blockColor, blockSpecular, blockShininess, size, blockTextu
 	}
 												   
 	var blockGeom = new THREE.BoxGeometry( size * 0.5, size, 0.25 * size);
-	 blck = new THREE.Mesh( blockGeom, blockMat );
-	blck.position.set(0, size * 0.5, 0);
+	blck = new THREE.Mesh( blockGeom, blockMat );
+	blck.position.set(0, size * 0.5, 0.25 * 0.5 * size);
 	block.add(blck);
 	
 	return block;
