@@ -37,7 +37,9 @@
 	
 	createChandelier(inputHeight, numBranches, isLipped, inputGlassColor, inputMetalColor)
 	Creates a chandelier based on user preference to height and width of object and 
-	user-specified colors/textures for the materials.
+	user-specified colors/textures for the materials.  Note that the height is always 
+	even, or gets changed to an even integer, because this affects the ability to 
+	calculate the sin wave for the branches.  (An odd integer breaks the equation.)
 	int height the overall height of the chandelier including mount and chain
 	int numBranches the number of lights and branches the user wants.  User should set 
 		2-6 branches.  If user sets more, defaults to 6; if fewer, defaults to 2.
