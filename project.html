@@ -111,7 +111,7 @@ Details available to change:
                     umbrellaColor: 0x524CFD,
                     umbrellaSpecular: 0x444444,
                     umbrellaShininess: 5,
-                    umbrellaSize: 25,
+                    umbrellaSize: 35,
                     umbrellaTexture: '../images/stripes.jpg',
                     handleColor: 0x663300,
                     //chandelier  
@@ -229,9 +229,9 @@ Details available to change:
 							sceneParams.umbrellaTexture,
 							sceneParams.handleColor);
 	umbrella.name = "umbrella";
-	umbrella.position.set(-100, 26, 90);  // Place in room on floor in front left corner
+	umbrella.position.set(-100, 36, 90);  // Place in room on floor in front left corner
 	umbrella.rotateX(Math.PI/2);		// rotate top of umbrella so two spokes rest on floor
-	umbrella.rotateY(-Math.PI/3.67);	// rotate umbrella so spokes and cane rest on floor
+	umbrella.rotateY(-Math.PI/3.55);	// rotate umbrella so spokes and cane rest on floor
 	umbrella.rotateZ(-Math.PI/8);
 	scene.add(umbrella);
 	
@@ -397,7 +397,7 @@ Details available to change:
   // create directional light from window
   var dirlight2 = new THREE.DirectionalLight( sceneParams.dirLightColor );
   dirlight2.position.set(-5,2,-4);
-  ambLight.name = "directional2";
+  dirlight2.name = "directional2";
   scene.add(dirlight2);
 
   // Finish camera and place scene on view.
