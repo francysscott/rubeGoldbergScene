@@ -263,7 +263,7 @@ Details available to change:
 	marbleCam = marbleSet[1];
     
     //add the marble					 
-    marble.position.set(-40, sceneParams.tableHeight, -170 );
+    marble.position.set(10, sceneParams.tableHeight, -43.5 );
 	scene.add(marble);	
 	
 	//add the camera that makes the marble reflective
@@ -304,22 +304,34 @@ Details available to change:
     scene.add(block4);
     
     var block5 = block4.clone();
-    block5.position.x += 6;
+    block5.position.x += 7;
     block5.position.z += 2;
     block5.rotateY(-Math.PI/6); 
     scene.add(block5);
     
     var block6 = block5.clone();
-    block6.position.x += 5;
+    block6.position.x += 6;
     block6.position.z += 3;
     block6.rotateY(-Math.PI/6); 
     scene.add(block6);
     
     var block7 = block6.clone();
-    block7.position.x += 4;
+    block7.position.x = 10;
     block7.position.z += 4;
     block7.rotateY(-Math.PI/6); 
     scene.add(block7);
+    
+    var block8 = block7.clone();
+    block8.position.z += 7;
+    scene.add(block8);
+    
+    var block9 = block8.clone();
+    block9.position.z += 7;
+    scene.add(block9);
+    
+    var block10 = block9.clone();
+    block10.position.z += 7;
+    scene.add(block10);
 
     // create little slide using Slide function
     // (height, length, width, inputColor, inputShininess, isLipped)
