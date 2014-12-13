@@ -64,7 +64,7 @@ function drawScene(sceneParams) {
     							scene.add(teapot); }
     							);		
 
-    //Create marble and its camera
+    //Create small marble and its camera
     var marbleSet = createShinyBall(sceneParams.marbleColor, sceneParams.marbleSpecular,
     						 sceneParams.marbleShininess, sceneParams.marbleRadius );
 	marble = marbleSet[0];
@@ -75,8 +75,22 @@ function drawScene(sceneParams) {
 	scene.add(marble);	
 	
 	//add the camera that makes the marble reflective
-	marbleCam.position.set(10, (sceneParams.marbleRadius), 0 );
+	marbleCam.position.set(10, (sceneParams.tableHeight + sceneParams.marbleRadius), -43.5 );
 	scene.add(marbleCam);
+    
+    //Create bowling ball and its camera
+    var ballSet = createShinyBall(sceneParams.bowlingBallColor, sceneParams.bowlingBallSpecular,
+    						 sceneParams.bowlingBallShininess, sceneParams.bowlingBallRadius );
+	bowlingBall = marbleSet[0];
+	bowlingBallCam = marbleSet[1];
+    
+    //add the bowling ball					 
+    bowlingBall.position.set(10, sceneParams.tableHeight, -43.5 );
+	scene.add(bowlingBall);	
+	
+	//add the camera that makes the bowling ball reflective
+	bowlingBallCam.position.set(10, (sceneParams.tableHeight + sceneParams.bowlingBallRadius), -43.5 );
+	scene.add(bowlingBallCam);
 	
 	//Create and place the chandelier
 	/*
@@ -191,9 +205,6 @@ function drawScene(sceneParams) {
     
     // Note:  objects that don't hold up and cannot be included without significant effort:  
     // Emily's Christmas tree, Emily Q's koi, Mary Beth Kery's house,
-    
-    
-    
     
     
     //Create and place window
