@@ -64,19 +64,33 @@ function drawScene(sceneParams) {
     							scene.add(teapot); }
     							);		
 
-    //Create marble and its camera
+    //Create small marble and its camera
     var marbleSet = createShinyBall(sceneParams.marbleColor, sceneParams.marbleSpecular,
     						 sceneParams.marbleShininess, sceneParams.marbleRadius );
 	marble = marbleSet[0];
 	marbleCam = marbleSet[1];
     
     //add the marble					 
-    marble.position.set(10, sceneParams.tableHeight, -43.5 );
+    marble.position.set(-80, sceneParams.tableHeight + sceneParams.slideHeight, -90 );
 	scene.add(marble);	
 	
 	//add the camera that makes the marble reflective
-	marbleCam.position.set(10, (sceneParams.marbleRadius), 0 );
+	marbleCam.position.set(40, (sceneParams.tableHeight + sceneParams.slideHeight + sceneParams.marbleRadius), -60);
 	scene.add(marbleCam);
+    
+    //Create bowling ball and its camera
+    var ballSet = createShinyBall(sceneParams.bowlingBallColor, sceneParams.bowlingBallSpecular,
+    						 sceneParams.bowlingBallShininess, sceneParams.bowlingBallRadius );
+	bowlingBall = ballSet[0];
+	bowlingBallCam = ballSet[1];
+    
+    //add the bowling ball					 
+    bowlingBall.position.set(10, sceneParams.tableHeight, -43.5 );
+	scene.add(bowlingBall);	
+	
+	//add the camera that makes the bowling ball reflective
+	bowlingBallCam.position.set(10, (sceneParams.tableHeight + sceneParams.bowlingBallRadius), -43.5 );
+	scene.add(bowlingBallCam);
 	
 	//Create and place the chandelier
 	chand = createChandelier(sceneParams.chandelierHeight, 
@@ -184,11 +198,14 @@ function drawScene(sceneParams) {
     toyApple.position.set(115, 112.5, -140);
     scene.add(toyApple);
     
+    // Rebecca Scanlon and Cecille Yang's apple, from apple tree
+    var toyApple = makeFullApple(sceneParams.appleHeight);
+    //toyApple.fruit.mat1.side = THREE.DoubleSide;
+    toyApple.position.set(110, 112.5, -140);
+    scene.add(toyApple);
+    
     // Note:  objects that don't hold up and cannot be included without significant effort:  
     // Emily's Christmas tree, Emily Q's koi, Mary Beth Kery's house,
-    
-    
-    
     
     
     //Create and place window
