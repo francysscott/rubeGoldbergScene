@@ -198,6 +198,7 @@ Details available to change:
        				deltaT: 0.5,        // time between steps, in arbitrary time units
                     lastElement : null
                   };
+<<<<<<< Updated upstream
 
   var animationState = {
         marbleAngle: sceneParams.marbleInitialAngle,
@@ -207,6 +208,9 @@ Details available to change:
         time: 0,
         lastParam: null
     };
+=======
+    
+>>>>>>> Stashed changes
 
   // Light section:  add lights as appropriate
   //create ambient light
@@ -240,6 +244,41 @@ Details available to change:
 	      
   drawScene(sceneParams);
 
+
+  //Animation
+  
+  var animationState;
+  
+  function resetAnimationState() {
+  		animationState = {
+        	marbleAngle: sceneParams.marbleInitialAngle,
+        	marbleX: sceneParams.marbleInitialX,
+        	marbleY: sceneParams.marbleInitialY,
+        	marbleZ: sceneParams.marbleInitialZ,
+        	time: 0,
+        	lastParam: null
+    };
+  };
+  
+  resetAnimationState();
+  
+  function oneStep() {
+    updateState();
+    render();
+  }
+  
+  function firstState() {
+    resetAnimationState();
+    TW.render();
+}
+var animationId = null; 
+
+function stopAnimation() {
+    if( animationId != null ) {
+        cancelAnimationFrame(animationId);
+    }
+}
+
   function updateMarblePosition(time) {
     var deltaAngle = sceneParams.marbleAngularVelocity * sceneParams.deltaT;
     animationState.marbleAngle += deltaAngle; // in radians
@@ -259,8 +298,8 @@ Details available to change:
 
   function animate() 
   {
-    requestAnimationFrame( animate );
-	render();		
+  	animationId = requestAnimationFrame(animate);
+  	oneStep();
   }
 
   function updateState() {
@@ -293,8 +332,11 @@ Details available to change:
 	}
 	renderer.render(scene, state.cameraObject); //re-render the scene using the TW camera
   }
-
-  animate(); //allows video to play
+  
+  TW.setKeyboardCallback("0",firstState,"reset animation");
+  TW.setKeyboardCallback("1",oneStep,"advance by one step");
+  TW.setKeyboardCallback("g", animate, "go:  start animation");
+  TW.setKeyboardCallback("s",stopAnimation,"stop animation");
 
   </script>
   </body>
