@@ -20,6 +20,9 @@ Details available to change:
 	umbrella canopy's color, size, texture, shininess, and specular light interactions;
 	umbrella handle's color;
 	teapot's size, shininess, and ambient, diffuse, and specular light interactions;
+	slide's height, length, color and lighting;
+	ramp's height, length, color and lighting;
+	marble's size, color and animation parameters;
 	ambient light's color;
 	and directional light's color.
 	
@@ -111,6 +114,13 @@ Details available to change:
                     umbrellaSize: 25,
                     umbrellaTexture: '../images/stripes.jpg',
                     handleColor: 0x663300,
+                    //chandelier  
+					chandelierHeight: 42,
+					chandelierNumBranches: 4,
+					chandelierIsLipped:  true,
+					chandelierGlassColor: 0xFF8800,
+					chandelierMetalColor: 0x5C3317,
+					chandelierMetalShininess: 15,
                     //block
                     blockColor: 0xFFFFFF,
                     blockSpecular: 0x333333,
@@ -259,7 +269,15 @@ Details available to change:
 	scene.add(marbleCam);
 	
 	//Create and place the chandelier
-	chand = createChandelier(42, 4, true, "glass.jpg", "bronze.jpg");
+	/*
+	
+	*/
+	chand = createChandelier(sceneParams.chandelierHeight, 
+					sceneParams.chandelierNumBranches,
+					sceneParams.chandelierIsLipped,
+					sceneParams.chandelierGlassColor,
+					sceneParams.chandelierMetalColor,
+					sceneParams.chandelierMetalShininess);
 	chand.position.set(0,sceneParams.roomH, 0);
 	scene.add(chand);	 
   
@@ -275,6 +293,10 @@ Details available to change:
     var block2 = block1.clone();
     block2.position.x = -27;
     scene.add(block2);
+    
+    var block3 = block2.clone();
+    block3.position.x = -24;
+    scene.add(block3);
     
     // create little slide using Slide function
     // (height, length, width, inputColor, inputShininess, isLipped)

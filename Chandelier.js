@@ -1,36 +1,69 @@
 /**
-	createChandelier(height, numBranches, glassTexture, branchTexture, isLipped)
+	Copyright 2014 Francys Scott and Susie Carovillano
+	
+	This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+	fscottChandelier.js
+	Francys Scott and Susie Carovillano
+	December 2014
+	
+	Builds a chandelier based on variables including number of branches, material colors,
+	size and shape (of glass globe).
+	
+	Chandelier origin is the center of the top plane of the mount from which hangs 
+	the rest of the chandelier.  
+	
+	Bounding box is:
+		xmin:  -height/2 	xmax: height/2
+		ymin:  -height 		ymax: 0
+		zmin:  -height/2 	zmax: height/2
+		
+		This makes placing the object into a scene very easy - simply use the ceiling 
+		height to specify the chandelier.position.set.y.
+	*/
+	
+/*
+	
+	createChandelier(inputHeight, numBranches, isLipped, inputGlassColor, inputMetalColor)
 	Creates a chandelier based on user preference to height and width of object and 
 	user-specified colors/textures for the materials.
 	int height the overall height of the chandelier including mount and chain
 	int numBranches the number of lights and branches the user wants.  User should set 
 		2-6 branches.  If user sets more, defaults to 6; if fewer, defaults to 2.
 	bool isLipped whether the glass globes are lipped or spherical
-	String glassTexture the glass texture (if wanted)
-	String branchTexture the branch texture (if wanted)
+	hex inputGlassColor  the glass color for the globes
+	hex inputMetalColor the branch metal color for the arms
+	int inputMetalShininess the amount of shininess on the arms, range 0-100.
 	
 */               
 function createChandelier(inputHeight, numBranches, isLipped,
-							inputGlassTexture, inputBranchTexture){
+							inputGlassColor, inputMetalColor, inputMetalShininess){
 	var chandelier = new THREE.Object3D();	// frame in which all pieces are placed
 	
 	// Basic materials for testing, amber glass and brass metal fixture
 	// additional interesting materials at 
 	// http://devernay.free.fr/cours/opengl/materials.html
-	var amberM = new THREE.MeshPhongMaterial({color: 0xFFBF00,
-    										 ambient: 0xFF4400,
-                                             shininess: 60,
+	var glassM = new THREE.MeshPhongMaterial({color: inputGlassColor,
+    										 ambient: inputGlassColor,
+                                             shininess: 65,
                                              transparent: true,
                                              opacity: 0.7
                                     		});
-	var brownM = new THREE.MeshPhongMaterial({color: 0xA52A2A,
-    										 ambient: 0x888822,
-                                             shininess: 20,
+	var metalM = new THREE.MeshPhongMaterial({color: inputMetalColor,
+    										 ambient: inputMetalColor,
+                                             shininess: inputMetalShininess,
                                     		});
-                                    		
-    // Here is where we would interpret the textures IF the user input some
-	// var renderedGlassTexture
-    // var finalGlassTexture = (scale === undefined) ? 1 : scale;
                                     		                                    		
 	// make sure the number of branches is within reason, else limit it.
 	var actualNumBranches = numBranches;
@@ -49,7 +82,7 @@ function createChandelier(inputHeight, numBranches, isLipped,
 	var width = height;	// keep relationship the same between width and height
 		
 	// Create basic branch
-	var branch1 = createBranch(height, width, amberM, brownM, isLipped);
+	var branch1 = createBranch(height, width, glassM, metalM, isLipped);
 	// Add new branches to chandelier, number of branches as specified by user
 	for (i = 0; i < actualNumBranches; i++)  {
 		var branch2 = branch1.clone();
@@ -73,11 +106,11 @@ function createChandelier(inputHeight, numBranches, isLipped,
 	
 	//Build and add suspension chain and ceiling mount
 	var mountGeom = new THREE.CylinderGeometry(width/4, width/4.5, width/10, numBranches*4);
-	var mount = new THREE.Mesh(mountGeom,brownM);
+	var mount = new THREE.Mesh(mountGeom,metalM);
 	mount.position.y = -width/20;
 	chandelier.add(mount);
 	var chainGeom = new THREE.CylinderGeometry(width/30, width/30, height/2);
-	var chain = new THREE.Mesh(chainGeom,brownM);
+	var chain = new THREE.Mesh(chainGeom,metalM);
 	chain.position.y = -height/4;
 	chandelier.add(chain);
 
@@ -178,8 +211,8 @@ function createGlobeGeom(globeHeight, globeRad, isLipped)  {
         alt.push(p);
     }
     
-    var geom = new THREE.LatheGeometry( alt, 20 ); 
-    // 20 segments make it look like an generally rounded globe without using 
+    var geom = new THREE.LatheGeometry( alt, 18 ); 
+    // 18 segments make it look like an generally rounded globe without using 
     // too much processor resources.
     
 	return geom;
