@@ -47,12 +47,14 @@ function drawScene(sceneParams) {
 	var shelf1 = createShelf(sceneParams.shelfWidth, sceneParams.shelfHeight, sceneParams.shelfLength,
 							sceneParams.shelfTexture, sceneParams.shelfColor, sceneParams.shelfSpecular,
 							sceneParams.shelfShininess);
+	shelf1.name = "shelf1";
 	shelf1.position.set(150, 140, -100);
 	scene.add(shelf1);
 	
 	var shelf2 = shelf1.clone();
 	shelf2.rotateY(Math.PI/2);
 	shelf2.position.set(100, 100, -150);
+	shelf2.name = "shelf2";
 	scene.add(shelf2);
 	
 	//Create and place teapot
@@ -61,6 +63,7 @@ function drawScene(sceneParams) {
 							  sceneParams.teapotSize, function(teapot) {
 							  	teapot.position.set(130, 140, -80); //set on tabletop
     							teapot.rotateY(-Math.PI/3); 
+    							teapot.name = "teapot";
     							scene.add(teapot); }
     							);		
 
@@ -72,10 +75,12 @@ function drawScene(sceneParams) {
     
     //add the marble					 
     marble.position.set(-80, sceneParams.tableHeight + sceneParams.slideHeight, -90 );
+    marble.name = "marble";
 	scene.add(marble);	
 	
 	//add the camera that makes the marble reflective
 	marbleCam.position.set(40, (sceneParams.tableHeight + sceneParams.slideHeight + sceneParams.marbleRadius), -60);
+	marbleCam.name = "marbleCam";
 	scene.add(marbleCam);
     
     //Create bowling ball and its camera
@@ -86,10 +91,12 @@ function drawScene(sceneParams) {
     
     //add the bowling ball					 
     bowlingBall.position.set(10, sceneParams.tableHeight, -43.5 );
+    bowlingBall.name = "bowlingBall";
 	scene.add(bowlingBall);	
 	
 	//add the camera that makes the bowling ball reflective
 	bowlingBallCam.position.set(10, (sceneParams.tableHeight + sceneParams.bowlingBallRadius), -43.5 );
+	bowlingBallCam.name = "bowlingBallCam";
 	scene.add(bowlingBallCam);
 	
 	//Create and place the chandelier
@@ -100,6 +107,7 @@ function drawScene(sceneParams) {
 					sceneParams.chandelierMetalColor,
 					sceneParams.chandelierMetalShininess);
 	chand.position.set(0,sceneParams.roomH, 0);
+	chand.name = "chandelier";
 	scene.add(chand);	 
   
     //Create and place blocks
@@ -162,6 +170,7 @@ function drawScene(sceneParams) {
                     sceneParams.slideLip);
     slide.position.set(-80, sceneParams.tableHeight, -90);
     slide.rotateY(Math.PI/2);
+    slide.name = "slide";
     scene.add(slide);
     
     // create ramp using Slide function
@@ -173,13 +182,14 @@ function drawScene(sceneParams) {
                     sceneParams.rampShininess,
                     sceneParams.rampLip);
     ramp.position.set(10, 0, -43.5);
+    ramp.name = "ramp";
     scene.add(ramp);
     
     // Add small ornaments to shelves, referencing other CS307 projects.
     // Sarah Bailin's penguin
     var toyPenguin = sbailinPenguin(false, false, 10, 0x444444); 
     toyPenguin.position.set(130, 100, -130);
-    //toyPenguin.scale.set(0.8,0.8,0.8);
+    toyPenguin.name = "toyPenguin";
     scene.add(toyPenguin);
     
     // Laura Shih's (?) rocket
@@ -191,11 +201,13 @@ function drawScene(sceneParams) {
     toyRocket.scale.set(.5, .5, .5);
     toyRocket.rotateX(Math.PI/2.25);
     toyRocket.position.set(130, 150, -130);
+    toyRocket.name = "toyRocket";
     scene.add(toyRocket);
     
     // Rebecca Scanlon and Cecille Yang's apple, from apple tree
     var toyApple = makeFullApple(sceneParams.appleHeight);
     toyApple.position.set(115, 112.5, -140);
+    toyApple.name = "toyApple";
     scene.add(toyApple);
     
     // Note:  objects that don't hold up and cannot be included without significant effort:  
