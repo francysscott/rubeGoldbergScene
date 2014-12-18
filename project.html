@@ -62,6 +62,12 @@ Details available to change:
 
   </head>
   <body>
+  
+  <h1>CS307 Final Project:  Rube Goldberg Scene</h1>
+	<p>Francys Scott and Susie Carovillano</p>
+	<p>Prof. Scott Anderson, CS307, Wellesley College, Fall 2014</p>
+	<p>Press "g" when you want the animation to start, or "1" if you prefer going step by 
+	step.  Remember to turn on the sound also!</p>
 
   <script id="prog">
 
@@ -331,6 +337,162 @@ function stopAnimation() {
   TW.setKeyboardCallback("s",stopAnimation,"stop animation");
 
   </script>
+  
+
+
+	
+	<p>Note:  all our screenshots should have the same filepath as our textures:
+	  "../images/example.png"  so that we can keep all our images together 
+	  easily in one spot.</p>
+	  
+	  <h2>Project Description:</h2>
+	  <p>This project is part of the CS304 course at Wellesley 
+	  College, Fall 2014.  </p>
+	  
+	  <h2>How it Works</h2>
+	  <p>Uses Threejs</p>
+	  <h3>Project Structure</h3>
+	  <h3>Individual Objects</h3>
+	  <h3>Object Placement and Interaction</h3>
+	  
+	  <h2>Details to Notice</h2>
+	  <h3>Interesting Geometries: Lathing, Extrusion, Bezier curves</h3>
+	  <p>We used lathing to build a number of objects including the globes of the 
+	  chandelier and the legs of the table.  However, the umbrella in the front left 
+	  corner of the room really demonstrates the clever use of the principle. While many 
+	  use lathing to make a seemingly smooth curve around the axis (as we did for the 
+	  table legs and the glass chandelier globes), this object is made of a lathe of 8 
+	  sides (an intentionally small number of sides for such a large object, and under 
+	  other circumstances considered too crude for a proper lathing) to effectively and 
+	  efficiently build the geometry of its canopy.  To emphasize the elegant nature of 
+	  this design choice, Susie texture mapped the object to a striped picture so that it really 
+	  stands out as a very cheerful umbrella.  The umbrella is finished with a lovely 
+	  cylindrical handle, torus for the hook and hemisphere to round off the edge of 
+	  the hook. </p>
+	  <img src="../images/ScreenShot2014-12-13at22510PM.png" alt="close up of umbrella and handle">
+	  
+	  <p>There are also some curves courtesy of sin functions built into the chandelier.</p>
+	  <img src="../images/ScreenShot2014-12-16at102001AM.png" alt="close up of chadelier curve">
+	  
+	  <p>We also use extrusions to build the little yellow slide and larger orange ramp in
+	  the scene.  The user can select whether she wants a lip on the each side of the 
+	  slide when creating the object.  (Technically the tubes used for the chandelier arms 
+	  are also extrusions, but the slides demonstrate extrusion of an unusual 2D shape.)</p>
+	  <img src="../images/ScreenShot2014-12-16at103631AM.png" alt="close up of yello slide">
+	  
+	  
+	  <h3>Material and Texture</h3>
+	  <p>As mentioned above, the umbrella has a lovely striped pattern.  We also applied 
+	  texture mapping to a number of other objects.  Below, you can see the delicate wood 
+	  textures on the table, wooden blocks and hardwood floor as well as the 
+	  wallpaper in the room.  </p>
+	  <img src="../images/ScreenShot2014-12-15at73317PM.png" alt="close up of reflections in ball">
+	  
+	  
+	  <h3>Transparencies</h3>
+	  <p>The glass globes in the chandelier use transparency, as you can see below.  We 
+	  had also originally planned to use a partially transparent marble for our animation, 
+	  but in the end decided that a reflective marble was more visually interesting.  Here 
+	  is a closeup of the chandelier. </p>
+	  <img src="../images/ScreenShot2014-12-13at22412PM.png" alt="chandelier with lipped edge and four branches">
+	  
+	  <h3>Reflections</h3>
+	  <p>Looking carefully, you can see that both the small marble and larger ball appear 
+	  to be tinted metals -- that is, they are reflective of their surroundings but imbued 
+	  with a base hue.  Here's a closeup of the larger ball where you can see in the 
+	  reflection, from the left to right, the umbrella, window, chandelier, little yellow 
+	  slide with green marble, series of wooden blocks and shelves with the teapot.  Take 
+	  a look at the reflections during the animation, and you'll also see that the 
+	  reflections adjust to mirror the ball's position in the room and the state of the 
+	  video in the window. (You can watch the video through its reflection in the ball!)</p>
+	  <img src="../images/ScreenShot2014-12-15at72524PM.png" alt="close up of reflections in ball">
+	  
+	  <h3>Animations</h3>
+	  <p>We have several animations occurring throughout our work.  Most obvious are the 
+	  balls on the table as they each travel down slides or ramps.</p>
+	  <p>Additionally, we used texture mapping with an ogv file to build a window with a 
+	  video of a rainy day.  Listen carefully when you start the animation and you can 
+	  hear the rain!  The change in these stills is easiest to see when looking at the 
+	  upper right corner of the window's left pane.</p>
+	  <img src="../images/ScreenShot2014-12-15at15434PM.png" alt="first still of rainy day window">
+	  <img src="../images/ScreenShot2014-12-15at15457PM.png" alt="second still of rainy day window">
+	  <img src="../images/ScreenShot2014-12-15at15510PM.png" alt="third still of rainy day window">
+	  
+	  <h3>Dependencies and Function Calls to Others' Work</h3>
+	  <p>In an homage to the history of computer graphics, we uploaded and used an svg 
+	  file with the original teapot's parameters to include it in the scene.  
+	  Additionally, we referenced various other projects by other students of this course,
+	   and included a number of items from the public "contrib" library to which all 
+	   students donated some object.  You can see the teapot and the student 
+	   contributions on the shelves of the room in the far right corner including a 
+	   penguin, apple and rocket. Not all "contrib" files were written such that they 
+	   could be easily called using just a quick function call, so in the end we did not 
+	   reference every student project.</p>
+	   <img src="../images/ScreenShot2014-12-15at120815PM.png" alt="close up of teapot and other shelf objects">
+	  
+	  
+	  <h2>Challenges and Tricks</h2>
+	  <p> There were a number of challenges we solved, here listed in the order 
+	  we tackled them: </p>
+	  <h3>Functionality, Modularity, Customizability and Ease of Use</h3>
+	    <p>There are several very important factors in our code that are not immediately 
+	    visible when watching the final scene that are nonetheless very important to our 
+	    project.  Without good design and coding practices, it would be difficult for 
+	    others to use our objects or for us to reuse them in the future.</p>
+	  	<p>When placing multiple objects within a scene, we recognize the 
+	  	realities of how these objects interact with one another.  For example, in 
+	  	the physical world, we place a teapot on a shelf rather than embedding it in the wood or
+	  	levitating it in the air above.  In a similar fashion, the objects in the 
+	  	computer-generated scene must appear to interact with each other naturally.  
+	  	Towards this goal, we took 
+	  	care that every object had a natural point of origin so that a person could 
+	  	position said object into the scene in an intuitive way.  For example, the 
+	  	chandelier's point of origin is the center of the topmost plane of the ceiling 
+	  	mount, so that users can specify chandelier.position.y = heightOfRoom without 
+	  	having to tweak the settings of the chandelier.  Although this objective is not as snazzy 
+	  	as, for example, anti-aliasing, it makes a big difference in the usability of the 
+	  	created object. </p>
+	  	<p>Additionally, these objects are highly customizable to the user's wishes.  
+	  	Every library call passes parameters for height and/or width, colors and textures.  
+	  	For example, users can build a table using our libraries to have simple or complicated legs 
+	  	and determine what textures they want.  With the chandelier, users can even specify 
+	  	between several shapes of globe and number of branches.  For example, here the user 
+	  	specifies a lipped globe and four branches, then changes her mind and creates 
+	  	a spherical globe and five branches.  The only differences here are the integers and 
+	  	boolean values she fed in as parameters to the function call.  The colors of both the globe and the arm
+	  	are likewise easily adjustable.</p>
+	  	<img src="../images/ScreenShot2014-12-13at22412PM.png" alt="chandelier with lipped edge and four branches">
+	    <img src="../images/ScreenShot2014-12-13at25108PM.png" alt="chandelier with spherical edge and five branches">
+	  
+	    <p>Finally, we have some error-checking and exception handling that prevents 
+	    unwary users from accidentally breaking the build of their object.  In some cases, this means 
+	    capping a maximum or minimum value (such as number of branches for a chandelier).  
+	    In other cases, this means specifying one parameter, such as width, as a constant 
+	    proportion to another parameter, such as  
+	    height, so that all the individual parts of the object fit together correctly. </p>
+	  	<p>By making our contributions highly functional, intuitive and 
+	  	customizable, we have provided objects that are useful and extensible to ourselves
+	  	and anyone else interested in our designs.</p>
+	  	
+	  <h3>Video Animation</h3>
+	  <p></p>
+	  <h3>Curves</h3>
+	  <p></p>
+	  <h3>Reflecting Surfaces</h3>
+	  <p></p>
+	  <h3>Animation</h3>
+	  <p>There are some very tough aspects of translating or rotating an object in three 
+	  dimensions, particularly when the object needs to be precisely translated.  The balls 
+	  rolling down the ramps are a particular challenge because it seems the compiler wants 
+	  to add delta t of 0.00999999999999999 for every step instead of adding 0.01.  (We think 
+	  this is a result of the way that the machine stores fractions in memory.)  This 
+	  seemingly slight rounding error actually affects the ball's y position so strongly 
+	  that the ball falls through the slide's bottom.</p>
+	  <h3>Incorporating Others' Work</h3>
+	  <p></p>
+	  
+	  
+	  
   </body>
 </html>
 
