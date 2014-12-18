@@ -458,11 +458,11 @@ function stopAnimation() {
 	  	and determine what textures they want.  With the chandelier, users can even specify 
 	  	between several shapes of globe and number of branches.  For example, here the user 
 	  	specifies a lipped globe and four branches, then changes her mind and creates 
-	  	a spherical globe and five branches.  The only differences here are the integers and 
-	  	boolean values she fed in as parameters to the function call.  The colors of both the globe and the arm
-	  	are likewise easily adjustable.</p>
-	  	<img src="../images/ScreenShot2014-12-13at22412PM.png" alt="chandelier with lipped edge and four branches">
-	    <img src="../images/ScreenShot2014-12-13at25108PM.png" alt="chandelier with spherical edge and five branches">
+	  	a spherical globe and five branches where the glass is red and the metal is silver.
+	  	  The only differences here are the hex, integer and 
+	  	boolean values she fed in as parameters to the function call.  </p>
+	  	<img src="../images/ScreenShot2014-12-13at22412PM.png" alt="orange chandelier with lipped edge and four branches">
+	    <img src="../images/ScreenShot2014-12-18at61157PM.png" alt="red chandelier with spherical edge and five branches">
 	  
 	    <p>Finally, we have some error-checking and exception handling that prevents 
 	    unwary users from accidentally breaking the build of their object.  In some cases, this means 
@@ -474,13 +474,26 @@ function stopAnimation() {
 	  	customizable, we have provided objects that are useful and extensible to ourselves
 	  	and anyone else interested in our designs.</p>
 	  	
-	  <h3>Video Animation</h3>
-	  <p></p>
 	  <h3>Curves</h3>
 	  <p></p>
 	  <h3>Reflecting Surfaces</h3>
 	  <p></p>
-	  <h3>Animation</h3>
+	  	
+	  <h3>Video Animation</h3>
+	  <p>Making the video in theory is simple, but its implementation required careful attention 
+	  to several crucial details.  In theory, one could substitute a jpg file with a 
+	  video file and map it onto a given surface.  However, video mapping requires video 
+	  files of only the type ogv.  Also, to minimize processing time, the video should not 
+	  be too large.  Finally, unless the video is handled as an animation and "run" elsewhere 
+	  in the page, the video will not run the appropriate place.  We solved these challenges 
+	  by finding an appropriate file we liked and converting it to ogv format, shortening its 
+	  length to two minutes.  Then, to solve the runtime issue, we initially ran the video 
+	  at the bottom of the page in addition to the spot in our scene, but the video we ran 
+	  below was purposefully hidden from the user's view so that it didn't appear.  Later 
+	  on, when we implemented the other animations, this solved the need to run the video 
+	  animation under the scene and so this code was removed. </p>
+
+	  <h3>Animation - Translation and Rotation</h3>
 	  <p>There are some very tough aspects of translating or rotating an object in three 
 	  dimensions, particularly when the object needs to be precisely translated.  The balls 
 	  rolling down the ramps are a particular challenge because it seems the compiler wants 
