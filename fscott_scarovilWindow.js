@@ -54,7 +54,7 @@ function createWindow(width, frameColor, fileName)  {
 	var frame = new THREE.Mesh(windowGeometry, basicMat);
 	window.add(frame);
 	
-	var view = createRainyDay(height, width, fileName);
+	var view = createView(height, width, fileName);
 	window.add(view);
 	
 	return window;
@@ -111,7 +111,7 @@ function createWindowFrameGeom (height, width, depth, thickness)  {
     geom.vertices.push(new THREE.Vector3((th/2), -h2+th, 0));
     geom.vertices.push(new THREE.Vector3(w2-th, -h2+th, 0));
     
-
+    
     // now that we've got the vertices we need to define the faces.
 	// Note:  the faces are one-sided.
     // outer faces
@@ -163,7 +163,7 @@ function createWindowFrameGeom (height, width, depth, thickness)  {
     return geom;
 }
 
-function createRainyDay(height, width, fileName) {
+function createView(height, width, fileName) {
 
 /*	Creates the view from the window. */
 
