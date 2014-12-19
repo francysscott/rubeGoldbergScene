@@ -122,8 +122,8 @@ Details available to change:
   //global variables for animation
   var marble;
   var marbleCam; 
-  var largeMarble;
-  var largeMarbleCam;
+  var shinyBall;
+  var shinyBallCam;
   var clothGeometry;
   
   TW.mainInit(renderer,scene);
@@ -205,10 +205,10 @@ Details available to change:
                     rampShininess: 20,
                     rampLip: false,
                     //large Marble
-                    largeMarbleRadius: 12,
-    				largeMarbleColor: 0x524CFD,
-    				largeMarbleSpecular: 0x222222,
-                    largeMarbleShininess: 5,
+                    shinyBallRadius: 12,
+    				shinyBallColor: 0x524CFD,
+    				shinyBallSpecular: 0x222222,
+                    shinyBallShininess: 5,
                     //small Marble
                     marbleRadius: 2,
     				marbleColor: 0x34AD5A,
@@ -239,16 +239,18 @@ Details available to change:
                     ambLightColor: 0x6F6F6F,
                     dirLightColor: 0xAAAAAA,
                     //animation
+                    deltaT: 1,        // time between steps, in arbitrary time units
+                    //animation for marble
                     marbleBouncePeriod: 3,  // time to bounce once, in arbitrary time units
    					maxMarbleHeight: 8, //max change in height as marble bounces
-   					largeMarbleVelocityX: 0.8,
-    				largeMarbleVelocityZ: 0.4,
-    				largeMarbleInitialX: 0,
-    				largeMarbleInitialY: 50,
-    				largeMarbleInitialZ: -140,
-    				largeMarbleAngularVelocity: TW.degrees2radians(3),
-    				largeMarbleInitialAngle: -Math.PI/4,   					
-       				deltaT: 0.01,        // time between steps, in arbitrary time units
+   					//animation for shiny ball
+   					shinyBallVelocityX: 80,
+    				shinyBallVelocityZ: 40,
+    				shinyBallInitialX: 70,
+    				shinyBallInitialZ: -120,
+    				shinyBallAngularVelocity: TW.degrees2radians(3),
+    				shinyBallInitialAngle: -Math.PI/4,   
+    				//to prevent errors					
                     lastElement : null
                   };
 
@@ -293,32 +295,31 @@ Details available to change:
   // Action! //
   /////////////
   var animationState = {
+    shinyBallAngle: sceneParams.shinyBallInitialAngle,
+    shinyBallRadius: sceneParams.shinyBallRadius,
+    shinyBallX: sceneParams.shinyBallInitialX,
+	shinyBallY: sceneParams.shinyBallInitialY,
+   	shinyBallZ: sceneParams.shinyBallInitialZ,
         	
-        	largeMarbleAngle: sceneParams.largeMarbleInitialAngle,
-        	largeMarbleRadius: sceneParams.largeMarbleRadius,
-        	largeMarbleX: sceneParams.largeMarbleInitialX,
-        	largeMarbleY: sceneParams.largeMarbleInitialY,
-        	largeMarbleZ: sceneParams.largeMarbleInitialZ,
-        	
-        	marbleHeight: sceneParams.maxMarbleHeight, // fall from highest height
+    marbleHeight: sceneParams.maxMarbleHeight, // fall from highest height
         
-        	time: 0,
-        	lastParam: null
+    time: 0,
+	lastParam: null
+	
     };
 
-  
   function oneStep() {
     updateState();
     render();
   }
   
-var animationId = null; 
+  var animationId = null; 
 
-function stopAnimation() {
+  function stopAnimation() {
     if( animationId != null ) {
         cancelAnimationFrame(animationId);
     }
-}
+  }
 
  function updateState() {
     // changes the time and everything in the state that depends on it
@@ -328,77 +329,75 @@ function stopAnimation() {
 
   function updateMarblePosition(time) {
   	
-  	//if ( time < 100) {
-    	var deltaAngle = sceneParams.largeMarbleAngularVelocity * sceneParams.deltaT;
-    	animationState.largeMarbleAngle += deltaAngle; // in radians
+    	var deltaAngle = sceneParams.shinyBallAngularVelocity * sceneParams.deltaT;
+    	animationState.shinyBallAngle += deltaAngle; // in radians
     	// if the ball w/ radius R rotates by r radians, the ball rolls R * r units but to the *left*
-   	 	animationState.largeMarbleX += -1 * sceneParams.largeMarbleRadius * deltaAngle;
-    	animationState.largeMarbleZ += 1 * sceneParams.largeMarbleRadius * deltaAngle;
-    	largeMarble.position.x = animationState.largeMarbleX;
-    	largeMarbleCam.position.x = largeMarble.position.x;
-    	largeMarble.position.z = animationState.largeMarbleZ;
-    	largeMarbleCam.position.z = largeMarble.position.z;
-    	largeMarble.rotateX(deltaAngle);
-    //}
-  
+   	 	animationState.shinyBallX += -1 * sceneParams.shinyBallRadius * deltaAngle;
+    	animationState.shinyBallZ += 1 * sceneParams.shinyBallRadius * deltaAngle;
+    	shinyBall.position.x = animationState.shinyBallX;
+    	shinyBallCam.position.x = shinyBall.position.x;
+    	shinyBall.position.z = animationState.shinyBallZ;
+    	shinyBallCam.position.z = shinyBall.position.z;
+    	shinyBall.rotateX(deltaAngle);
+    
   }
   
   
-  /*
-  The following is from the curtain example.  This code needs to be placed in the regular functions.
-  function animate() {
-
-				requestAnimationFrame( animate );
-
-				var time = Date.now();
-
-				windStrength = Math.cos( time / 7000 ) * 20 + 40;
-				windForce.set( Math.sin( time / 2000 ), Math.cos( time / 3000 ), Math.sin( time / 1000 ) ).normalize().multiplyScalar( windStrength );
-				arrow.setLength( windStrength );
-				arrow.setDirection( windForce );
-
-				simulate(time);
-				render();
-				stats.update();
-
-			}
-
-			function render() {
-
-				var timer = Date.now() * 0.0002;
-
-				var p = cloth.particles;
-
-				for ( var i = 0, il = p.length; i < il; i ++ ) {
-
-					clothGeometry.vertices[ i ].copy( p[ i ].position );
-
-				}
-
-				clothGeometry.computeFaceNormals();
-				clothGeometry.computeVertexNormals();
-
-				clothGeometry.normalsNeedUpdate = true;
-				clothGeometry.verticesNeedUpdate = true;
-
-				sphere.position.copy( ballPosition );
-
-				if ( rotate ) {
-
-					camera.position.x = Math.cos( timer ) * 1500;
-					camera.position.z = Math.sin( timer ) * 1500;
-
-				}
-
-				camera.lookAt( scene.position );
-
-				renderer.render( scene, camera );
-
-			}
-
-  
-  
-  */
+ // 
+//   The following is from the curtain example.  This code needs to be placed in the regular functions.
+//   function animate() {
+// 
+// 				requestAnimationFrame( animate );
+// 
+// 				var time = Date.now();
+// 
+// 				windStrength = Math.cos( time / 7000 ) * 20 + 40;
+// 				windForce.set( Math.sin( time / 2000 ), Math.cos( time / 3000 ), Math.sin( time / 1000 ) ).normalize().multiplyScalar( windStrength );
+// 				arrow.setLength( windStrength );
+// 				arrow.setDirection( windForce );
+// 
+// 				simulate(time);
+// 				render();
+// 				stats.update();
+// 
+// 			}
+// 
+// 			function render() {
+// 
+// 				var timer = Date.now() * 0.0002;
+// 
+// 				var p = cloth.particles;
+// 
+// 				for ( var i = 0, il = p.length; i < il; i ++ ) {
+// 
+// 					clothGeometry.vertices[ i ].copy( p[ i ].position );
+// 
+// 				}
+// 
+// 				clothGeometry.computeFaceNormals();
+// 				clothGeometry.computeVertexNormals();
+// 
+// 				clothGeometry.normalsNeedUpdate = true;
+// 				clothGeometry.verticesNeedUpdate = true;
+// 
+// 				sphere.position.copy( ballPosition );
+// 
+// 				if ( rotate ) {
+// 
+// 					camera.position.x = Math.cos( timer ) * 1500;
+// 					camera.position.z = Math.sin( timer ) * 1500;
+// 
+// 				}
+// 
+// 				camera.lookAt( scene.position );
+// 
+// 				renderer.render( scene, camera );
+// 
+// 			}
+// 
+//   
+//   
+//  
 
   function animate() 
   {
@@ -414,19 +413,22 @@ function stopAnimation() {
     marble.visible = true;
     
     //update large marble
-    largeMarble.visible = false;
-    largeMarbleCam.updateCubeMap(renderer, scene);
-    largeMarble.visible = true;
+    shinyBall.visible = false;
+    shinyBallCam.updateCubeMap(renderer, scene);
+    shinyBall.visible = true;
 
 	//update video
 	if (video.readyState === video.HAVE_ENOUGH_DATA) 
 	{
-		videoImageContext.drawImage(video, 0, 0);
-		if (videoTexture) videoTexture.needsUpdate = true;
+	  videoImageContext.drawImage(video, 0, 0);
+	  if (videoTexture) videoTexture.needsUpdate = true;
 	}
+	
+	//crucial part, this re-renders the scene.
 	renderer.render(scene, state.cameraObject); //re-render the scene using the TW camera
   }
   
+  //Keyboard call backs for ease of use
   TW.setKeyboardCallback("1",oneStep,"advance by one step");
   TW.setKeyboardCallback("g", animate, "go:  start animation");
   TW.setKeyboardCallback("s",stopAnimation,"stop animation");

@@ -83,21 +83,21 @@ function drawScene(sceneParams) {
 	marbleCam.name = "marbleCam";
 	scene.add(marbleCam);
     
-    //Create large marble and its camera
-    var ballSet = createShinyBall(sceneParams.largeMarbleColor, sceneParams.largeMarbleSpecular,
-    						 sceneParams.largeMarbleShininess, sceneParams.largeMarbleRadius );
-	largeMarble = ballSet[0];
-	largeMarbleCam = ballSet[1];
+    //Create large shiny ball and its camera
+    var ballSet = createShinyBall(sceneParams.shinyBallColor, sceneParams.shinyBallSpecular,
+    						 sceneParams.shinyBallShininess, sceneParams.shinyBallRadius );
+	shinyBall = ballSet[0];
+	shinyBallCam = ballSet[1];
     
     //add the large marble					 
-    largeMarble.position.set(-40, sceneParams.largeMarbleRadius, -43.5 );
-    largeMarble.name = "largeMarble";
-	scene.add(largeMarble);	
+    shinyBall.position.set(sceneParams.shinyBallInitialX, sceneParams.shinyBallRadius, sceneParams.shinyBallInitialZ);
+    shinyBall.name = "shinyBall";
+	scene.add(shinyBall);	
 	
-	//add the camera that makes the large marble reflective
-	largeMarbleCam.position.set(-40, sceneParams.largeMarbleRadius, -43.5 );
-	largeMarbleCam.name = "largeMarbleCam";
-	scene.add(largeMarbleCam);
+	//add the camera that makes the large ball reflective
+	shinyBallCam.position.set(-40, sceneParams.shinyBallRadius, -43.5 );
+	shinyBallCam.name = "shinyBallCam";
+	scene.add(shinyBallCam);
 	
 	//Create and place the chandelier
 	chand = createChandelier(sceneParams.chandelierHeight, 
