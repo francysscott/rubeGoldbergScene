@@ -59,6 +59,7 @@ Details available to change:
 	<script src="block.js"></script>
     <script src="fscott_scarovilSlide.js"></script>
     <script src="shelf.js"></script>
+    <script src="fscottSnowglobe.js"></script>
     <script src="drawScene.js"></script>
 
   </head>
@@ -196,6 +197,11 @@ Details available to change:
     				toyRocketFinColor:  0xFF00FF,
     				toyRocketThrusterColor:  0xFF8800,
     				toyRocketCabinColor:  0x0000FF,
+    				// snowglobe
+    				snowglobeHeight: 10,
+    				snowglobeGlassColor: 0xDDDDEE,
+    				snowglobeGlassOpacity: 0.4,
+    				snowglobeBaseColor: 0x00AABB,
     				//toy apple
     				appleHeight: 20,
                     //lights
@@ -409,6 +415,9 @@ function stopAnimation() {
 	  but in the end decided that a reflective marble was more visually interesting.  Here 
 	  is a closeup of the chandelier. </p>
 	  <img src="../images/ScreenShot2014-12-13at22412PM.png" alt="chandelier with lipped edge and four branches">
+	  <p>And just to keep it interesting, see if you can find a second example of 
+	  transparency.  We'll draw more attention to it in a few paragraphs in the 
+	  Dependencies section.</p>
 	  
 	  <h3>Reflections</h3>
 	  <p>Looking carefully, you can see that both the small marble and larger ball appear 
@@ -441,9 +450,11 @@ function stopAnimation() {
 	   contributions on the shelves of the room in the far right corner including a 
 	   penguin, apple and rocket. Not all "contrib" files were written such that they 
 	   could be easily called using just a quick function call, so in the end we did not 
-	   reference every student project.</p>
-	   <img src="../images/ScreenShot2014-12-15at120815PM.png" alt="close up of teapot and other shelf objects">
-	  
+	   reference every student project.  However, we did build a Snowglobe object that 
+	   can take any of these objects as input parameters so that one can make a snowglobe 
+	   out of it.  The globe is made of transparent glass material.</p>
+	   <img src="../images/ScreenShot2014-12-18at93039PM.png" alt="close up of teapot and other shelf objects">
+	   <img src="../images/ScreenShot2014-12-18at92722PM.png" alt="close up of teapot and other shelf objects">
 	  
 	  <h2>Challenges and Tricks</h2>
 	  <p> There were a number of challenges we solved, here listed in the order 

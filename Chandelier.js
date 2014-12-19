@@ -51,8 +51,7 @@
 	
 */               
 function createChandelier(inputHeight, numBranches, isLipped,
-							inputGlassColor, inputMetalColor, inputMetalShininess){
-							
+							inputGlassColor, inputMetalColor, inputMetalShininess){					
 	/** 
 	getSimpleGlobePoints()
 	Returns an array of values for the points to make a simple globe with open top.

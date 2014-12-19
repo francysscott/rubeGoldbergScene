@@ -198,11 +198,24 @@ function drawScene(sceneParams) {
     							sceneParams.toyRocketFinColor, 
     							sceneParams.toyRocketThrusterColor, 
     							sceneParams.toyRocketCabinColor);
-    toyRocket.scale.set(.5, .5, .5);
+    toyRocket.scale.set(.33, .33, .33);
     toyRocket.rotateX(Math.PI/2.25);
-    toyRocket.position.set(130, 150, -130);
+    //toyRocket.position.set(130, 150, -130);
     toyRocket.name = "toyRocket";
-    scene.add(toyRocket);
+    //scene.add(toyRocket);
+    
+    // Testing snowglobe with rocket
+    //var toyRocket2 = toyRocket.clone();
+    // 
+    var snowglobe = createSnowglobe(toyRocket, 
+    								sceneParams.snowglobeHeight, 
+    								sceneParams.snowglobeGlassColor, 
+    								sceneParams.snowglobeGlassOpacity, 
+    								sceneParams.snowglobeBaseColor);
+    snowglobe.name = "snowglobe";
+    snowglobe.position.set(130, 140, -130);
+    
+    scene.add(snowglobe);
     
     // Rebecca Scanlon and Cecille Yang's apple, from apple tree
     var toyApple = makeFullApple(sceneParams.appleHeight);
