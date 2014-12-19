@@ -79,7 +79,7 @@ Details available to change:
 	<p>Francys Scott and Susie Carovillano</p>
 	<p>Prof. Scott Anderson, CS307, Wellesley College, Fall 2014</p>
 	<p>Press "g" when you want the animation to start, "s" to stop, "1" if you prefer going step by 
-	step and "0" to reset.  Remember to turn on the sound!</p>
+	step. Remember to turn on the sound!</p>
 	
 
 	<script type="x-shader/x-fragment" id="fragmentShaderDepth">
@@ -118,6 +118,7 @@ Details available to change:
 
   var scene = new THREE.Scene(); 
   var renderer = new THREE.WebGLRenderer();
+  
   //global variables for animation
   var marble;
   var marbleCam; 
@@ -291,34 +292,26 @@ Details available to change:
   /////////////
   // Action! //
   /////////////
-  var animationState;
-  
-  function resetAnimationState() {
-  		animationState = {
+  var animationState = {
         	
-        	largeMarbleAngle: sceneParams.marbleInitialAngle,
-        	largeMarbleX: sceneParams.marbleInitialX,
-        	largeMarbleY: sceneParams.marbleInitialY,
-        	largeMarbleZ: sceneParams.marbleInitialZ,
+        	largeMarbleAngle: sceneParams.largeMarbleInitialAngle,
+        	largeMarbleRadius: sceneParams.largeMarbleRadius,
+        	largeMarbleX: sceneParams.largeMarbleInitialX,
+        	largeMarbleY: sceneParams.largeMarbleInitialY,
+        	largeMarbleZ: sceneParams.largeMarbleInitialZ,
         	
-        	marbleHeight: guiParams.maxMarbleHeight, // fall from highest height
+        	marbleHeight: sceneParams.maxMarbleHeight, // fall from highest height
         
         	time: 0,
         	lastParam: null
     };
-  };
-  
-  resetAnimationState();
+
   
   function oneStep() {
     updateState();
     render();
   }
   
-  function firstState() {
-    resetAnimationState();
-    TW.render();
-}
 var animationId = null; 
 
 function stopAnimation() {
@@ -327,27 +320,26 @@ function stopAnimation() {
     }
 }
 
+ function updateState() {
+    // changes the time and everything in the state that depends on it
+    animationState.time += sceneParams.deltaT;
+    updateMarblePosition(animationState.time);
+  }
+
   function updateMarblePosition(time) {
   	
-  	if ( marble.position.x < -40) {
-    	var A = new THREE.Vector3(0, sceneParams.rampHeight, 0);      // start of line
-    	var B = new THREE.Vector3(0, 0, sceneParams.rampLength);      // end of line
-    	var dir = new THREE.Vector3();
-    	dir.subVectors(B,A);                         // direction is B-A
-    	var P = new THREE.Vector3();
-   	 	P.copy(A);
-   	 	console.log("should be A" + P.x);
-    	//console.log("dir: " + dir);
-   		// console.log("time: " + time);
-    	P.lerp(dir,time); 
-    	console.log("dir: " + dir.x);
-		console.log("time: " + time);                           // compute P=A+dir*time
-    	console.log("p: " + P.x);
-    	largeMarble.position.copy(P);  
-    	largeMarble.position.z = -43.5;
-    	//largeMarble.position.x += -80;
-    	scene.add(P);    
-    }
+  	//if ( time < 100) {
+    	var deltaAngle = sceneParams.largeMarbleAngularVelocity * sceneParams.deltaT;
+    	animationState.largeMarbleAngle += deltaAngle; // in radians
+    	// if the ball w/ radius R rotates by r radians, the ball rolls R * r units but to the *left*
+   	 	animationState.largeMarbleX += -1 * sceneParams.largeMarbleRadius * deltaAngle;
+    	animationState.largeMarbleZ += 1 * sceneParams.largeMarbleRadius * deltaAngle;
+    	largeMarble.position.x = animationState.largeMarbleX;
+    	largeMarbleCam.position.x = largeMarble.position.x;
+    	largeMarble.position.z = animationState.largeMarbleZ;
+    	largeMarbleCam.position.z = largeMarble.position.z;
+    	largeMarble.rotateX(deltaAngle);
+    //}
   
   }
   
@@ -414,23 +406,15 @@ function stopAnimation() {
   	oneStep();
   }
 
-  function updateState() {
-    // changes the time and everything in the state that depends on it
-    animationState.time += sceneParams.deltaT;
-    updateMarblePosition(animationState.time);
-  }
-
   function render() 
   {	
     // update marble 
     marble.visible = false;
-    //updateState();
     marbleCam.updateCubeMap(renderer, scene);
     marble.visible = true;
     
     //update large marble
     largeMarble.visible = false;
-    //updateState();
     largeMarbleCam.updateCubeMap(renderer, scene);
     largeMarble.visible = true;
 
@@ -443,7 +427,6 @@ function stopAnimation() {
 	renderer.render(scene, state.cameraObject); //re-render the scene using the TW camera
   }
   
-  TW.setKeyboardCallback("0",firstState,"reset animation");
   TW.setKeyboardCallback("1",oneStep,"advance by one step");
   TW.setKeyboardCallback("g", animate, "go:  start animation");
   TW.setKeyboardCallback("s",stopAnimation,"stop animation");
