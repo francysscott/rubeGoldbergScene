@@ -94,8 +94,6 @@ function buildBaseGeom(height, lw)  {
 
 }
 
-
-
 function buildSlideGeom(height, length, width, isLipped)  {
 	var slideLength = Math.sqrt((height*height) + (length * length)); 
 	console.log("hypotenuse of "+height+" and "+length+" is "+slideLength);
@@ -106,13 +104,10 @@ function buildSlideGeom(height, length, width, isLipped)  {
 	};
 	
 	var slideShape = getSlideShape(width, isLipped);
-	
 	var slideGeom = new THREE.ExtrudeGeometry( slideShape, extrusionSettings );
 
 	return slideGeom;
 }
-
-
 
 function getSlideShape(scale, isLipped)  {
 	
@@ -145,8 +140,11 @@ function getSlideShape(scale, isLipped)  {
 		origPoints.push( new THREE.Vector2 (   scale * 0.4,  scale * -0.1 ) );
 		origPoints.push( new THREE.Vector2 (   scale * -0.4,  scale * -0.1 ) );
 		origPoints.push( new THREE.Vector2 (   scale * -0.5,  scale * 0 ) );
+<<<<<<< HEAD
 	}
+=======
+	}	
+>>>>>>> FETCH_HEAD
 		
 	return new THREE.Shape(origPoints);
-
 }

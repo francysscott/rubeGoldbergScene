@@ -24,8 +24,6 @@
 */
 function createRoom(height, wallTexture, ceilingTexture, floorTexture)  {
            
-    //BoxGeometry instead
-    //Creating the environment --> the room
 	var roomGeometry = new THREE.BoxGeometry(height * 1.5, // width 
 											height ,		// height 
 											height * 1.5);	// length 
@@ -35,11 +33,11 @@ function createRoom(height, wallTexture, ceilingTexture, floorTexture)  {
                                                 new THREE.UVMapping(),
                                                 TW.render );
 	
-	var stuccoCeiling = THREE.ImageUtils.loadTexture( ceilingTexture , // "stucco.jpg" or something similar
+	var ceiling = THREE.ImageUtils.loadTexture( ceilingTexture , // "stucco.jpg" or something similar
                                                 new THREE.UVMapping(),
                                                 TW.render );
 	
-	var woodFloor = THREE.ImageUtils.loadTexture( floorTexture ,  // "wood-pattern.jpg"
+	var floor = THREE.ImageUtils.loadTexture( floorTexture ,  // "wood-pattern.jpg"
                                                 new THREE.UVMapping(),
                                                 TW.render );
 	// Build the materials array
@@ -56,8 +54,8 @@ function createRoom(height, wallTexture, ceilingTexture, floorTexture)  {
         side: THREE.BackSide}));  // face only on the inside
 	}
 	
-	materialArray[2].map = stuccoCeiling;
-	materialArray[3].map = woodFloor;
+	materialArray[2].map = ceiling;
+	materialArray[3].map = floor;
 	
 	var roomMaterial = new THREE.MeshFaceMaterial(materialArray);
 	var room = new THREE.Mesh(roomGeometry, roomMaterial);

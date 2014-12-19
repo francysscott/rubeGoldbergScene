@@ -35,10 +35,12 @@
 	
 /**
 	createChandelier(inputHeight, numBranches, isLipped, inputGlassColor, inputMetalColor)
+	
 	Creates a chandelier based on user preference to height and width of object and 
-	user-specified colors/textures for the materials.  Note that the height is always 
+	user-specified colors for the materials.  Note that the height is always 
 	even, or gets changed to an even integer, because this affects the ability to 
-	calculate the sin wave for the branches.  (An odd integer breaks the equation.)
+	calculate the sine wave for the branches.  (An odd integer breaks the equation.)
+	
 	int height the overall height of the chandelier including mount and chain.  Note that 
 		if this number is even, the final height of the object is slightly adjusted in 
 		order to prevent a fatal error when calculating the sin curve for the arm.
@@ -179,20 +181,20 @@ function createChandelier(inputHeight, numBranches, isLipped,
 	/**
 	Creates whole branch including globe and arm.  Returns the branch object mesh.
 	*/
-	function createBranch(height, width, glassTexture, branchTexture, isLipped)  {
+	function createBranch(height, width, glassMaterial, branchMaterial, isLipped)  {
 		var branch = new THREE.Object3D();
 
 		// glass globe in which is a light                               		
 		var globeGeom = createGlobeGeom(height/3, width/4, isLipped);
-		var globe1 = new THREE.Mesh(globeGeom,glassTexture);
+		var globe1 = new THREE.Mesh(globeGeom,glassMaterial);
 	
 		// wood base for each globe, always lipped
 		var baseGeom = createGlobeGeom(height/8, width/5, true);
-		var base1 = new THREE.Mesh(baseGeom,branchTexture);
+		var base1 = new THREE.Mesh(baseGeom,branchMaterial);
 	
 		// arm that attaches globe to base and ceiling
 		var armGeom = createBranchGeom(height, width);
-		var arm1 = new THREE.Mesh(armGeom,branchTexture);
+		var arm1 = new THREE.Mesh(armGeom,branchMaterial);
 	
 		// position arm
 		arm1.rotateY(-Math.PI/2);
