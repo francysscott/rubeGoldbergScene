@@ -43,7 +43,7 @@
 	
 	int height the overall height of the chandelier including mount and chain.  Note that 
 		if this number is even, the final height of the object is slightly adjusted in 
-		order to prevent a fatal error when calculating the sin curve for the arm.
+		order to prevent a fatal error when calculating the sine curve for the arm.
 	int numBranches the number of lights and branches the user wants.  User should set 
 		2-6 branches.  If user sets more, defaults to 6; if fewer, defaults to 2.
 	bool isLipped whether the glass globes are lipped or spherical
@@ -152,7 +152,7 @@ function createChandelier(inputHeight, numBranches, isLipped,
 	*/
 	function createBranchGeom(height, width)  {
 
-		var CustomSinCurve = THREE.Curve.create(
+		var CustomSineCurve = THREE.Curve.create(
 			function ( scale ) { //custom curve constructor
 				// if no scale is specified, default scale is 1:1.
 				this.scale = (scale === undefined) ? 1 : scale;
@@ -167,7 +167,7 @@ function createChandelier(inputHeight, numBranches, isLipped,
 		);
 
 		// Build curve and return the values of the 2D curve.
-		var path = new CustomSinCurve( width/4 );
+		var path = new CustomSineCurve( width/4 );
 		var geometry = new THREE.TubeGeometry(
 			path,  				//path
 			width * 1.5,    	//segments
@@ -243,7 +243,7 @@ function createChandelier(inputHeight, numBranches, isLipped,
 	if (actualNumBranches < 2) {
 		actualNumBranches = 2;
 	}
-	// make sure that the size of the object is even (because the sin function needs it)
+	// make sure that the size of the object is even (because the sine function needs it)
 	// otherwise set height for user as slightly smaller
 	var height = inputHeight;
 	if (height%2 === 1) {

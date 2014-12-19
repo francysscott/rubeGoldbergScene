@@ -66,7 +66,7 @@ Details available to change:
   </head>
   <body>
   
-  <h1>CS307 Final Project:  Rube Goldberg Scene</h1>
+  <h1>CS307 Final Project:  Play</h1>
 	<p>Francys Scott and Susie Carovillano</p>
 	<p>Prof. Scott Anderson, CS307, Wellesley College, Fall 2014</p>
 	<p>Press "g" when you want the animation to start, "s" to stop, "1" if you prefer going step by 
@@ -266,7 +266,7 @@ Details available to change:
         	largeMarbleX: sceneParams.marbleInitialX,
         	largeMarbleY: sceneParams.marbleInitialY,
         	largeMarbleZ: sceneParams.marbleInitialZ,
-        	
+        
         	time: 0,
         	lastParam: null
     };
@@ -357,68 +357,71 @@ function stopAnimation() {
 
   </script>
   
+<!--   End of our graphics code.  -->
   
-  
-
-
-	
 	<p>Note:  all our screenshots should have the same filepath as our textures:
 	  "../images/example.png"  so that we can keep all our images together 
 	  easily in one spot.</p>
 	  
 	  <h2>Project Description:</h2>
 	  <p>This project is part of the CS304 course at Wellesley 
-	  College, Fall 2014.  It shows a lovely room with a window showing a rainy day 
+	  College, Fall 2014.  It shows a lovely playroom with a window showing a rainy day 
 	  outside. Inside the room there are a number of objects including an umbrella, table, 
 	  several balls and slides, and a set of shelves with small collectible items displayed.  
-	  Someone has arranged the balls, slides and wooden blocks so that they form a sort of 
-	  simple Rube Goldberg device, ready to go. </p>
+	  Someone has arranged the wooden blocks in a pyramid on the table and left toys 
+	  scattered around the room, including a bouncing marble and a rolling ball. </p>
 	  
 	  <h2>How it Works</h2>
 	  <p>This scene is written entirely in Javascript and utilizes the Threejs libraries 
 	  available online at http://threejs.org/.  </p>
+	  
 	  <h3>Project Structure</h3>
 	  <p>This project has a main (contained within this file), a drawScene file that 
 	  creates and places individual objects.  The main contains all the basic code for beginning 
 	  a project of this type, such as the setup and camera, as well as the lighting and 
 	  animation (because drawScene can't calculate the change in position for the 
-	  animated objects).  The main also has a large dictionary that stores all the important 
-	  data about each object in the scene especially user specifications such as color and 
-	  size preferences.  The drawScene function takes the sceneParams and builds each object 
-	  as specified, placing the objects into their correct locations.  It calls on the 
-	  create function for each individual object file.  Each create() function returns a 
-	  complete object mesh, ready to place in the scene.</p>
+	  animated objects).  The main also has a large dictionary called sceneParams that 
+	  stores all the important data about each object in the scene, especially user 
+	  specifications such as color and size preferences.  The drawScene function takes the
+	  sceneParams and builds each object as specified, placing the objects into their 
+	  correct locations.  It calls on the create function for each individual object file.
+	  Each create() function returns a complete object mesh, ready to place in the scene.</p>
 	  
 	  <h2>Details to Notice</h2>
+	  
 	  <h3>Interesting Geometries: Lathing, Extrusion, Bezier curves</h3>
 	  <p>We used lathing to build a number of objects including the globes of the 
 	  chandelier and the legs of the table.  However, the umbrella in the front left 
 	  corner of the room really demonstrates the clever use of the principle. While many 
 	  use lathing to make a seemingly smooth curve around the axis (as we did for the 
 	  table legs and the glass chandelier globes), this object is made of a lathe of 8 
-	  sides (an intentionally small number of sides for such a large object, and under 
-	  other circumstances considered too crude for a proper lathing) to effectively and 
-	  efficiently build the geometry of its canopy.  To emphasize the elegant nature of 
-	  this design choice, Susie texture mapped the object to a striped picture so that it  
-	  stands out as a very cheerful umbrella.  The umbrella is finished with a lovely 
-	  cylindrical handle, torus for the hook and hemisphere to round off the edge of 
+	  sides. This is an intentionally small number of sides for such a large object and under 
+	  other circumstances would be considered too crude for a proper lathing. This small 
+	  number was used to effectively and efficiently build the geometry of its canopy.  
+	  To emphasize the elegant nature of this design choice, Susie texture mapped the 
+	  object to a striped picture so that it stands out as a very cheerful umbrella.  
+	  The umbrella is finished with a lovely cylindrical handle that tapers a bit as it 
+	  nears the canopy, a torus for the hook, and hemisphere to round off the edge of 
 	  the hook. </p>
 	  <img src="../images/ScreenShot2014-12-13at22510PM.png" alt="close up of umbrella and handle">
 	  
-	  <p>There are also some curves courtesy of sin functions built into the chandelier.</p>
+	  <p>Another interesting geometry is the chandelier where there are some extruded 
+	  curves in the branches of the chandelier. Francys created these using a custom curve
+	  creator to create a sine function and extruded a tube along that path. 
+	  .</p>
 	  <img src="../images/ScreenShot2014-12-16at102001AM.png" alt="close up of chadelier curve">
 	  
 	  <p>We also use extrusions to build the little yellow slide and larger orange ramp in
 	  the scene.  The user can select whether she wants a lip on the each side of the 
-	  slide when creating the object.  (Technically the tubes used for the chandelier arms 
-	  are also extrusions, but the slides demonstrate extrusion of an unusual 2D shape.)</p>
+	  slide when creating the object.  The tubes used for the chandelier arms 
+	  are also extrusions, but the slides demonstrate extrusion of an unusual 2D shape.</p>
 	  <img src="../images/ScreenShot2014-12-16at103631AM.png" alt="close up of yello slide">
 	  
 	  
 	  <h3>Material, Texture and Lighting</h3>
 	  <p>As mentioned above, the umbrella has a lovely striped pattern.  We also applied 
 	  texture mapping to a number of other objects.  Below, you can see the delicate wood 
-	  textures on the table, wooden blocks and hardwood floor as well as the 
+	  textures on the table, wooden blocks, and hardwood floor as well as the 
 	  wallpaper in the room.  </p>
 	  <img src="../images/ScreenShot2014-12-15at73317PM.png" alt="close up of reflections in ball">
 	  <p>As for lighting, we use multiple kinds in our scene.  All objects have their own 
