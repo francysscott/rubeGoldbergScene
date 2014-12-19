@@ -83,18 +83,18 @@ function drawScene(sceneParams) {
 	marbleCam.name = "marbleCam";
 	scene.add(marbleCam);
     
-    //Create bowling ball and its camera
+    //Create large marble and its camera
     var ballSet = createShinyBall(sceneParams.largeMarbleColor, sceneParams.largeMarbleSpecular,
     						 sceneParams.largeMarbleShininess, sceneParams.largeMarbleRadius );
 	largeMarble = ballSet[0];
 	largeMarbleCam = ballSet[1];
     
-    //add the bowling ball					 
+    //add the large marble					 
     largeMarble.position.set(10, sceneParams.tableHeight, -43.5 );
     largeMarble.name = "largeMarble";
 	scene.add(largeMarble);	
 	
-	//add the camera that makes the bowling ball reflective
+	//add the camera that makes the large marble reflective
 	largeMarbleCam.position.set(10, (sceneParams.tableHeight + sceneParams.largeMarbleRadius), -43.5 );
 	largeMarbleCam.name = "largeMarbleCam";
 	scene.add(largeMarbleCam);
@@ -111,52 +111,52 @@ function drawScene(sceneParams) {
 	scene.add(chand);	 
   
     //Create and place blocks
-    var block1 = createBlock(sceneParams.blockColor, sceneParams.blockSpecular,
+    block1 = createBlock(sceneParams.blockColor, sceneParams.blockSpecular,
      						 sceneParams.blockShininess, sceneParams.blockSize,
      						 sceneParams.blockTexture );  
     block1.position.set(-30, sceneParams.tableHeight, -90);  
     block1.rotateY(Math.PI/2); 						 
     scene.add(block1);
     
-    var block2 = block1.clone();
+    block2 = block1.clone();
     block2.position.x += 8;
     scene.add(block2);
     
-    var block3 = block2.clone();
+    block3 = block2.clone();
     block3.position.x += 8;
     scene.add(block3);
     
-    var block4 = block3.clone();
+    block4 = block3.clone();
     block4.position.x += 8;
     scene.add(block4);
     
-    var block5 = block4.clone();
+    block5 = block4.clone();
     block5.position.x += 7;
     block5.position.z += 2;
     block5.rotateY(-Math.PI/6); 
     scene.add(block5);
     
-    var block6 = block5.clone();
+    block6 = block5.clone();
     block6.position.x += 6;
     block6.position.z += 3;
     block6.rotateY(-Math.PI/6); 
     scene.add(block6);
     
-    var block7 = block6.clone();
+    block7 = block6.clone();
     block7.position.x = 10;
     block7.position.z += 4;
     block7.rotateY(-Math.PI/6); 
     scene.add(block7);
     
-    var block8 = block7.clone();
+    block8 = block7.clone();
     block8.position.z += 7;
     scene.add(block8);
     
-    var block9 = block8.clone();
+    block9 = block8.clone();
     block9.position.z += 7;
     scene.add(block9);
     
-    var block10 = block9.clone();
+    block10 = block9.clone();
     block10.position.z += 7;
     scene.add(block10);
 
