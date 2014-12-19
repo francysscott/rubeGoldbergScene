@@ -28,6 +28,10 @@
   		shinyBallSpecular - color of specular light against ball
   		shinyBallShininess - shininess of ball
   		shinyBallSize	- scaling factor of ball
+  		
+  	It returns an array of size two.
+  		First element of array is the ball object.
+  		Second element is the ball camera.
  */
 
 function createShinyBall(shinyBallColor, shinyBallSpecular, shinyBallShininess, shinyBallSize) {
@@ -43,7 +47,6 @@ function createShinyBall(shinyBallColor, shinyBallSpecular, shinyBallShininess, 
 	var sphereGeom =  new THREE.SphereGeometry(shinyBallSize, 32, 16);
 	
 	var shinyBall = new THREE.Mesh(sphereGeom, shinyBallMat);
-	shinyBall.position.set(0, shinyBallSize, 0);
 	
 	var shinyBallFrame = new THREE.Object3D();
 	shinyBallFrame.add(shinyBall);

@@ -74,7 +74,7 @@ function drawScene(sceneParams) {
 	marbleCam = marbleSet[1];
     
     //add the marble					 
-    marble.position.set(-80, sceneParams.tableHeight + sceneParams.slideHeight, -90 );
+    marble.position.set(-80, sceneParams.tableHeight + sceneParams.slideHeight + sceneParams.marbleRadius, -90 );
     marble.name = "marble";
 	scene.add(marble);	
 	
@@ -90,7 +90,7 @@ function drawScene(sceneParams) {
 	largeMarbleCam = ballSet[1];
     
     //add the large marble					 
-    largeMarble.position.set(10, sceneParams.tableHeight, -43.5 );
+    largeMarble.position.set(10, sceneParams.tableHeight + sceneParams.largeMarbleRadius, -43.5 );
     largeMarble.name = "largeMarble";
 	scene.add(largeMarble);	
 	
