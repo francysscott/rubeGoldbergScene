@@ -45,6 +45,15 @@ Details available to change:
     <script src="http://cs.wellesley.edu/~cs307/threejs/libs/OrbitControls.js"></script>
     <script src="http://cs.wellesley.edu/~cs307/threejs/libs/tw.js"></script>
     <script src="http://cs.wellesley.edu/~cs307/threejs/libs/dat.gui.min.js"></script>
+    <!-- Scripts with our helper methods for cloth animation. -->
+
+  <!--  Don't seem to load threejs again
+	<script src="http://threejs.org/build/three.min.js"></script>
+  -->
+	<script src="http://threejs.org/examples/js/Detector.js"></script>
+	<script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
+	<script src="http://threejs.org/examples/js/Cloth.js"></script>
+
     <!-- Personal scripts with our helper methods for various objects. -->
     <script src="createBall.js"></script>
     <script src="fscottRoom.js"></script>
@@ -71,6 +80,39 @@ Details available to change:
 	<p>Prof. Scott Anderson, CS307, Wellesley College, Fall 2014</p>
 	<p>Press "g" when you want the animation to start, "s" to stop, "1" if you prefer going step by 
 	step and "0" to reset.  Remember to turn on the sound!</p>
+	
+
+	<script type="x-shader/x-fragment" id="fragmentShaderDepth">
+			// This script helps the cloth curtain animation to run
+			uniform sampler2D texture;
+			varying vec2 vUV;
+
+			vec4 pack_depth( const in float depth ) {
+				const vec4 bit_shift = vec4( 256.0 * 256.0 * 256.0, 256.0 * 256.0, 256.0, 1.0 );
+				const vec4 bit_mask  = vec4( 0.0, 1.0 / 256.0, 1.0 / 256.0, 1.0 / 256.0 );
+				vec4 res = fract( depth * bit_shift );
+				res -= res.xxyz * bit_mask;
+				return res;
+			}
+			void main() {
+				vec4 pixel = texture2D( texture, vUV );
+				if ( pixel.a < 0.5 ) discard;
+				gl_FragData[ 0 ] = pack_depth( gl_FragCoord.z );
+			}
+	</script>
+
+	<script type="x-shader/x-vertex" id="vertexShaderDepth">
+			// This script is also necessary for the cloth animation to run
+			varying vec2 vUV;
+			void main() {
+				vUV = 0.75 * uv;
+				vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+				gl_Position = projectionMatrix * mvPosition;
+			}
+
+	</script>
+
+
 
   <script id="prog">
 
@@ -81,6 +123,7 @@ Details available to change:
   var marbleCam; 
   var largeMarble;
   var largeMarbleCam;
+  var clothGeometry;
   
   TW.mainInit(renderer,scene);
 
@@ -359,9 +402,16 @@ function stopAnimation() {
   
 <!--   End of our graphics code.  -->
   
+<<<<<<< HEAD
 	<p>Note:  all our screenshots should have the same filepath as our textures:
 	  "../images/example.png"  so that we can keep all our images together 
 	  easily in one spot.</p>
+=======
+  
+
+
+	
+>>>>>>> FETCH_HEAD
 	  
 	  <h2>Project Description:</h2>
 	  <p>This project is part of the CS304 course at Wellesley 
