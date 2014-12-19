@@ -140,11 +140,7 @@ function getSlideShape(scale, isLipped)  {
 		origPoints.push( new THREE.Vector2 (   scale * 0.4,  scale * -0.1 ) );
 		origPoints.push( new THREE.Vector2 (   scale * -0.4,  scale * -0.1 ) );
 		origPoints.push( new THREE.Vector2 (   scale * -0.5,  scale * 0 ) );
-<<<<<<< HEAD
 	}
-=======
-	}	
->>>>>>> FETCH_HEAD
 		
 	return new THREE.Shape(origPoints);
 }
