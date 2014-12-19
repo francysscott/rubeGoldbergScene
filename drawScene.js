@@ -74,12 +74,12 @@ function drawScene(sceneParams) {
 	marbleCam = marbleSet[1];
     
     //add the marble					 
-    marble.position.set(-80, sceneParams.tableHeight + sceneParams.slideHeight + sceneParams.marbleRadius, -90 );
+    marble.position.set(20, sceneParams.tableHeight + sceneParams.marbleRadius, -50 );
     marble.name = "marble";
 	scene.add(marble);	
 	
 	//add the camera that makes the marble reflective
-	marbleCam.position.set(40, (sceneParams.tableHeight + sceneParams.slideHeight + sceneParams.marbleRadius), -60);
+	marbleCam.position.set(20, (sceneParams.tableHeight + sceneParams.marbleRadius), -50);
 	marbleCam.name = "marbleCam";
 	scene.add(marbleCam);
     
@@ -90,12 +90,12 @@ function drawScene(sceneParams) {
 	largeMarbleCam = ballSet[1];
     
     //add the large marble					 
-    largeMarble.position.set(10, sceneParams.tableHeight + sceneParams.largeMarbleRadius, -43.5 );
+    largeMarble.position.set(10, sceneParams.largeMarbleRadius, -43.5 );
     largeMarble.name = "largeMarble";
 	scene.add(largeMarble);	
 	
 	//add the camera that makes the large marble reflective
-	largeMarbleCam.position.set(10, (sceneParams.tableHeight + sceneParams.largeMarbleRadius), -43.5 );
+	largeMarbleCam.position.set(10, sceneParams.largeMarbleRadius, -43.5 );
 	largeMarbleCam.name = "largeMarbleCam";
 	scene.add(largeMarbleCam);
 	
@@ -111,53 +111,70 @@ function drawScene(sceneParams) {
 	scene.add(chand);	 
   
     //Create and place blocks
-    block1 = createBlock(sceneParams.blockColor, sceneParams.blockSpecular,
-     						 sceneParams.blockShininess, sceneParams.blockSize,
+    var blockSize = sceneParams.blockSize; //its own local variable because blockSize is used so often
+    
+    
+    //Arrange blocks in a pyramid shape
+    
+    //bottom left block
+    var block1 = createBlock(sceneParams.blockColor, sceneParams.blockSpecular,
+     						 sceneParams.blockShininess, blockSize,
      						 sceneParams.blockTexture );  
     block1.position.set(-30, sceneParams.tableHeight, -90);  
     block1.rotateY(Math.PI/2); 						 
     scene.add(block1);
     
-    block2 = block1.clone();
-    block2.position.x += 8;
+    //center bottom block
+    var block2 = block1.clone();
+    block2.position.x += (blockSize + 0.1 * blockSize);
     scene.add(block2);
     
-    block3 = block2.clone();
-    block3.position.x += 8;
+    //right bottom block
+    var block3 = block2.clone();
+    block3.position.x += blockSize;
     scene.add(block3);
     
-    block4 = block3.clone();
-    block4.position.x += 8;
+    //left bottom horizontal block
+    var block4 = block3.clone();
+    block4.position.x -= (blockSize - 0.05 * blockSize);
+    block4.position.y += blockSize;
+    block4.rotateX(-Math.PI/2);
     scene.add(block4);
     
-    block5 = block4.clone();
-    block5.position.x += 7;
-    block5.position.z += 2;
-    block5.rotateY(-Math.PI/6); 
+    // right bottom horizontal block
+    var block5 = block4.clone();
+    block5.position.x += (blockSize + 0.1 * blockSize);
     scene.add(block5);
     
-    block6 = block5.clone();
-    block6.position.x += 6;
-    block6.position.z += 3;
-    block6.rotateY(-Math.PI/6); 
+    //left middle vertical block
+    var block6 = block1.clone();
+    block6.position.x += (blockSize/2);
+    block6.position.y += (blockSize + 0.25 * blockSize);
     scene.add(block6);
     
-    block7 = block6.clone();
-    block7.position.x = 10;
-    block7.position.z += 4;
-    block7.rotateY(-Math.PI/6); 
+    //right middle vertical block
+    var block7 = block6.clone();
+    block7.position.x += blockSize;
     scene.add(block7);
     
-    block8 = block7.clone();
-    block8.position.z += 7;
+    //top horizontal block
+    var block8 = block4.clone();
+    block8.position.x += (blockSize/2);
+    block8.position.y += (blockSize + 0.25 * blockSize);
     scene.add(block8);
     
-    block9 = block8.clone();
-    block9.position.z += 7;
+    //top vertical block
+    var block9 = block2.clone();
+    block9.position.y += (blockSize * 2 + 0.5 * blockSize);
     scene.add(block9);
     
-    block10 = block9.clone();
-    block10.position.z += 7;
+    //on table
+    var block10 = block3.clone();
+    //place at an angle on the table in front of the other blocks
+    block10.position.x -= (blockSize / 6);
+    block10.position.z += (blockSize * 2);
+    block10.rotateX(-Math.PI/2);
+    block10.rotateZ(Math.PI/6);
     scene.add(block10);
 
     // create little slide using Slide function
@@ -168,8 +185,8 @@ function drawScene(sceneParams) {
                     sceneParams.slideColor,
                     sceneParams.slideShininess,
                     sceneParams.slideLip);
-    slide.position.set(-80, sceneParams.tableHeight, -90);
-    slide.rotateY(Math.PI/2);
+    slide.position.set(-80, sceneParams.tableHeight, -120);
+    slide.rotateY(Math.PI/5);
     slide.name = "slide";
     scene.add(slide);
     
@@ -181,7 +198,8 @@ function drawScene(sceneParams) {
                     sceneParams.rampColor,
                     sceneParams.rampShininess,
                     sceneParams.rampLip);
-    ramp.position.set(10, 0, -43.5);
+    ramp.position.set(100, 0, -50);
+    ramp.rotateY(-Math.PI/4);
     ramp.name = "ramp";
     scene.add(ramp);
     
