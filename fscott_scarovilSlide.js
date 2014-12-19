@@ -92,10 +92,6 @@ function buildBaseGeom(height, lw)  {
 	
 	return new THREE.BoxGeometry( lw, height, lw);
 	
-	
-	
-	
-	
 	var geom = new THREE.Geometry();
 	// Create vars for easy calculation of window frame coordinates.
     var w2 = 0.5*width;
@@ -193,13 +189,7 @@ function buildBaseGeom(height, lw)  {
 
     return geom;
 
-	
 }
-
-
-
-
-
 
 function buildSlideGeom(height, length, width, isLipped)  {
 	var slideLength = Math.sqrt((height*height) + (length * length)); 
@@ -211,13 +201,10 @@ function buildSlideGeom(height, length, width, isLipped)  {
 	};
 	
 	var slideShape = getSlideShape(width, isLipped);
-	
 	var slideGeom = new THREE.ExtrudeGeometry( slideShape, extrusionSettings );
 
 	return slideGeom;
 }
-
-
 
 function getSlideShape(scale, isLipped)  {
 	
@@ -250,16 +237,7 @@ function getSlideShape(scale, isLipped)  {
 		origPoints.push( new THREE.Vector2 (   scale * 0.4,  scale * -0.1 ) );
 		origPoints.push( new THREE.Vector2 (   scale * -0.4,  scale * -0.1 ) );
 		origPoints.push( new THREE.Vector2 (   scale * -0.5,  scale * 0 ) );
-	}
-		
-// 	var scaledPoints = [];
-//     for( var i=0; i<origPoints.length; i++ ) { // Puts points in new Vector2 array
-//         var p = new THREE.Vector2();
-//         p.x = origPoints[i][0];
-//         p.y = origPoints[i][1];;
-//         scaledPoints.push(p);
-//     }	
+	}	
 		
 	return new THREE.Shape(origPoints);
-
 }
