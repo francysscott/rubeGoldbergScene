@@ -44,11 +44,7 @@ function createBlock(blockColor, blockSpecular, blockShininess, size, blockTextu
     } else {
     	var wood = THREE.ImageUtils.loadTexture( blockTexture,
                                                 new THREE.UVMapping(),
-                                                TW.render );
-		wood.wrapS = THREE.RepeatWrapping;
-		wood.wrapT = THREE.RepeatWrapping;
-		wood.repeat.set( 1, 1 );
-	
+                                                TW.render );	
 		var blockMat = new THREE.MeshPhongMaterial( { color: blockColor,
 												   ambient: blockColor,
 												   specular: blockSpecular,

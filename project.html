@@ -1,6 +1,6 @@
 <!-- 
 Francys Scott and Susie Carovillano
-November 2014
+December 2014
 CS 307
 project.html
 
@@ -23,7 +23,8 @@ Details available to change:
 	teapot's size, shininess, and ambient, diffuse, and specular light interactions;
 	slide's height, length, color and lighting;
 	ramp's height, length, color and lighting;
-	marble's size, color and animation parameters;
+	small marble's size, color and animation parameters;
+	large marble's size, color and animation parameters;
 	ambient light's color;
 	and directional light's color.
 	
@@ -36,7 +37,7 @@ Details available to change:
       canvas {
           display: block;
           margin: 10px auto;
-          width: 800px;
+          width: 80%;
           height: 500px;
       }
     </style>
@@ -78,8 +79,8 @@ Details available to change:
   var renderer = new THREE.WebGLRenderer();
   var marble;
   var marbleCam; 
-  var bowlingBall;
-  var bowlingBallCam;
+  var largeMarble;
+  var largeMarbleCam;
   
   TW.mainInit(renderer,scene);
 
@@ -159,19 +160,19 @@ Details available to change:
                     rampColor: 0xFF8844,
                     rampShininess: 20,
                     rampLip: false,
-                    //bowling ball
-                    bowlingBallRadius: 12,
-    				bowlingBallColor: 0x524CFD,
-    				bowlingBallSpecular: 0x222222,
-                    bowlingBallShininess: 5,
-    				bowlingBallVelocityX: 0.8,
-    				bowlingBallVelocityZ: 0.4,
-    				bowlingBallInitialX: 0,
-    				bowlingBallInitialY: 50,
-    				bowlingBallInitialZ: -140,
-    				bowlingBallAngularVelocity: TW.degrees2radians(3),
-    				bowlingBallInitialAngle: -Math.PI/4,
-                    //marble
+                    //large Marble
+                    largeMarbleRadius: 12,
+    				largeMarbleColor: 0x524CFD,
+    				largeMarbleSpecular: 0x222222,
+                    largeMarbleShininess: 5,
+    				largeMarbleVelocityX: 0.8,
+    				largeMarbleVelocityZ: 0.4,
+    				largeMarbleInitialX: 0,
+    				largeMarbleInitialY: 50,
+    				largeMarbleInitialZ: -140,
+    				largeMarbleAngularVelocity: TW.degrees2radians(3),
+    				largeMarbleInitialAngle: -Math.PI/4,
+                    //small Marble
                     marbleRadius: 2,
     				marbleColor: 0x34AD5A,
     				marbleSpecular: 0x444444,
@@ -208,7 +209,7 @@ Details available to change:
                     ambLightColor: 0x6F6F6F,
                     dirLightColor: 0xAAAAAA,
                     //animation
-       				deltaT: 0.5,        // time between steps, in arbitrary time units
+       				deltaT: 0.01,        // time between steps, in arbitrary time units
                     lastElement : null
                   };
 
@@ -285,20 +286,44 @@ function stopAnimation() {
 }
 
   function updateMarblePosition(time) {
-    var deltaAngle = sceneParams.marbleAngularVelocity * sceneParams.deltaT;
-    animationState.marbleAngle += deltaAngle; // in radians
-    // if the ball w/ radius R rotates by r radians, the ball rolls R * r units but to the *left*
-    animationState.marbleX += -1 * sceneParams.marbleRadius * deltaAngle;
-    animationState.marbleZ += 1 * sceneParams.marbleRadius * deltaAngle;
-    
-    
-    marble.position.x = animationState.marbleX;
-    marbleCam.position.x = marble.position.x;
-    //marble.position.y = animationState.marbleY;
-    //marbleCam.position.y = marble.position.y;
-    marble.position.z = animationState.marbleZ;
-    marbleCam.position.z = marble.position.z;
-    marble.rotateX(deltaAngle);
+  	
+  	if ( marble.position.x < -40) {
+    	var A = new THREE.Vector3(0, sceneParams.rampHeight, 0);      // start of line
+    	var B = new THREE.Vector3(0, 0, sceneParams.rampLength);      // end of line
+    	var dir = new THREE.Vector3();
+    	dir.subVectors(B,A);                         // direction is B-A
+    	var P = new THREE.Vector3();
+   	 	P.copy(A);
+   	 	console.log("should be A" + P.x);
+    	//console.log("dir: " + dir);
+   		// console.log("time: " + time);
+    	P.lerp(dir,time); 
+    	console.log("dir: " + dir.x);
+		console.log("time: " + time);                           // compute P=A+dir*time
+    	console.log("p: " + P.x);
+    	largeMarble.position.copy(P);  
+    	largeMarble.position.z = -43.5;
+    	//largeMarble.position.x += -80;
+    	scene.add(P);    
+    }
+  
+  
+  
+  
+    // var deltaAngle = sceneParams.marbleAngularVelocity * sceneParams.deltaT;
+//     animationState.marbleAngle += deltaAngle; // in radians
+//     // if the ball w/ radius R rotates by r radians, the ball rolls R * r units but to the *left*
+//     animationState.marbleX += -1 * sceneParams.marbleRadius * deltaAngle;
+//     animationState.marbleZ += 1 * sceneParams.marbleRadius * deltaAngle;
+//     
+//     
+//     marble.position.x = animationState.marbleX;
+//     marbleCam.position.x = marble.position.x;
+//     //marble.position.y = animationState.marbleY;
+//     //marbleCam.position.y = marble.position.y;
+//     marble.position.z = animationState.marbleZ;
+//     marbleCam.position.z = marble.position.z;
+//     marble.rotateX(deltaAngle);
   }
 
   function animate() 
@@ -310,24 +335,22 @@ function stopAnimation() {
   function updateState() {
     // changes the time and everything in the state that depends on it
     animationState.time += sceneParams.deltaT;
-    if (animationState.time < 80) { 
-    	//updateMarblePosition(animationState.time);
-    }
+    updateMarblePosition(animationState.time);
   }
 
   function render() 
   {	
     // update marble 
     marble.visible = false;
-    updateState();
+    //updateState();
     marbleCam.updateCubeMap(renderer, scene);
     marble.visible = true;
     
-    //update bowling ball
-    bowlingBall.visible = false;
-    updateState();
-    bowlingBallCam.updateCubeMap(renderer, scene);
-    bowlingBall.visible = true;
+    //update large marble
+    largeMarble.visible = false;
+    //updateState();
+    largeMarbleCam.updateCubeMap(renderer, scene);
+    largeMarble.visible = true;
 
 	//update video
 	if (video.readyState === video.HAVE_ENOUGH_DATA) 

@@ -84,20 +84,20 @@ function drawScene(sceneParams) {
 	scene.add(marbleCam);
     
     //Create bowling ball and its camera
-    var ballSet = createShinyBall(sceneParams.bowlingBallColor, sceneParams.bowlingBallSpecular,
-    						 sceneParams.bowlingBallShininess, sceneParams.bowlingBallRadius );
-	bowlingBall = ballSet[0];
-	bowlingBallCam = ballSet[1];
+    var ballSet = createShinyBall(sceneParams.largeMarbleColor, sceneParams.largeMarbleSpecular,
+    						 sceneParams.largeMarbleShininess, sceneParams.largeMarbleRadius );
+	largeMarble = ballSet[0];
+	largeMarbleCam = ballSet[1];
     
     //add the bowling ball					 
-    bowlingBall.position.set(10, sceneParams.tableHeight, -43.5 );
-    bowlingBall.name = "bowlingBall";
-	scene.add(bowlingBall);	
+    largeMarble.position.set(10, sceneParams.tableHeight, -43.5 );
+    largeMarble.name = "largeMarble";
+	scene.add(largeMarble);	
 	
 	//add the camera that makes the bowling ball reflective
-	bowlingBallCam.position.set(10, (sceneParams.tableHeight + sceneParams.bowlingBallRadius), -43.5 );
-	bowlingBallCam.name = "bowlingBallCam";
-	scene.add(bowlingBallCam);
+	largeMarbleCam.position.set(10, (sceneParams.tableHeight + sceneParams.largeMarbleRadius), -43.5 );
+	largeMarbleCam.name = "largeMarbleCam";
+	scene.add(largeMarbleCam);
 	
 	//Create and place the chandelier
 	chand = createChandelier(sceneParams.chandelierHeight, 
