@@ -35,10 +35,10 @@
  */
 
 function createShinyBall(shinyBallColor, shinyBallSpecular, shinyBallShininess, shinyBallSize) {
-	// create additional camera for reflections
+	// Create additional camera for reflections
     var sphereCamera = new THREE.CubeCamera(0.1, 1000, 512);
 	
-	// create the ball
+	// Create the ball
 	var shinyBallMat = new THREE.MeshPhongMaterial( { color: shinyBallColor,
 												ambient: shinyBallColor,
 												specular: shinyBallSpecular, 
@@ -51,11 +51,8 @@ function createShinyBall(shinyBallColor, shinyBallSpecular, shinyBallShininess, 
 	var shinyBallFrame = new THREE.Object3D();
 	shinyBallFrame.add(shinyBall);
 	
-	//can only return a single object so we put the two needed objects into an array
+	// Can only return a single object so we put the two needed objects into an array
 	var objectArray = [shinyBallFrame, sphereCamera];
+	// Returns an array
 	return objectArray; 
 }
-
- 
-
- 

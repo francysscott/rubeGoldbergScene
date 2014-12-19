@@ -56,7 +56,7 @@ function drawScene(sceneParams) {
 	shelf2.position.set(100, 100, -150);
 	shelf2.name = "shelf2";
 	scene.add(shelf2);
-	
+		
 	//Create and place teapot
 	var teapot = createTeapot(sceneParams.teapotDiffuse, sceneParams.teapotAmbient, 
 							  sceneParams.teapotSpecular, sceneParams.teapotShininess,
