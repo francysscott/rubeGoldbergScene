@@ -37,8 +37,7 @@ function createSnowglobe(insideObject, height, glassColor, glassOpacity, baseCol
 	// create the overall snowglobe
 	var snowglobe = new THREE.Object3D();
 	
-	// create the textures of the glass and base 
-	// using user params
+	// create the materials of the glass and base using user params
 	var glassM = new THREE.MeshPhongMaterial({color: glassColor,
     										 ambient: glassColor,
     										 specular: 0xDDDDDD,
@@ -68,7 +67,3 @@ function createSnowglobe(insideObject, height, glassColor, glassOpacity, baseCol
 	
 	return snowglobe; 
 }
-
- 
-
- 
