@@ -116,9 +116,9 @@ Details available to change:
 
   <script id="prog">
 
-  //global variables for animation
   var scene = new THREE.Scene(); 
   var renderer = new THREE.WebGLRenderer();
+  //global variables for animation
   var marble;
   var marbleCam; 
   var largeMarble;
@@ -208,25 +208,11 @@ Details available to change:
     				largeMarbleColor: 0x524CFD,
     				largeMarbleSpecular: 0x222222,
                     largeMarbleShininess: 5,
-    				largeMarbleVelocityX: 0.8,
-    				largeMarbleVelocityZ: 0.4,
-    				largeMarbleInitialX: 0,
-    				largeMarbleInitialY: 50,
-    				largeMarbleInitialZ: -140,
-    				largeMarbleAngularVelocity: TW.degrees2radians(3),
-    				largeMarbleInitialAngle: -Math.PI/4,
                     //small Marble
                     marbleRadius: 2,
     				marbleColor: 0x34AD5A,
     				marbleSpecular: 0x444444,
-                    marbleShininess: 20,
-    				marbleVelocityX: 0.8,
-    				marbleVelocityZ: 0.4,
-    				marbleInitialX: 0,
-    				marbleInitialY: 80,
-    				marbleInitialZ: -140,
-    				marbleAngularVelocity: TW.degrees2radians(3),
-    				marbleInitialAngle: -Math.PI/4,
+                    marbleShininess: 20,    		
     				//shelves
     				shelfColor: 0xDDDDDD,
     				shelfSpecular: 0x333333,
@@ -252,6 +238,15 @@ Details available to change:
                     ambLightColor: 0x6F6F6F,
                     dirLightColor: 0xAAAAAA,
                     //animation
+                    marbleBouncePeriod: 3,  // time to bounce once, in arbitrary time units
+   					maxMarbleHeight: 8, //max change in height as marble bounces
+   					largeMarbleVelocityX: 0.8,
+    				largeMarbleVelocityZ: 0.4,
+    				largeMarbleInitialX: 0,
+    				largeMarbleInitialY: 50,
+    				largeMarbleInitialZ: -140,
+    				largeMarbleAngularVelocity: TW.degrees2radians(3),
+    				largeMarbleInitialAngle: -Math.PI/4,   					
        				deltaT: 0.01,        // time between steps, in arbitrary time units
                     lastElement : null
                   };
@@ -300,15 +295,13 @@ Details available to change:
   
   function resetAnimationState() {
   		animationState = {
-        	marbleAngle: sceneParams.marbleInitialAngle,
-        	marbleX: sceneParams.marbleInitialX,
-        	marbleY: sceneParams.marbleInitialY,
-        	marbleZ: sceneParams.marbleInitialZ,
         	
         	largeMarbleAngle: sceneParams.marbleInitialAngle,
         	largeMarbleX: sceneParams.marbleInitialX,
         	largeMarbleY: sceneParams.marbleInitialY,
         	largeMarbleZ: sceneParams.marbleInitialZ,
+        	
+        	marbleHeight: guiParams.maxMarbleHeight, // fall from highest height
         
         	time: 0,
         	lastParam: null
@@ -402,17 +395,10 @@ function stopAnimation() {
   
 <!--   End of our graphics code.  -->
   
-<<<<<<< HEAD
-	<p>Note:  all our screenshots should have the same filepath as our textures:
+<p>Note:  all our screenshots should have the same filepath as our textures:
 	  "../images/example.png"  so that we can keep all our images together 
 	  easily in one spot.</p>
-=======
   
-
-
-	
->>>>>>> FETCH_HEAD
-	  
 	  <h2>Project Description:</h2>
 	  <p>This project is part of the CS304 course at Wellesley 
 	  College, Fall 2014.  It shows a lovely playroom with a window showing a rainy day 
@@ -505,7 +491,7 @@ function stopAnimation() {
 	  
 	  <h3>Animations</h3>
 	  <p>We have several animations occurring throughout our work.  Most obvious are the 
-	  balls on the table as they each travel down slides or ramps.</p>
+	  marble on the table it bounces or the large shiny ball that rolls across the floor.</p>
 	  <p>Additionally, we used texture mapping with an ogv file to build a window with a 
 	  video of a rainy day.  Listen carefully when you start the animation and you can 
 	  hear the rain!  The change in these stills is easiest to see when looking at the 
