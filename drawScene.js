@@ -253,5 +253,35 @@ function drawScene(sceneParams) {
 	scene.add(window);
 	
 	
+	// Add the curtain.
+	// cloth material
+// 	var clothTexture = THREE.ImageUtils.loadTexture( sceneParams.umbrellaTexture );
+// 	clothTexture.wrapS = clothTexture.wrapT = THREE.RepeatWrapping;
+// 	clothTexture.anisotropy = 16;
+// 
+// 	var clothMaterial = new THREE.MeshPhongMaterial( { alphaTest: 0.5, ambient: 0xffffff, color: 0xffffff, specular: 0x030303, emissive: 0x111111, shiness: 10, map: clothTexture, side: THREE.DoubleSide } );
+// 
+// 	// cloth geometry
+// 	clothGeometry = new THREE.ParametricGeometry( clothFunction, cloth.w, cloth.h );
+// 	clothGeometry.dynamic = true;
+// 	clothGeometry.computeFaceNormals();
+// 
+// 	var uniforms = { texture:  { type: "t", value: clothTexture } };
+// 	var vertexShader = document.getElementById( 'vertexShaderDepth' ).textContent;
+// 	var fragmentShader = document.getElementById( 'fragmentShaderDepth' ).textContent;
+// 
+// 	// cloth mesh
+// 
+// 	object = new THREE.Mesh( clothGeometry, clothMaterial );
+// 	object.position.set( 0, 0, 0 );
+// 	object.castShadow = true;
+// 	object.receiveShadow = true;
+// 	scene.add( object );
+// 
+// 	object.customDepthMaterial = new THREE.ShaderMaterial( { uniforms: uniforms, vertexShader: vertexShader, fragmentShader: fragmentShader } );
+
+			
+	
+	
     TW.render();
   }
