@@ -4,10 +4,11 @@ November 2014
 CS 307
 project.html
 
-Update the description below
-
-Creates a room with a a ball, umbrella, table with lathed legs, teapot, and a window
-with the sounds and view of a rainy day. (Note: Textures make take a little 
+Creates a room with a ball, umbrella, table with lathed legs, balls, slides, wooden 
+blocks, teapot, and a window with the sounds and view of a rainy day.  There are also a 
+number of objects including a set of shelves with small collectible items displayed.  
+Someone has arranged the balls, slides and wooden blocks so that they form a sort of 
+ simple Rube Goldberg device, ready to go. (Note: Textures make take a little 
 while to properly load and render.)
 
 Manipulate the sceneParams to change the scene's details.
@@ -45,7 +46,7 @@ Details available to change:
     <script src="http://cs.wellesley.edu/~cs307/threejs/libs/dat.gui.min.js"></script>
     <!-- Personal scripts with our helper methods for various objects. -->
     <script src="createBall.js"></script>
-    <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/fscottRoom.js"></script>
+    <script src="fscottRoom.js"></script>
     <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/fscottTable.js"></script>
     <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/scarovilUmbrella.js"></script>
     <script src="http://cs.wellesley.edu/~cs307/threejs/contrib/fscott_scarovilWindow.js"></script>
@@ -66,8 +67,8 @@ Details available to change:
   <h1>CS307 Final Project:  Rube Goldberg Scene</h1>
 	<p>Francys Scott and Susie Carovillano</p>
 	<p>Prof. Scott Anderson, CS307, Wellesley College, Fall 2014</p>
-	<p>Press "g" when you want the animation to start, or "1" if you prefer going step by 
-	step.  Remember to turn on the sound also!</p>
+	<p>Press "g" when you want the animation to start, "s" to stop, "1" if you prefer going step by 
+	step and "0" to reset.  Remember to turn on the sound!</p>
 
   <script id="prog">
 
@@ -347,13 +348,26 @@ function stopAnimation() {
 	  
 	  <h2>Project Description:</h2>
 	  <p>This project is part of the CS304 course at Wellesley 
-	  College, Fall 2014.  </p>
+	  College, Fall 2014.  It shows a lovely room with a window showing a rainy day 
+	  outside. Inside the room there are a number of objects including an umbrella, table, 
+	  several balls and slides, and a set of shelves with small collectible items displayed.  
+	  Someone has arranged the balls, slides and wooden blocks so that they form a sort of 
+	  simple Rube Goldberg device, ready to go. </p>
 	  
 	  <h2>How it Works</h2>
-	  <p>Uses Threejs</p>
+	  <p>This scene is written entirely in Javascript and utilizes the Threejs libraries 
+	  available online at http://threejs.org/.  </p>
 	  <h3>Project Structure</h3>
-	  <h3>Individual Objects</h3>
-	  <h3>Object Placement and Interaction</h3>
+	  <p>This project has a main (contained within this file), a drawScene file that 
+	  creates and places individual objects.  The main contains all the basic code for beginning 
+	  a project of this type, such as the setup and camera, as well as the lighting and 
+	  animation (because drawScene can't calculate the change in position for the 
+	  animated objects).  The main also has a large dictionary that stores all the important 
+	  data about each object in the scene especially user specifications such as color and 
+	  size preferences.  The drawScene function takes the sceneParams and builds each object 
+	  as specified, placing the objects into their correct locations.  It calls on the 
+	  create function for each individual object file.  Each create() function returns a 
+	  complete object mesh, ready to place in the scene.</p>
 	  
 	  <h2>Details to Notice</h2>
 	  <h3>Interesting Geometries: Lathing, Extrusion, Bezier curves</h3>
@@ -365,7 +379,7 @@ function stopAnimation() {
 	  sides (an intentionally small number of sides for such a large object, and under 
 	  other circumstances considered too crude for a proper lathing) to effectively and 
 	  efficiently build the geometry of its canopy.  To emphasize the elegant nature of 
-	  this design choice, Susie texture mapped the object to a striped picture so that it really 
+	  this design choice, Susie texture mapped the object to a striped picture so that it  
 	  stands out as a very cheerful umbrella.  The umbrella is finished with a lovely 
 	  cylindrical handle, torus for the hook and hemisphere to round off the edge of 
 	  the hook. </p>
@@ -502,8 +516,12 @@ function stopAnimation() {
 	  seemingly slight rounding error actually affects the ball's y position so strongly 
 	  that the ball falls through the slide's bottom.</p>
 	  <h3>Incorporating Others' Work</h3>
-	  <p></p>
+	  <p> We tried to use other students' contrib files to decorate the shelves of our 
+	  scene, but some of the contrib files require more than just a function call.  Since 
+	  the focus of this final project is to create new content, we decided to focus on our 
+	  objects and new animation content.</p>
 	  
+	  <h3>Copyright 2014 Susie Carovillano and Francys Scott</h3>
 	  
 	  
   </body>
