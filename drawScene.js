@@ -74,12 +74,12 @@ function drawScene(sceneParams) {
 	marbleCam = marbleSet[1];
     
     //add the marble					 
-    marble.position.set(20, sceneParams.tableHeight + sceneParams.marbleRadius, -50 );
+    marble.position.set(20, sceneParams.tableHeight + sceneParams.marbleRadius, -70 );
     marble.name = "marble";
 	scene.add(marble);	
 	
 	//add the camera that makes the marble reflective
-	marbleCam.position.set(20, (sceneParams.tableHeight + sceneParams.marbleRadius), -50);
+	marbleCam.position.set(20, (sceneParams.tableHeight + sceneParams.marbleRadius), -70);
 	marbleCam.name = "marbleCam";
 	scene.add(marbleCam);
     
@@ -90,12 +90,12 @@ function drawScene(sceneParams) {
 	largeMarbleCam = ballSet[1];
     
     //add the large marble					 
-    largeMarble.position.set(10, sceneParams.largeMarbleRadius, -43.5 );
+    largeMarble.position.set(-40, sceneParams.largeMarbleRadius, -43.5 );
     largeMarble.name = "largeMarble";
 	scene.add(largeMarble);	
 	
 	//add the camera that makes the large marble reflective
-	largeMarbleCam.position.set(10, sceneParams.largeMarbleRadius, -43.5 );
+	largeMarbleCam.position.set(-40, sceneParams.largeMarbleRadius, -43.5 );
 	largeMarbleCam.name = "largeMarbleCam";
 	scene.add(largeMarbleCam);
 	
