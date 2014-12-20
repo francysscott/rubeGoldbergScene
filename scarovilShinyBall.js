@@ -34,16 +34,27 @@
   		Second element is the ball camera.
  */
 
-function createShinyBall(shinyBallColor, shinyBallSpecular, shinyBallShininess, shinyBallSize) {
+function createShinyBall(shinyBallColor, shinyBallSpecular, shinyBallShininess, shinyBallSize, bumpMapImage) {
 	// Create additional camera for reflections
     var sphereCamera = new THREE.CubeCamera(0.1, 1000, 512);
 	
 	// Create the ball
-	var shinyBallMat = new THREE.MeshPhongMaterial( { color: shinyBallColor,
+	if (bumpMapImage == undefined) {
+		var shinyBallMat = new THREE.MeshPhongMaterial( { color: shinyBallColor,
 												ambient: shinyBallColor,
 												specular: shinyBallSpecular, 
 												envMap: sphereCamera.renderTarget, //this makes the shinyBall reflective
 												shininess: shinyBallShininess} );
+	}
+	else {
+		var shinyBallMat = new THREE.MeshPhongMaterial( { color: shinyBallColor,
+												ambient: shinyBallColor,
+												specular: shinyBallSpecular, 
+												envMap: sphereCamera.renderTarget, //this makes the shinyBall reflective
+												shininess: shinyBallShininess,
+												bumpMap: THREE.ImageUtils.loadTexture(bumpMapImage),
+												bumpScale: 0.05} );
+	}
 	var sphereGeom =  new THREE.SphereGeometry(shinyBallSize, 32, 16);
 	
 	var shinyBall = new THREE.Mesh(sphereGeom, shinyBallMat);

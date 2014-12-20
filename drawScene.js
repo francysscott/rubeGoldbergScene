@@ -74,7 +74,7 @@ function drawScene(sceneParams) {
 	marbleCam = marbleSet[1];
     
     //add the marble					 
-    marble.position.set(20, sceneParams.tableHeight + sceneParams.marbleRadius, -70 );
+    marble.position.set(sceneParams.marbleInitialX, sceneParams.tableHeight + sceneParams.marbleRadius, -70 );
     marble.name = "marble";
 	scene.add(marble);	
 	
@@ -85,11 +85,11 @@ function drawScene(sceneParams) {
     
     //Create large shiny ball and its camera
     var ballSet = createShinyBall(sceneParams.shinyBallColor, sceneParams.shinyBallSpecular,
-    						 sceneParams.shinyBallShininess, sceneParams.shinyBallRadius );
+    						 sceneParams.shinyBallShininess, sceneParams.shinyBallRadius, '../images/scratches.jpg');
 	shinyBall = ballSet[0];
 	shinyBallCam = ballSet[1];
     
-    //add the large marble					 
+    //add the large marble		
     shinyBall.position.set(sceneParams.shinyBallInitialX, sceneParams.shinyBallRadius, sceneParams.shinyBallInitialZ);
     shinyBall.name = "shinyBall";
 	scene.add(shinyBall);	

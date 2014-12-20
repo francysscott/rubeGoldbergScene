@@ -241,15 +241,18 @@ Details available to change:
                     //animation
                     deltaT: 1,        // time between steps, in arbitrary time units
                     //animation for marble
-                    marbleBouncePeriod: 3,  // time to bounce once, in arbitrary time units
-   					maxMarbleHeight: 8, //max change in height as marble bounces
+                    marbleBouncePeriod: 20,  // time to bounce once, in arbitrary time units
+   					maxMarbleHeight: 20, //max change in height as marble bounces
+   					marbleVelocityX: -0.2,
+   					marbleInitialX: 20,
+   					marbleBounceFactor: 0.95,
+   					marbleDecayRate: 0.993, //decay of velocity in X direction
    					//animation for shiny ball
-   					shinyBallVelocityX: 80,
-    				shinyBallVelocityZ: 40,
     				shinyBallInitialX: 70,
     				shinyBallInitialZ: -120,
     				shinyBallAngularVelocity: TW.degrees2radians(3),
     				shinyBallInitialAngle: -Math.PI/4,   
+    				shinyBallDecayRate: 0.996, //decay of angular velocity
     				//to prevent errors					
                     lastElement : null
                   };
@@ -297,11 +300,13 @@ Details available to change:
   var animationState = {
     shinyBallAngle: sceneParams.shinyBallInitialAngle,
     shinyBallRadius: sceneParams.shinyBallRadius,
+    shinyBallAngularVelocity: sceneParams.shinyBallAngularVelocity,
     shinyBallX: sceneParams.shinyBallInitialX,
 	shinyBallY: sceneParams.shinyBallInitialY,
    	shinyBallZ: sceneParams.shinyBallInitialZ,
         	
     marbleHeight: sceneParams.maxMarbleHeight, // fall from highest height
+    marbleVelocityX: sceneParams.marbleVelocityX,
         
     time: 0,
 	lastParam: null
@@ -324,12 +329,53 @@ Details available to change:
  function updateState() {
     // changes the time and everything in the state that depends on it
     animationState.time += sceneParams.deltaT;
-    updateMarblePosition(animationState.time);
+    
+    if (Math.abs(animationState.marbleVelocityX) > 0.05) {  
+    	//Math.abs is needed because the velocity is negative
+    	
+    	//this means the marble stops after it has significantly slowed down
+    	//as if it was stopped by friction
+    	updateMarblePosition(animationState.time);
+    	console.log("go");
+    	}
+    if(animationState.shinyBallAngularVelocity > 0.005){
+    	//this stops the shiny ball once it has significantly slowed down
+    	updateShinyBallPosition(animationState.time);
+    	
+    }
   }
 
   function updateMarblePosition(time) {
-  	
-    	var deltaAngle = sceneParams.shinyBallAngularVelocity * sceneParams.deltaT;
+  		//slows the marble down (like friction)
+  		animationState.marbleVelocityX *= sceneParams.marbleDecayRate;
+  		
+  		// local function needed for calculating height in bounce
+  		TW.linearMap = function(x,minx,maxx,miny,maxy) {
+    	//Transforms x from [minx,maxx] to y in [miny,maxy]
+   	 	//t is in [0,1]
+    	t = (x-minx)/(maxx-minx);
+    	y = t*(maxy-miny)+miny;
+    	return y;
+		};
+		
+    	//rescale the Time dimension so that P, the period of bouncing, maps to pi
+    	var angle = time * Math.PI / sceneParams.marbleBouncePeriod; 
+    	var abs_cos = Math.abs(Math.cos(angle));
+    	var decay = Math.pow(sceneParams.marbleBounceFactor,time);
+   	 	var height = abs_cos * decay
+   		var newHeight = TW.linearMap(height, 0, 1, sceneParams.marbleRadius, sceneParams.maxMarbleHeight);
+   		console.log("newHeight: " + decay);
+    	marble.position.y = newHeight + sceneParams.tableHeight;
+    	marbleX = sceneParams.marbleInitialX + animationState.marbleVelocityX * time;
+    	marble.position.x = marbleX;
+    	animationState.marbleHeight = newHeight;
+  }
+  
+  function updateShinyBallPosition(time) {
+  		//slows the shiny ball down(like friction)
+  		animationState.shinyBallAngularVelocity *= sceneParams.shinyBallDecayRate;
+  		
+    	var deltaAngle = animationState.shinyBallAngularVelocity * sceneParams.deltaT;
     	animationState.shinyBallAngle += deltaAngle; // in radians
     	// if the ball w/ radius R rotates by r radians, the ball rolls R * r units but to the *left*
    	 	animationState.shinyBallX += -1 * sceneParams.shinyBallRadius * deltaAngle;
