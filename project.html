@@ -577,16 +577,18 @@ Details available to change:
 	  maps, you can see slight reflections of other objects in the room. The reflections
 	  are blurred due to the bump map. In the small green marble you can see the 
 	  reflections very clearly. In the image below you can see the reflections of,
-	  from the left to right, the umbrella, window, chandelier, little yellow 
-	  slide with green marble, series of wooden blocks and shelves with the teapot.  Take 
-	  a look at the reflections during the animation, and you'll also see that the 
-	  reflections adjust to mirror the ball's position in the room and the state of the 
-	  video in the window. (You can watch the video through its reflection in the ball!)</p>
+	  from the left to right, the shelves and the objects on them, the chandelier, the 
+	  pyramid of blocks, the curtain, and the window. Take a look at the reflections 
+	  during the animation, and you'll also see that the reflections adjust to mirror the 
+	  ball's position in the room and the state of the video in the window. You can even
+	  watch the video through its reflection in the ball!</p>
 	  <img src="../images/reflections.png" alt="close up of reflections in marble" style="width:480px;height:320px">
 	  
 	  <h3>Animations</h3>
 	  <p>We have several animations occurring throughout our work.  Most obvious are the 
-	  marble on the table it bounces or the large shiny ball that rolls across the floor.</p>
+	  marble on the table it bounces and moves towards the window and the large shiny ball
+	  that rolls across the floor. Both of these balls gradually slow down and then stop.
+	  This was done using a decay rate to simulate the effects of friction.</p>
 	  <p>Additionally, we used texture mapping with an ogv file to build a window with a 
 	  video of a rainy day.  Listen carefully when you start the animation and you can 
 	  hear the rain!  The change in these stills is easiest to see when looking at the 
@@ -597,8 +599,8 @@ Details available to change:
 	  
 	  <h3>Dependencies and Function Calls to Others' Work</h3>
 	  <p>In an homage to the history of computer graphics, we uploaded and used an svg 
-	  file with the original teapot's parameters to include it in the scene.  
-	  Additionally, we referenced various other projects by other students of this course,
+	   file with the original teapot's parameters to include it in the scene.  
+	   Additionally, we referenced various other projects by other students of this course,
 	   and included a number of items from the public "contrib" library to which all 
 	   students donated some object.  You can see the teapot and the student 
 	   contributions on the shelves of the room in the far right corner including a 
@@ -607,8 +609,8 @@ Details available to change:
 	   reference every student project.  However, we did build a Snowglobe object that 
 	   can take any of these objects as input parameters so that one can make a snowglobe 
 	   out of it.  The globe is made of transparent glass material.</p>
-	   <img src="../images/ScreenShot2014-12-18at93039PM.png" alt="close up of teapot and other shelf objects" style="width:480px;height:320px">
-	   <img src="../images/ScreenShot2014-12-18at92722PM.png" alt="close up of snow globe with embedded toy" style="width:480px;height:320px">
+	   <img src="../images/shelves.png" alt="close up of teapot and other shelf objects" style="width:480px;height:320px">
+	   <img src="../images/snowglobe.png" alt="close up of snow globe with embedded toy" style="width:480px;height:320px">
 	  
 	  <h2>Challenges and Tricks</h2>
 	  <p> There were a number of challenges we solved, here listed in the order 
@@ -640,8 +642,8 @@ Details available to change:
 	  	a spherical globe and five branches where the glass is red and the metal is silver.
 	  	  The only differences here are the hex, integer and 
 	  	boolean values she fed in as parameters to the function call.  </p>
-	  	<img src="../images/ScreenShot2014-12-13at22412PM.png" alt="orange chandelier with lipped edge and four branches">
-	    <img src="../images/ScreenShot2014-12-18at61157PM.png" alt="red chandelier with spherical edge and five branches">
+	  	<img src="../images/orangeChandelier.png" alt="orange chandelier with lipped edge and four branches" style="width:480px;height:320px">
+	    <img src="../images/redChandelier.png" alt="red chandelier with spherical edge and five branches" style="width:480px;height:320px">
 	  
 	    <p>Finally, we have some error-checking and exception handling that prevents 
 	    unwary users from accidentally breaking the build of their object.  In some cases, this means 
