@@ -665,12 +665,12 @@ Details available to change:
 
 	  <h3>Animation - Translation and Rotation</h3>
 	  <p>There are some very tough aspects of translating or rotating an object in three 
-	  dimensions, particularly when the object needs to be precisely translated.  The balls 
-	  rolling down the ramps are a particular challenge because it seems the compiler wants 
-	  to add delta t of 0.00999999999999999 for every step instead of adding 0.01.  (We think 
-	  this is a result of the way that the machine stores fractions in memory.)  This 
-	  seemingly slight rounding error actually affects the ball's y position so strongly 
-	  that the ball falls through the slide's bottom.</p>
+	  dimensions, particularly when the object needs to be precisely translated. Trying to
+	  get the balls to roll down the ramps was a particular challenge because it seems the
+	  compiler wants to add delta t of 0.00999999999999999 for every step instead of 
+	  adding 0.01. We think this is a result of the way that the machine stores fractions
+	  in memory. This seemingly slight rounding error actually affects the ball's y 
+	  position so strongly that the ball falls through the slide's bottom.</p>
 	  <p>Translation of reflective objects are doubly complicated because the inner cube 
 	  camera located inside the object must also move and record new images to map.  
 	  Otherwise, the ball moves but its reflections remain static.  Once this problem is 
@@ -689,6 +689,20 @@ Details available to change:
 	  scene, but some of the contrib files require more than just a function call.  Since 
 	  the focus of this final project is to create new content, we decided to focus on our 
 	  objects and new animation content.</p>
+	  
+	  <h3>Original Goal<h3>
+	  <p> The original goal we had was to have a simple Rube Goldberg machine. It would 
+	  have started with the small green marble sliding down the yellow slide on the table 
+	  and hitting the dominos. The dominos would be arranged in a line that curves towards
+	  the front of the table. After all the dominos have fallen the last domino would hit 
+	  the large shiny ball which slides down the large ramp to the ground. As it rolled 
+	  across the ground it would pass over a contact plate that would toggle the chandelier
+	  light so it would turn on. The complications from the animation discussed in the 
+	  section above were too difficult to overcome in the time period we had to work. So,
+	  instead we reconfigured the room into its current set up as a playroom and put 
+	  together a simpler animation that didn't involve trying to slide down the ramps.
+	  </p>
+	  
 	  
 	  <h3>Copyright 2014 Susie Carovillano and Francys Scott</h3>
 	  
