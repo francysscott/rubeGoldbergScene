@@ -7,6 +7,10 @@
 	Simple function that creates a curtain with rod.
 	
 	Currently has no parameters so it is not customizable unless the user changes the code.
+	
+	Creates a curtain with a curtain rod that connects to the wall above the window when 
+	the room height is set to 200 in the sceneParams.
+	
 */	
 	
 function createCurtain() {	
