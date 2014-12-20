@@ -47,7 +47,7 @@ function createCurtain() {
 	objectC = new THREE.Mesh( clothGeometry, clothMaterial );
 	objectC.position.set( -135, 100, -100 );
 	objectC.scale.set(0.25, 0.4, 0.4);
-	objectC.rotateY(Math.PI/2);
+	objectC.rotateY(-Math.PI/2);
 	objectC.name = "curtain";
 	curtain.add( objectC );
 
@@ -67,7 +67,7 @@ function createCurtain() {
 								 opacity: 0  } );
 
 	sphere = new THREE.Mesh( ballGeo, ballMaterial );
-	sphere.position.set(0,0,-5);
+	sphere.position.set(0,0,5);
 	curtain.add( sphere );
 	
 	return curtain;
