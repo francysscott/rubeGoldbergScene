@@ -367,8 +367,10 @@ Details available to change:
    		var newHeight = TW.linearMap(height, 0, 1, sceneParams.marbleRadius, sceneParams.maxMarbleHeight);
    		console.log("newHeight: " + decay);
     	marble.position.y = newHeight + sceneParams.tableHeight;
+    	marbleCam.position.y = marble.position.y;
     	marbleX = sceneParams.marbleInitialX + animationState.marbleVelocityX * time;
     	marble.position.x = marbleX;
+    	marbleCam.position.x = marble.position.x;
     	animationState.marbleHeight = newHeight;
   }
   
@@ -555,9 +557,11 @@ Details available to change:
 	  directional light is from the direction of the window.  It is a soft grey light to 
 	  help sell the feeling of a rainy day.  Finally, the chandelier emits a soft spotlight
 	  that can be seen when looking up at the ceiling of the scene. </p>
+	  <img src="../images/chandelierLighting.png" alt="shows chandelier light on ceiling" style="width:480px;height:320px">
 	  <p>For added realism and to show that the ball rotates as it moves, we also added a 
 	  bump map to the large shiny ball. This bump map has several 'scratches' in it that can
-	  be seen on the surface of the ball. <p>	  
+	  be seen on the surface of the ball. <p>	
+	  <img src="../images/bumpmap.png" alt="close up of large shiny ball showing scratches" style="width:480px;height:320px">  
 	  
 	  <h3>Transparencies</h3>
 	  <p>The glass globes in the chandelier use transparency, as you can see below.  We 
@@ -572,13 +576,16 @@ Details available to change:
 	  <h3>Reflections</h3>
 	  <p>Looking carefully, you can see that both the small marble and larger ball appear 
 	  to be tinted metals -- that is, they are reflective of their surroundings but imbued 
-	  with a base hue.  Here's a closeup of the larger ball where you can see in the 
-	  reflection, from the left to right, the umbrella, window, chandelier, little yellow 
+	  with a base hue. In the close up of the larger ball above when we were discussing bump
+	  maps, you can see slight reflections of other objects in the room. The reflections
+	  are blurred due to the bump map. In the small green marble you can see the 
+	  reflections very clearly. In the image below you can see the reflections of,
+	  from the left to right, the umbrella, window, chandelier, little yellow 
 	  slide with green marble, series of wooden blocks and shelves with the teapot.  Take 
 	  a look at the reflections during the animation, and you'll also see that the 
 	  reflections adjust to mirror the ball's position in the room and the state of the 
 	  video in the window. (You can watch the video through its reflection in the ball!)</p>
-	  <img src="../images/ScreenShot2014-12-15at72524PM.png" alt="close up of reflections in ball" style="width:480px;height:320px">
+	  <img src="../images/reflections.png" alt="close up of reflections in marble" style="width:480px;height:320px">
 	  
 	  <h3>Animations</h3>
 	  <p>We have several animations occurring throughout our work.  Most obvious are the 
@@ -587,9 +594,9 @@ Details available to change:
 	  video of a rainy day.  Listen carefully when you start the animation and you can 
 	  hear the rain!  The change in these stills is easiest to see when looking at the 
 	  upper right corner of the window's left pane.</p>
-	  <img src="../images/ScreenShot2014-12-15at15434PM.png" alt="first still of rainy day window" style="width:240px;height:160px">
-	  <img src="../images/ScreenShot2014-12-15at15457PM.png" alt="second still of rainy day window" style="width:240px;height:160px">
-	  <img src="../images/ScreenShot2014-12-15at15510PM.png" alt="third still of rainy day window" style="width:240px;height:160px">
+	  <img src="../images/window1.png" alt="first still of rainy day window" style="width:240px;height:160px">
+	  <img src="../images/window2.png" alt="second still of rainy day window" style="width:240px;height:160px">
+	  <img src="../images/window3.png" alt="third still of rainy day window" style="width:240px;height:160px">
 	  
 	  <h3>Dependencies and Function Calls to Others' Work</h3>
 	  <p>In an homage to the history of computer graphics, we uploaded and used an svg 
