@@ -67,6 +67,7 @@ function createCurtain() {
 								 opacity: 0  } );
 
 	sphere = new THREE.Mesh( ballGeo, ballMaterial );
+
 	sphere.position.set(0,0,5);
 	curtain.add( sphere );
 	
