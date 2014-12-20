@@ -255,6 +255,7 @@ function drawScene(sceneParams) {
 	
 	// Add the curtain.
 	var curtain = createCurtain();
+	curtain.name="curtain";
 	scene.add(curtain);
 	
 	

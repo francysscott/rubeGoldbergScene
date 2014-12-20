@@ -79,8 +79,7 @@ Details available to change:
   <h1>CS307 Final Project:  Play</h1>
 	<p>Francys Scott and Susie Carovillano</p>
 	<p>Prof. Scott Anderson, CS307, Wellesley College, Fall 2014</p>
-	<p>Press "g" when you want the animation to start, "s" to stop, "1" if you prefer going step by 
-	step. Remember to turn on the sound!</p>
+	<p>Press "g" when you want the animation to start, "s" to stop. Remember to turn on the sound!</p>
 	
 
 	<script type="x-shader/x-fragment" id="fragmentShaderDepth">
@@ -125,6 +124,10 @@ Details available to change:
   var marbleCam; 
   var shinyBall;
   var shinyBallCam;
+  //global vars for the curtain
+  var curtain;
+  var sphere;
+  var rotate = false;
   var clothGeometry;
   
   TW.mainInit(renderer,scene);
@@ -331,6 +334,9 @@ Details available to change:
     // changes the time and everything in the state that depends on it
     animationState.time += sceneParams.deltaT;
     
+    updateCurtain(animationState.time);
+    console.log("curtain move");
+    
     if (Math.abs(animationState.marbleVelocityX) > 0.05) {  
     	//Math.abs is needed because the velocity is negative
     	
@@ -392,7 +398,12 @@ Details available to change:
   }
   
   
- // 
+  function updateCurtain(time){
+		windStrength = Math.cos( time / 7000 ) * 5 + 3;
+		windForce.set( Math.sin( time / 2000 ), Math.cos( time / 3000 ), Math.sin( time / 1000 ) ).normalize().multiplyScalar( windStrength );
+		simulate(time);
+  }
+
 //   The following is from the curtain example.  This code needs to be placed in the regular functions.
 //   function animate() {
 // 
@@ -400,11 +411,8 @@ Details available to change:
 // 
 // 				var time = Date.now();
 // 
-// 				windStrength = Math.cos( time / 7000 ) * 20 + 40;
+// 				windStrength = Math.cos( time / 7000 ) * 5 + 3;
 // 				windForce.set( Math.sin( time / 2000 ), Math.cos( time / 3000 ), Math.sin( time / 1000 ) ).normalize().multiplyScalar( windStrength );
-// 				arrow.setLength( windStrength );
-// 				arrow.setDirection( windForce );
-// 
 // 				simulate(time);
 // 				render();
 // 				stats.update();
@@ -413,40 +421,18 @@ Details available to change:
 // 
 // 			function render() {
 // 
-// 				var timer = Date.now() * 0.0002;
-// 
+// 				var timerC = Date.now() * 0.0002;
 // 				var p = cloth.particles;
-// 
 // 				for ( var i = 0, il = p.length; i < il; i ++ ) {
-// 
 // 					clothGeometry.vertices[ i ].copy( p[ i ].position );
-// 
 // 				}
-// 
 // 				clothGeometry.computeFaceNormals();
 // 				clothGeometry.computeVertexNormals();
-// 
 // 				clothGeometry.normalsNeedUpdate = true;
 // 				clothGeometry.verticesNeedUpdate = true;
 // 
-// 				sphere.position.copy( ballPosition );
-// 
-// 				if ( rotate ) {
-// 
-// 					camera.position.x = Math.cos( timer ) * 1500;
-// 					camera.position.z = Math.sin( timer ) * 1500;
-// 
-// 				}
-// 
-// 				camera.lookAt( scene.position );
-// 
-// 				renderer.render( scene, camera );
-// 
 // 			}
-// 
-//   
-//   
-//  
+
 
   function animate() 
   {
@@ -473,6 +459,18 @@ Details available to change:
 	  if (videoTexture) videoTexture.needsUpdate = true;
 	}
 	
+	//update curtain
+	clothGeometry.visible=false;
+	var p = cloth.particles;
+	for ( var i = 0, il = p.length; i < il; i ++ ) {
+		clothGeometry.vertices[ i ].copy( p[ i ].position );
+	}
+	clothGeometry.computeFaceNormals();
+	clothGeometry.computeVertexNormals();
+	clothGeometry.normalsNeedUpdate = true;
+	clothGeometry.verticesNeedUpdate = true;
+	clothGeometry.visible=true;
+	
 	//crucial part, this re-renders the scene.
 	renderer.render(scene, state.cameraObject); //re-render the scene using the TW camera
   }
@@ -486,9 +484,6 @@ Details available to change:
   
 <!--   End of our graphics code.  -->
   
-<p>Note:  all our screenshots should have the same filepath as our textures:
-	  "../images/example.png"  so that we can keep all our images together 
-	  easily in one spot.</p>
   
 	  <h2>Project Description:</h2>
 	  <p>This project is part of the CS304 course at Wellesley 

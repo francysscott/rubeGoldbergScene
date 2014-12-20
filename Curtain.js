@@ -16,6 +16,32 @@
 function createCurtain() {	
 	var curtain = new THREE.Object3D();
 	
+	var pinsFormation = [];
+	var pins = [6];
+
+	pinsFormation.push( pins );
+
+	pins = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
+	pinsFormation.push( pins );
+	pins = [ 0 ];
+	pinsFormation.push( pins );
+
+	pins = []; // cut the rope ;)
+	pinsFormation.push( pins );
+
+	pins = [ 0, cloth.w ]; // classic 2 pins
+	pinsFormation.push( pins );
+
+	pins = pinsFormation[ 1 ];
+
+
+	function togglePins() {
+
+		pins = pinsFormation[ ~~( Math.random() * pinsFormation.length ) ];
+
+	}
+	
+	
 	// cloth material
 	var clothTexture = THREE.ImageUtils.loadTexture( sceneParams.umbrellaTexture );
 	clothTexture.wrapS = clothTexture.wrapT = THREE.RepeatWrapping;
@@ -51,11 +77,18 @@ function createCurtain() {
 	//Curtain rods for the curtains
 	// poles
 	var poleGeo = new THREE.BoxGeometry( 20, 30, 3 );
-	var poleMat = new THREE.MeshPhongMaterial( { color: 0xffffff, specular: 0x111111, shiness: 30 } );
+	var poleMat = new THREE.MeshPhongMaterial( { color: 0x5C3317, specular: 0x5C3317, shiness: 10 } );
 
 	var mesh = new THREE.Mesh( new THREE.BoxGeometry( 20, 2, 80 ), poleMat );
 	mesh.position.set( -140, 150, -100 );
 	curtain.add(mesh);
+	
+	var ballGeo = new THREE.SphereGeometry( 1, 6, 6 );
+	var ballMaterial = new THREE.MeshPhongMaterial( { color: 0xffffff,transparent: true,
+								 opacity: 0  } );
+
+	sphere = new THREE.Mesh( ballGeo, ballMaterial );
+	curtain.add( sphere );
 	
 	return curtain;
 }
