@@ -21,7 +21,6 @@ function createCurtain() {
 
 	pinsFormation.push( pins );
 	
-	
 	// cloth material
 	var clothTexture = THREE.ImageUtils.loadTexture( sceneParams.umbrellaTexture );
 	clothTexture.wrapS = clothTexture.wrapT = THREE.RepeatWrapping;
