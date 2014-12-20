@@ -63,10 +63,11 @@ function createCurtain() {
 	curtain.add(mesh);
 	
 	var ballGeo = new THREE.SphereGeometry( 1, 6, 6 );
-	var ballMaterial = new THREE.MeshPhongMaterial( { color: 0xffffff,transparent: true,
+	var ballMaterial = new THREE.MeshPhongMaterial( { color: 0xffff00,transparent: true,
 								 opacity: 0  } );
 
 	sphere = new THREE.Mesh( ballGeo, ballMaterial );
+	sphere.position.set(0,0,-5);
 	curtain.add( sphere );
 	
 	return curtain;

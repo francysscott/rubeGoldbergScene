@@ -402,7 +402,7 @@ Details available to change:
   
   
   function updateCurtain(time){
-		windStrength = Math.abs(Math.cos( time / 7000 )/2 + 1);
+		windStrength = Math.abs(Math.cos( time / 7000 )/8);
 		windForce.set( Math.sin( time / 2000 ), Math.cos( time / 3000 ), Math.sin( time / 1000 ) ).normalize().multiplyScalar( windStrength );
 		simulate(time);
   }
