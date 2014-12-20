@@ -185,7 +185,7 @@ function drawScene(sceneParams) {
                     sceneParams.slideColor,
                     sceneParams.slideShininess,
                     sceneParams.slideLip);
-    slide.position.set(-10, sceneParams.tableHeight, -120);
+    slide.position.set(-80, sceneParams.tableHeight, -120);
     slide.rotateY(Math.PI/5);
     slide.name = "slide";
     scene.add(slide);
