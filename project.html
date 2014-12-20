@@ -401,40 +401,10 @@ Details available to change:
   
   
   function updateCurtain(time){
-		windStrength = Math.cos( time / 7000 ) * 5 + 3;
+		windStrength = Math.abs(Math.cos( time / 7000 )/2 + 1);
 		windForce.set( Math.sin( time / 2000 ), Math.cos( time / 3000 ), Math.sin( time / 1000 ) ).normalize().multiplyScalar( windStrength );
 		simulate(time);
   }
-
-//   The following is from the curtain example.  This code needs to be placed in the regular functions.
-//   function animate() {
-// 
-// 				requestAnimationFrame( animate );
-// 
-// 				var time = Date.now();
-// 
-// 				windStrength = Math.cos( time / 7000 ) * 5 + 3;
-// 				windForce.set( Math.sin( time / 2000 ), Math.cos( time / 3000 ), Math.sin( time / 1000 ) ).normalize().multiplyScalar( windStrength );
-// 				simulate(time);
-// 				render();
-// 				stats.update();
-// 
-// 			}
-// 
-// 			function render() {
-// 
-// 				var timerC = Date.now() * 0.0002;
-// 				var p = cloth.particles;
-// 				for ( var i = 0, il = p.length; i < il; i ++ ) {
-// 					clothGeometry.vertices[ i ].copy( p[ i ].position );
-// 				}
-// 				clothGeometry.computeFaceNormals();
-// 				clothGeometry.computeVertexNormals();
-// 				clothGeometry.normalsNeedUpdate = true;
-// 				clothGeometry.verticesNeedUpdate = true;
-// 
-// 			}
-
 
   function animate() 
   {
@@ -596,6 +566,8 @@ Details available to change:
 	  <img src="../images/window1.png" alt="first still of rainy day window" style="width:240px;height:160px">
 	  <img src="../images/window2.png" alt="second still of rainy day window" style="width:240px;height:160px">
 	  <img src="../images/window3.png" alt="third still of rainy day window" style="width:240px;height:160px">
+	  <p>Finally we applied some animation principles to an example of cloth and successfully 
+	  built a curtain for the window. You can see the curtain up top!</p>
 	  
 	  <h3>Dependencies and Function Calls to Others' Work</h3>
 	  <p>In an homage to the history of computer graphics, we uploaded and used an svg 
@@ -703,6 +675,14 @@ Details available to change:
 	  camera located inside the object must also move and record new images to map.  
 	  Otherwise, the ball moves but its reflections remain static.  Once this problem is 
 	  recognized, the simple solution is to translate the camera in tempo with the object.</p>
+	  <p>Finally, implementing the curtain took some work because it needs certain variables 
+	  to be global, while others can be local, that complicated our ability to keep all 
+	  the code modular.  Additionally the cloth particles generation uses a library function 
+	  call that requires that the cloth begin both upside down and fully extended.  As a result, 
+	  at this time there is no good way to start the curtain without the curtain hanging upwards 
+	  through the roof!  The animation cosine equation that generates the updated 
+	  positions should keep the curtains always blowing into the room rather than out 
+	   through the wall. But otherwise it's a fun application of animation.</p>
 	  
 	  <h3>Incorporating Others' Work</h3>
 	  <p> We tried to use other students' contrib files to decorate the shelves of our 
